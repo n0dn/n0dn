@@ -1,0 +1,10 @@
+---
+title: "Invitación al Coloquio México Visión 2060"
+author: "Eduardo BxN"
+date: 2024-08-29
+categories: [México, Conferencias]
+description: "Contenido migrado desde n0dn.com. Revisa y completa el texto, imágenes y enlaces."
+image: ""
+---
+
+<!-- Copia aquí el cuerpo completo del artículo. -->

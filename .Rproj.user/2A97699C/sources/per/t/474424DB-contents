@@ -1,0 +1,510 @@
+---
+title: "Capital burocrático de los aspirantes a la presidencia de Chile 2025"
+author: "Dr. Norberto Bustos"
+format: 
+  html: 
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: lumen
+editor: visual
+params:
+  datafile: "~/Documentos/web_n0dn/n0dn/dataframes/Aspirantes_Chile_2025_v2.csv"
+lang: es
+fontsize: 12pt
+execute: 
+  warning: false
+  message: false
+---
+
+# Introducción
+
+Después del declive de la Concertación de Partidos por la Democracia y de los partidos de la extrema derecha tradicional (UDI y RN) que surgieron tras el retorno a la democracia a finales de la década de 1980, se configuró un nuevo periodo partidista en donde la red política histórica encontró nuevos espacios. Con el ascenso a la presidencia de Gabriel Boric, se esperó un rompimiento con las políticas neoliberales como las causantes de los descontentos sociales de los estudiantes, trabajadores asalariados y demás sectores de las amplias mayorías los cuales vieron agrabada su situación durante la represión durante el periodo de la pandemia durante el último año de gobierno de Sebastián Piñera. Sin embargo, los cambios no fueron tan profundos y radicales como se esperaba. Ganó la moderación y el sectarismo. Ello avivó las esperanzas de los partidos de la extrema derecha y de las redes políticas pinochetistas quienes hoy ven grandes posibilidades de volver a gobernar con José Antonio Kast. Sin embargo, la carta fuerte de la izquierda oficial - alianza de la izquierda tradicional y nuevos partidos vinculados a Boric- es la ex sindicalista y funcionaria comunista Jeannete Jara. La polarización no sólo es ideolígica, sino programática y podría derivar en el avance de los derechos de los trabajadores, reducción de la desigualdad y una agenda progresista en favor de los derechos humanos si Jara gana las elecciones, o el retorno de políticas represivas, favorables a los holdings financieros bajo una agenda de seguridad nacional a través de José Antonio Kast.
+
+En este artículo compararemos la capacidad directiva de los aspirantes a la presidencia de Chile a partir de sus trayectorias dentro y fuera del aparato de Estado que denominamos *capital burocrático*. Con ello, podremos medir su capacidad de dirección en caso de llegar a la presidencia a partir de su experiencia en los cargos directivos en donde han participado desde el inicio de su carrera política. La carrera por la presidencia se construye desde la adolescencia. Además, veremos sus vínculos con otros actores políticos y la relevancia de los mismos dentro de la red política histórica. Los vínculos son tan o más importantes que la capacidad directiva, además de que muestra tendencias de comportamientos en cluster que derivan en programas políticos.
+
+## ¿Quiénes son l\@s aspirantes a la presidencia de Chile en 2025?
+
+Las elecciones presidenciales de Chile en 2025 constituyen un hito central en la historia política reciente del país, marcando un momento crucial para definir el futuro político, social y económico tras años de profundos cambios estructurales y demandas ciudadanas. Convocadas para el 16 de noviembre de 2025, complementadas con elecciones parlamentarias, estas contiendas electorales buscan elegir al sucesor del presidente Gabriel Boric, en un contexto de alta participación ciudadana impulsada por la inscripción automática y la obligatoriedad del voto. El ambiente político se caracteriza por una polarización creciente, un electorado más diverso y la emergencia de nuevos actores políticos, factores que complejizan la disputa democrática.
+
+El bloque oficialista, conformado por la coalición Unidad por Chile, ha optado por la vía de primarias para seleccionar a su candidato presidencial, privilegiando la legitimidad interna y la unidad frente a una oposición fragmentada. La realización de primarias el 29 de junio de 2025 fue fundamental para consolidar una candidatura que represente la diversidad ideológica de esta coalición, que incluye desde fuerzas tradicionalmente de centro-izquierda hasta el Partido Comunista. Este proceso refleja la complejidad de los desafíos sociales que Chile enfrenta, como la reforma policial, la educación, el sistema de pensiones y la estabilidad económica, que exigen un liderazgo que logre cohesionar distintas visiones.
+
+En oposición, la derecha y la extrema derecha presentan candidatos en primera vuelta, reflejando un espectro político plural y la fragmentación del voto conservador, pero exhibiendo una fortaleza significativa en las encuestas y en su base electoral. Esto genera un escenario donde la primera vuelta presidencial será decisiva para definir si es necesaria una segunda vuelta y cuáles serán las alianzas posteriores. Además, existen múltiples candidatos independientes que, aunque enfrentan el desafío de reunir firmas para su inscripción, aportan variedad y amplitud al proceso electoral, en sintonía con la creciente demanda ciudadana de nuevas representaciones.
+
+El debate electoral en Chile 2025 se articula alrededor de temas cruciales como la seguridad pública, el desarrollo económico inclusivo, la descentralización, la política exterior y la profundización democrática. Los candidatos deberán responder no solo a los reclamos tradicionales sino también a aspiraciones emergentes de una juventud politizada y de grupos sociales históricamente marginados. De esta manera, la elección presidencial es a su vez un reflejo de las tensiones sociales y culturales que atraviesan el país, involucrando no solo la elección de un líder sino la definición de un proyecto país.
+
+Finalmente, las elecciones de 2025 en Chile representan un ejercicio democrático clave para consolidar la estabilidad política y social en un contexto de incertidumbre global y local. Más allá de los resultados y candidatos, este proceso evidencia la vitalidad y complejidad del sistema democrático chileno, obligando a las fuerzas políticas a dialogar, negociar y construir consensos que permitan enfrentar los retos en la próxima década.
+
+### Perfiles y trayectorias
+
+Para conocer el perfil de quienes contendrán por la presidencia de Chile, hemos analizado 9 biografías de candidatas y candidatos a fin de medir y comparar su capital burocrático con el objetivo de conocer su experiencia en la dirección de cargos dentro del Estado.
+
+Representantes de coaliciones y partidos \[Activos\]
+
+***Jeannette Alejandra Jara Román*** (Partido Comunista / Unidad por Chile - oficialismo): Abogada nacida en Santiago en 1974, proveniente de un barrio popular de Conchalí. Su trayectoria política se inició en las Juventudes Comunistas y ha ocupado cargos públicos como ministra del Trabajo en el gobierno de Gabriel Boric. Su campaña se distingue por su énfasis en la justicia social y la defensa de los derechos laborales y sociales. Jara ganó la primaria oficialista y representa la continuidad y profundización de las reformas sociales iniciadas en el actual gobierno.
+
+***José Antonio Kast Rits*** (Partido Republicano - derecha/extrema derecha): Abogado y político de derecha nacido en 1966 en Santiago. Ha sido diputado en múltiples periodos y es fundador del Partido Republicano de Chile. Kast ha sido candidato en varias elecciones presidenciales, caracterizándose por posiciones conservadoras en materia económica, social y de seguridad. Representa una propuesta política que recalca la defensa del orden de tiempos de la dictadura y valores tradicionales.
+
+***Ximena Cecilia Rincón González*** (Concepción, 5 de julio de 1967): Abogada y política chilena. Fue senadora por la Región del Maule y presidenta del Senado entre 2021 y 2022. Ha sido ministra en carteras como Secretaría General de la Presidencia y Trabajo. En 2022 renunció al Partido Demócrata Cristiano (PDC) y fundó el Partido Demócratas, del cual es presidenta.
+
+***Eveline Rose Matthei Fornet*** (Santiago, 11 de noviembre de 1953): Economista y política de derecha. Fue alcaldesa de Providencia entre 2016 y 2024. Militó en Renovación Nacional, luego en Unión Demócrata Independiente (UDI). Ha tenido un perfil político confrontacional que ha ido suavizando con el tiempo.
+
+***Johannes Maximilian Kaiser Barents von Hohenhagen o Johannes Maximilian Kaiser Barents von Hohenhagen*** (Santiago, 5 de enero de 1976): Youtuber y político de derecha ultraconservadora, fundador del Partido Nacional Libertario. Diputado desde 2022. Se define como paleolibertario, social-conservador y crítico de políticas como las vacunas COVID-19 y la inmigración irregular.
+
+Independientes y partidos minoritarios
+
+***Marco Enriquez Ominami*** (Santiago, 12 de junio de 1973): Político, cineasta y filósofo chileno. Fue diputado y fundador del Partido Progresista. Ha sido candidato presidencial en varias elecciones, logrando buenos resultados. También es conocido por su trabajo en cine y televisión.
+
+***Franco Aldo Parisi Fernandez*** (Santiago, 25 de agosto de 1967): Economista e ingeniero comercial, fundador y líder del Partido de la Gente. Ha sido candidato presidencial en 2013 y 2021, con perfil populista y programas radiales y televisivos sobre economía.
+
+***Harold Alfred Mayne-Nicholls Sacul*** (Antofagasta, 27 de julio de 1961): Periodista y dirigente de fútbol. Fue presidente de la Federación de Fútbol de Chile y de la ANFP. También trabajó en FIFA y tiene formación en administración de empresas.
+
+***Eduardo Antonio Artés Brichetti*** (El Tambo, San Vicente de Tagua Tagua, 25 de octubre de 1951): Profesor y dirigente social chileno de ideología antirrevisionista y de izquierda. Secretario general del Partido Comunista Chileno (Acción Proletaria). Ha sido candidato presidencial y es conductor de un programa en HispanTV.
+
+**Representantes de coaliciones y partidos \[No Activos\]**
+
+Gonzalo Winter (Frente Amplio / Unidad por Chile - oficialismo): Abogado y diputado joven, nacido en 1987, con militancia en el movimiento autonomista y político de izquierda más reciente. Su candidatura fue respaldada por el Frente Amplio tras las renuncias de otros candidatos en ese bloque. Winter enfatiza propuestas progresistas y renovación política dentro del oficialismo.
+
+Carolina Tohá (Partido Por la Democracia / Unidad por Chile - oficialismo): Política experimentada y exalcaldesa de Santiago. Está vinculada al socialismo democrático y a la centroizquierda, con una carrera enfocada en la gestión municipal y el trabajo legislativo. Su candidatura representa la tradición y experiencia política dentro del bloque oficialista.
+
+Jaime Mulet (Federación Regionalista Verde Social): Político regionalista nacido en 1956, con una trayectoria ligada a la defensa de la descentralización y temas sociales en regiones. Su postulación busca dar voz a los sectores más periféricos y resalta el enfoque territorial en las políticas públicas.
+
+### El capital burocrático de los aspirantes
+
+Como describimos en artículos anteriores, el **capital burocrático** es el cúmulo de competencias, experiencia, conocimientos y relaciones que poseen los agentes dentro de una burocracia, y que les permite operar eficaz y legítimamente en el marco institucional estatal o corporativo. A partir de la sistematización de los cargos directivos según su posición en torno al poder ejecutivo es posible medir y comparar la experiencia de cualquier actor, partido o coalición política desde las guerras de Independencia hasta la actualidad. Por su puesto, es un esfuerzo metodológico que aun se encuentra en fase de desarrollo y se requieren aún varias pruebas y detección de errores para mejorar su calibración.
+
+```{r}
+#| label: tb1_aspirantes_kb
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: Tabla 1. Datos generales de los aspirantes
+
+#librerías
+library(foreign)
+library(tidyverse)
+library(dplyr)
+library(scales)
+library(kableExtra)
+library(readr)
+library(readxl)
+library(ggplot2)
+library(forcats)
+
+kb_d <- read.csv(params$datafile, fileEncoding = "Latin1", stringsAsFactors = FALSE) # Para codificar en windows
+tb_aspirantes_kb <-kb_d %>% 
+  dplyr::select(Nombre, Edad_contienda,Genero,Comuna,Coalición,Partido, Activo, kb) %>% 
+  rename(Aspirante = Nombre, 
+         Edad = Edad_contienda,
+         Género = Genero,
+         "Comuna de nacimiento" = Comuna,
+         "Candidatura activa" = Activo,
+         "Capital burocrático\n(kb)" = kb
+         ) %>% 
+  mutate(Género = case_when(Género == "M"~"Hombre",
+                            Género == "F"~"Mujer")) %>% 
+  arrange(desc(`Capital burocrático\n(kb)`)) %>% 
+   kable(caption = "Elaborado por: n0dn | The linked data") %>%
+   kable_styling(bootstrap_options = c("striped", "responsive"),
+                 full_width = FALSE, 
+                 position = "center") 
+
+tb_aspirantes_kb
+```
+
+## Capital burocrático de las coaliciones
+
+Iniciaremos con el capital burocrático de las coaliciones, es decir, con la suma de experiencias directivas de los aspirantes a la presidencia de cada uno de los partidos que componen las coaliciones electorales. El capital burocrático de las coaliciones partidistas mide la sumatoria de las experiencias en cargos directivos de los aspirantes que las componen, por lo que entre más actores existan mayor será el valor del capital burocrático de la coalición. Esto permite comparar las trayectorias de los candidatos dentro de los diferentes niveles y órganos del Estado así como de aquellas actividades fuera del Estado.
+
+```{r}
+#| label: tb2_aspirantes_kb_gt
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: Tabla 2. Aspirantes según su capital burocrático
+
+library(tidyverse)
+library(gtExtras)
+library(gt)
+library(dplyr)
+
+
+kb_e <- read.csv(params$datafile, fileEncoding = "Latin1", stringsAsFactors = FALSE) # Para codificar en windows
+
+# Calcular rango antes
+rango_prom_kb <- kb_e %>%
+  dplyr::select(Nombre, Coalición, Activo, kb) %>%
+  rename(Aspirante = Nombre, "Candidatura activa" = Activo) %>%
+  group_by(Coalición, Aspirante) %>%
+  summarise(prom_kb = mean(kb, na.rm = TRUE), .groups = "drop") %>%
+  summarise(
+    min_val = min(prom_kb, na.rm = TRUE),
+    max_val = max(prom_kb, na.rm = TRUE)
+  )
+
+# Extraer valores para usarlos después
+min_val <- rango_prom_kb$min_val
+max_val <- rango_prom_kb$max_val
+
+# Ahora generar la tabla
+kb_e %>%
+  dplyr::select(Nombre, Edad_contienda, Genero, Coalición, Activo, kb) %>%
+  rename(
+    Aspirante = Nombre,
+    Edad = Edad_contienda,
+    Género = Genero,
+    "Candidatura activa" = Activo
+  ) %>%
+  mutate(
+    Género = case_when(
+      Género == "M" ~ "Hombre",
+      Género == "F" ~ "Mujer",
+      TRUE ~ Género
+    )
+  ) %>%
+  group_by(Coalición, Aspirante) %>%
+  summarise(
+    prom_kb = mean(kb, na.rm = TRUE),
+    ranking_kb = case_when(
+      prom_kb >= 455 ~ "Alto",
+      prom_kb >= 440 & prom_kb < 455   ~ "Medio",
+      TRUE ~ "Bajo"
+    ),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(prom_kb)) %>%
+  mutate(
+    ranking_icon = case_when(
+      ranking_kb == "Alto" ~ "▲",
+      ranking_kb == "Medio" ~ "■",
+      ranking_kb == "Bajo" ~ "▼"
+    )
+  ) %>%
+  gt() %>%
+  tab_header(
+    title = "Tabla 2. Aspirantes según su capital burocrático",
+    subtitle = "Presidencia de Chile 2025"
+  ) %>%
+  fmt_number(columns = prom_kb, decimals = 1) %>%
+  cols_label(
+    prom_kb = "Prom. Kb",
+    ranking_kb = "Ranking Kb",
+    ranking_icon = "Capital burocrático"
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = ranking_icon
+  ) %>%
+  tab_footnote(
+    footnote = "La intensidad del color representa la experiencia en cargos directivos del aspirante con respecto a la media histórica (1818-2022)",
+    locations = cells_column_labels(columns = ranking_kb)
+  ) %>%
+  tab_footnote(
+    footnote = "▲ Alto (≥455 kb) | ■ Medio (440-454.99 kb) | ▼ Bajo (≤ 439.99 kb)",
+    locations = cells_column_labels(columns = ranking_icon)
+  ) %>%
+  gt_theme_pff() %>%
+  gt_color_box(
+    columns = prom_kb,
+    domain = c(min_val, max_val),
+    palette = "viridis"
+  ) %>%
+  tab_style(
+    style = cell_text(color = "#28a745", size = px(20), weight = "bold"),
+    locations = cells_body(columns = ranking_icon, rows = ranking_kb == "Alto")
+  ) %>%
+  tab_style(
+    style = cell_text(color = "#ff9800", size = px(20), weight = "bold"),
+    locations = cells_body(columns = ranking_icon, rows = ranking_kb == "Medio")
+  ) %>%
+  tab_style(
+    style = cell_text(color = "#dc3545", size = px(20), weight = "bold"),
+    locations = cells_body(columns = ranking_icon, rows = ranking_kb == "Bajo")
+  )
+
+
+```
+
+Como se aprecia en @grap_coaliciones_kb los aspirantes de Coalición Unidad por Chile que representa al oficialismo y a los partidos de izquierda y centro izquierda (tanto de la nueva hisquierda encabezada por el presidente Boric como de la extinta Concertación que acumula a los partidos de centro izquierda) acumula principalemente Intra-burocrático con 1,044 kb lo que indica que predomina la experiencia en Ministerios de Estado, seguida de ella se encuentra la sub-burocrática que refiere la experiencia en Partidos Políticos y Alcaldias o Comunas con 589 kb, y en tercer lugar el capital para-burocrático con 567 kb los cuales abarcan principalmente el trabajo legislativo. Finalmente el capital exa-burocrático que incluye actividades empresariales y en sociedad civil con 258 kb. Lo anterior, muestra que los candidatos de la Coalición Unidad por Chile cuentan con amplia experiencia en labores ejecutivas del Estado, cuentan con una base partidista sólida y experiencia en el campo legislativo, todas ellas por encima de las labores empresariales o de sociedad civil.
+
+Por su parte, la coalición Chile Vamos que representa a los partidos de derecha y extrema derecha, con fuertes vínculos en la dictadura de Augusto Pinochet, el gremialismo y en varios casos ex-militantes de la Unión Democrática Independiente (UDI) el partido de la herencia pinochetista, cuentan con mayor experiencia en el capital para-burocrático especialmente en las diputaciones federales, seguida del capital intra-burocrático ya todos ellos fueron ministros de Estado durante el gobierno de Sebastián Piñera como los casos de Eveline Matthei y Jose Antonio Kast.
+
+El tercer grupo con mayor capital burocrático acumulado son los candidatos independientes con 891 kb. La mayoría de su capital burocrático se concentra en exa burocrático 651 kb, particularmente en el sector empresarial particularmente por Harlold Mayner quien se ha dedicado exclusivamente al sector empresarial y que es el único de los aspirantes sin experiencia en algún cargo público. La Coalición de Derecha Unida, en el cuarto puesto en la acumulación de capital burocrático, siendo el capital sub-burocrático que se refiere a la creación y dirección de partidos políticos acumula 243 kb, en tanto que los capitales para y exa tienen una proporción similar con 164 y 160 kbs respectivamente, lo que señala que dicha formación acumula la misma experiencia en el sector empresarial y en la legislatura. Finalmente, el Partico Comunista de Chile- Acción Proletaria y Partido de la Gente no forman ninguna coalición, sino que tienen un sólo representante, como se verá más adelante.
+
+```{r}
+#| label: grap_coaliciones_kb
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: Gráfica 1. Acumulación de capital burocrático por coaliciones partidistas
+
+#librerías
+library(foreign)
+library(tidyverse)
+library(dplyr)
+library(scales)
+library(kableExtra)
+library(readr)
+library(readxl)
+library(ggplot2)
+library(forcats)
+
+kb_c <- read.csv(params$datafile, fileEncoding = "Latin1", stringsAsFactors = FALSE) # Para codificar en windows
+# Gráfico de barras apiladas
+
+# Apilar datos
+long_kbtyp <- kb_c %>%
+  pivot_longer(
+    cols = c("Intra", "Para", "Sub", "Exa", 
+             "Ana"),
+    names_to = "Tipo_de_capital",
+    values_to = "cantidad"
+  )
+## Sumar los datos por coalición
+long_kbtyp_suma <- long_kbtyp %>%
+  group_by(Coalición, Tipo_de_capital) %>%
+  summarise(cantidad = sum(cantidad, na.rm = TRUE), .groups = "drop") %>% 
+  mutate(Tipo_de_capital = factor(Tipo_de_capital, 
+                                  levels = c("Intra", "Para", "Sub", "Exa", "Ana")))
+
+#Tabla con suma total de kb por Coalición (para las etiquetas)
+suma_total_coalicion <- long_kbtyp_suma %>%
+  group_by(Coalición) %>%
+  summarise(total_kb = sum(cantidad, na.rm = TRUE), .groups = "drop")
+
+## Ordenar levels de Coalición de mayor a menor por total_kb
+orden_coalicion <- suma_total_coalicion %>%
+  arrange(desc(total_kb)) %>%
+  pull(Coalición)
+
+# Aplicar orden al factor en el dataset long_kbtyp_suma
+long_kbtyp_suma$Coalición <- factor(long_kbtyp_suma$Coalición, levels = orden_coalicion)
+
+# También en la tabla de sumas para etiquetas
+suma_total_coalicion$Coalición <- factor(suma_total_coalicion$Coalición, levels = orden_coalicion)
+
+# Los niveles de un factor deben ser únicos, pero aquí estás usando una lista con repeticiones por lo que se deben corregir con unique
+kb_c$Coalición <- factor(kb_c$Coalición, levels = unique(kb_c$Coalición[order(kb_c$kb)]))
+
+# Colores por tipo de capital
+
+colores_tkb <- c(
+  "Intra" = "#53EAFD",
+  "Para" = "#022674",
+  "Sub" = "#821291",
+  "Exa" = "#CD040E",
+  "Ana" = "#FFA600"
+)
+
+## Gráfica de barras apiladas por tipo de capital burocático de cada aspirante
+ggplot(data = long_kbtyp_suma, aes(x = Coalición, y = cantidad, fill = Tipo_de_capital)) +
+  geom_col() +
+  scale_y_continuous(labels = comma) +           # Coma cada millar en eje Y
+  scale_fill_manual(values = colores_tkb) +          # Paleta de colores agradable
+  coord_flip() +
+  geom_text(data = suma_total_coalicion, 
+            aes(x=Coalición, y= total_kb +50,
+                label = comma(round(total_kb))),
+            size = 3.5, fontface = "bold", color = "black",
+            inherit.aes = FALSE) +
+  labs(title = "",
+       subtitle = "",
+       caption = "Fuente: n0dn | The linked data\ncon datos de Wikipedia.com",
+       x = "Coalición partidista",
+       y = "capital burocrático (kb)",
+       fill = "Tipo de Capital Burocrático") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 0, hjust = 1, vjust = 1),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.caption = element_text(size = 7, face = "italic"),
+        legend.position = "bottom",
+        panel.background = element_rect(fill = "white", color = NA)
+  )
+```
+
+## Capital burocrático por persona
+
+La trayectoria política es el resultado de la intención, persistencia y capacidad de adaptación de las personas para lograr un objetivo propuesto desde temprana edad. El capital burocrático es un indicador de ese esfuerzo y capacidad en actividades directivas que le dotan del prestigio necesario para acceder a posiciones cada vez más estratégicas dentro del aparato de Estado que les permitan alcanzar los recursos necesarios para llevar a cabo los programas políticos y solventar temas de interés de su subred política. Al agruparlos por su kb con respecto a la media histórica que es de 455 kb[^1], hallé 4 grupos de aspirantes que son Muy alto kb igual o mayor a 879 kb; alto 570 a 610 kb, medio 415-469 y bajo menor a 321 kb.
+
+[^1]: El estudio sobre el capital político de los aspirantes a la presidencia de Chile desde el proceso de independencia hasta 2022 será presentado próximamente en una publicación de revista indexada.
+
+#### **Muy alto**
+
+En el caso de los aspirantes para ocupar la primera magistratura del Estado chileno, encontramos que Carolina Toha y Ximena Rincón son las personas que acumulan mayor capital burocrático con 1,011 kb y 879 kb como se aprecia en @graph_Dist_cargos, que son el doble de la media histórica . En constraste Johanes Kaisser es el candidato con menor capital burocrático con 156 kb es decir, 299 kb por debajo del promedio histórico, mientras que la aspirante que mayormente se acerca al promedio es Eveline Matthei con 469 kb, tan sólo 14 puntos por encima del promedio. Carolina Toha y Ximena Rincón acumulan experiencia en casi todos los tipos de capital dentro del Estado que, salvo la presidencia, vicepresidencia, ejército y Suprema Corte, en el resto ha tenido cargos directivos, así como cargos fuera del Estado como en empresas privadas y sociedad civil, lo que se traduce en que ambas son las aspirantes con mayor experiencia burocrática dentro del Estado.
+
+Lo notable de estas aspirantes que ya no partipan en la contienda por la presidencia, es que ambas están ligadas a la red política histórica a partir de familiares en el caso de Carolina Toha, ligada desde la adolescencia al Partido Socialista y cuyo padre José Toha fue Ministro de Defensa de Salvador Allende (1970-1973) y de la diplomática Victoria Morales, así como por su tío Jaime Toha quien fue ministro durante las administraciones de Salvador Allende, Patricio Aylwin y Eduardo Frei así como otros familiares que han ocupado cargos legislativos, diplomáticos y como funcionarios del Estado. Por su parte, Ximena Rincón ligada desde su juventud a la Democracia Cristiana, tiene a su hermano Ricardo Rincón como diputado y a su ex esposo Juan Carlos Latorre quien fuera legislador y subsecretario de Obras durante el gobierno de Eduardo Frei. En este sentido, ella forma parte del círculo cercano del expresidente Eduardo Frei Ruiz-Tagle (1994-2000)
+
+#### **Alto**
+
+Por otras parte Jaime Mulet, Jeanet Jara y Harold Mayne registran kb similares con 610, 594 y 570 respectivamente, pero en su composición difieren ya que Mulet acumula mayor experiencia en cargos directivos y Jara en cargos dentro de diferentes Ministerio de Estado, lo que muestra que Jara cuenta con mayor experiencia en cargos ejecutivos que Mulet. En cambio, Mayne como ya fue señalado, acumula muchas experiencia en cargos directivos pero fuera del aparato de Estado, es decir en empresas privadas ligadas al fútbol y otros deportes, lo cual lo muestra su liderazgo en la gerencia privada pero muestra su inexperiencia en cargos públicos.
+
+Los vínculos de Mulet se encuentran dentro de una subred de la DC, liderada por Adolfo Zaldivar quien tuvo un papel relevante junto a sus hermanos salidvar para la construcción de ese partido posterior al regreso a la democracia en 1989, pero que por motivos personales decidió abandonar ese partido, fundar el Partido Regionalista Independiente (PRI) y con ello jalar a su subred fuera de la DC, como es el caso de Mulet. De allí que su acción como actor política se funde en la negociación sin cuartel para mantenerse dentro del espectro político. Por su parte, Jeanet Jara quien actualmente es la candidata de la coalición oficialista Unidad por Chile, representa a los primeros cuadros surgidos de la unión de movimientos insurgentes de izquierda de la primera década del siglo XXI y que apoyaron la candidatura de Gabriel Boric. Jara, la segunda candidata a la presidencia del país por el Partido Comunista, despues de Gladys Marín, es una política con la mayor experiencia en cargos dentro del Ministerio del trabajo durante las administraciones de Michelle Bachelet y Gabriel Boric, lo que le permite contar con el respaldo de los partidos de izquierda de la coalición formada por la extinta Concertación y los nuevos partidos que apoyan al presidente Boric.
+
+```{r}
+#| label: graph_Dist_cargos
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: Gráfico 2. Distribución de kb por aspirante 
+
+#librerías
+library(foreign)
+library(tidyverse)
+library(dplyr)
+library(scales)
+library(kableExtra)
+library(readr)
+library(readxl)
+library(ggplot2)
+
+kb_a <-  read.csv(params$datafile, fileEncoding = "Latin1", stringsAsFactors = FALSE) # Para codificar en windows
+# Gráfico de barras apiladas
+# Reordenar el nombre por kb
+
+kb_a$Nombre <- factor(kb_a$Nombre, levels = kb_a$Nombre[order(kb_a$kb)])
+# Apilar datos
+datos_long <- kb_a %>%
+  pivot_longer(
+    cols = c("Presidencia", "Vicepresidencia", "Ministerio", "Gobernatura", 
+             "Ejercito", "Suprema.Corte", "Legislatura", "Alcaldia", 
+             "Partidos_Politicos", "Empresas", "Sociedad_Civil"),
+    names_to = "institucion",
+    values_to = "cantidad"
+  )
+# Posición en la parte de arriba
+
+# Ordenar manualmente las instituciones
+# Orden manual de instituciones
+orden_instituciones <- c(
+  "Presidencia", "Vicepresidencia", "Ministerio", "Gobernatura",
+  "Ejercito", "Suprema.Corte", "Legislatura", "Alcaldia",
+  "Partidos_Politicos", "Empresas", "Sociedad_Civil"
+)
+datos_long$institucion <- factor(datos_long$institucion, 
+                                 levels = orden_instituciones)
+# Colores instituciones
+colores_institucion <- c(
+  "Presidencia"        = "#53EAFD",
+  "Vicepresidencia"    = "#02B7CF",
+  "Ministerio"         = "#016774",
+  "Gobernatura"        = "#5E90FD",
+  "Ejercito"           = "#155DFC",
+  "Suprema.Corte"      = "#0235A1",
+  "Legislatura"        = "#022674",
+  "Alcaldia"           = "#D545E8",
+  "Partidos_Politicos" = "#821291",
+  "Empresas"           = "#FC5F67",
+  "Sociedad_Civil"     = "#CD040E"
+)
+
+## Hline
+# Hline o lineas de intersección
+lineas_kb <- tibble(
+  yintercept = c(418.88, 455.17),
+  label_text = c("kb 2025 = 418.88", "kb histórico = 455.17"),
+  color_code = c(7, 2) # Usar códigos de color o nombres para que coincidan con hline
+)
+# Posición vertical para labels de lineas_kb (arriba)
+pos_y_superior <- max(datos_long$cantidad, na.rm = TRUE) * 1.05
+## Gráfica de barras apiladas por tipo de capital burocático de cada aspirante
+
+ggplot(datos_long, aes(x = Nombre, y = cantidad, fill = institucion)) +
+  geom_col() +
+  labs(
+    title = "",
+    x = "ASpirante",
+    y = "Cantidad",
+    fill = "Institución"
+  ) +
+  scale_y_continuous(labels = comma) +           # Coma cada millar en eje Y
+  scale_fill_manual(values = colores_institucion) + # Paleta de colores institución
+  coord_flip() +
+  geom_hline(
+    aes(yintercept = yintercept, 
+        linetype = as.factor(color_code)),
+    data = lineas_kb,
+    show.legend = FALSE
+  ) +
+  geom_label(data = lineas_kb,
+             aes(x = length(unique(kb_a$Nombre)), 
+                 y = pos_y_superior, 
+                 label = label_text), 
+             hjust = 1, vjust = -0.5, # Ajusta justificación para que quede sobre la línea
+             fill = "white", color = "black", size = 3, # Fondo blanco, texto negro
+             label.padding = unit(0.25, "lines"), label.size = 0) + # Margen y borde del label
+  geom_text(aes(x=Nombre, y= kb +20,
+                label = comma(round(kb))), # recuerda usar la librería scales para que salga la coma
+            size = 3.5) +
+  geom_label(
+  data = lineas_kb,
+  aes(x = length(unique(kb_a$Nombre)), 
+      y = 1,  # parte inferior
+      label = label_text),
+  hjust = 1, vjust = 1.5,
+  fill = "white", color = "black", size = 3,
+  label.padding = unit(0.25, "lines"), label.size = 0
+) +
+  labs(title = "Aspirantes para la presidencia de Chile, 2025",
+       subtitle = "Capital burocrático por tipo",
+       caption = "Fuente: n0dn.com con datos de Wikipedia.com",
+       x = "",
+       y = "capital burocrático (kb)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 1),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank())
+```
+
+#### **Medio**
+
+En esta clasificación se encuentran los casos de Evelin Matthei y José Antonio Kast, personajes ideológicamente cercanos así como dentro de la red política, ya que ambos tienen vínculos familiares y políticos surgidos durante la dictadura de Augusto Pinochet. En el caso de Evelin Matthei quien registra 469 kb, integrados principalmente por su trabajo legislativo, en partidos y en ministerios de Estado durante los gobiernos de Sebastián Piñera. Su padre, Fernando Matthei, quien fuera general del ejército chileno y ministro de Salud durante la dictadura de Pinochet y su esposo Jorge Desormeaux quien fuera director del Banco Central de Chile, le dotan de un prestigio dentro de la subred pinochetista, aunada a su participación en la fundación de Renovación Nacional donde se vinculó políticamente con Sebastian Piñera. Por su parte, Jose Antonio Kast, quien fuera militante de la UDI desde su juventud hasta 2016, es hijo Michael Kast Schindele del ex militante y soldado NAZI que partició en la Segunda Guerra Mundial, y de cuya ideología nunca abandonó, de hecho le ayudó para integrar a sus hijos Miguel y el propio Jose Antonio a la subred de la dictaruda pinochetista. Los hijos de ambos hermanos Kast también forman parte de la subred actual que dirige la extrema derecha chilena como son los casos de Felipe y Pablo Kast.
+
+#### **Bajo**
+
+En este grupo se encuentran los candidatos independientes Marco Enriquez y el ex aspirante del Frente Amplio, Gonzalo Winter, así como los candidatos de los partidos Comunista-Acción Proletaria, Eduardo Artés, de la Gente de Franco Parisi y del ultra conservador Nacional Libertario de Johanes Kaiser. De estos cuatro, tres de ellos cuentan con experiencia mayor a 30 años en la política y que sin embargo no han logrado acumular mayores cargos directivos estratégicos dentro del aparato de Estado. Quizás la característica que los asimila sea su centralidad dentro de las subredes a las que pertenecen. Marco Enriquez que acumula 321 kb y quien es hijo de Miguel Enriquez , fundador del (Movimiento Izquierda Revolucionaria) MIR y militante vinculado a la red de Allende, no logró fortalecer su vínculo con la subred del partido Socialista ni con la Concertación lo que ha llevado a postularse por su cuenta más de cuatro veces por la presidencia quedando en puestos alejados de los tres primeros lugares.
+
+Por su parte Gonzálo Winter con 243 kb y quien con 38 años es el aspirante más jóven aunque ya no se encuentra activo, surge de la red de movimientos estudiantiles insurgentes surgidos en la primera década de los 2000, y quien se encuentra vinculado por esta red al presidente Boric. En contraste, Eduardo Artés que acumula 273 kb, es el candidato con mayor edad y con una amplia experiencia que parte desde el gobierno de Salvador Allende como dirigente estudiantil comunista, y que tras el regreso a la democracia ha participado sin éxito en elecciones parlamentarias y presidenciales, siendo ésta su tercera participación desde las elecciones de 2017. De igual manera que Enriquez y Artés, para Franco Parisilas elecciones de 2025 representan su tercera contienda por la presidencia, aunque a diferencia de ellos sus porcentajes de votación superan el 10% en las elecciones de 2013 y 2021.
+
+A pesar de ello, Parisi, candidato de Partido por la Gente que él mismo creó en 2021, acumula 253 kb, tan sólo 10 puntos por encima de Winter el candidato más jóven. Finalmente, Johannes Kaiser que acumula 156 kb, es descendiente de colonos alemanes que emigran a Chile en la década de 1930, y cuyo padre Hans Chiristian Kaiser inició su carrera política en los conservadores Partido Nacional y posteriormente en la UDI. Sin embargo, sus hermanos y primos se han desempeñado en diferentes cargos públicos dentro de la subred de la UDI cercana al pinochetismo actual como son los casos de sus hermanos Axel (ideólogo, escritor y conferensista neoconservador), Vanessa Olimpia (consejala, youtuber y columnista), Leif Magnus (líder de la Asociación Chilena del Rifle).
+
+# La lucha entre redes políticas: El *clan emergente* vs la *casta hereditaria*
+
+La diferencia más importante de un político además de su capital burocrático es su centralidad dentro de la red política histórica. La política es el uso instrumental de los vínculos de personajes con capitales social, económico y burocrático lo suficientemente estratéfico para movilizar el capital social de grandes conglomerados. Para mantener la cumulación de dicho capital político los personajes se organizan en torno a diferentes estructuras que dependen de las fuentes de poder que las vinculan. En el caso de los candidatos a la presidencia de Chile para 2025 se encuentran dos tipos de estructuras que compiten entre sí como clases dirigentes:
+
+-   las castas heredada por vínculos familiares, políticos, empresariales que conformaron una clase dirigente durente la dictadura de Pinochet, la Concertación y el gobierno de Sebstián Piñera
+-   los clanes vinculados por trabajo meramente político y empresarial que no se han estructurado como clase dirigente.
+
+::: callout-note
+## Castas y clanes
+
+-   **Casta**: sistema de estratificación social mucho más rígido y cerrado, donde el estatus social y las identidades están determinadas hereditariamente y se mantienen a través de reglas de endogamia estricta. En las castas, la pertenencia y las oportunidades sociales dependen del nacimiento, y los grupos están organizados en jerarquías fijas con limitaciones sociales, legales y culturales para la movilidad entre ellas. Este sistema es característica de sociedades con divisiones sociales muy estructuradas, como el sistema de castas en India o sistemas similares de estratos sociales rígidos, donde la casta define la posición social, los roles y las interacciones con otros grupos
+
+-   **Clan**: grupo social basado principalmente en la descendencia común, generalmente en sociedades donde lazos de parentesco y consanguinidad constituyen la unidad fundamental de organización política y social. Los clanes funcionan en sistemas segmentarios o de linaje, donde la solidaridad interna y la identidad colectiva se construyen sobre la genealogía compartida, pudiendo incluir reglas específicas de alianza y conflicto con otros grupos. Son grupos relativamente abiertos y flexibles, donde el parentesco es importante para la cohesión y la expresión de la vida política, pero sin una jerarquía rígida de estatus o privilegios heredados.
+:::
+
+La red política chilena se caracteriza por la densidad de sus vínculos estables que van desde el útlimo tercio del siglo XVIII por la clase colonial española (vascos) y criollos chilenos, la cual participó activamente en la construcción de la República que surgió de la guerra de independencia en el primer tercio del siglo XIX y que se acomodó como nueva clase dominante, junto con migrantes ingleses, norteamericanos, franceses, croatas y alemanes que transitaron su acumulación de capital económico del fundo a las industrias y a la banca. Durante todo el siglo XIX, la red política chilena comenzó a consolidarse en torno a los vínculos de los antiguos latifundios con los nuevos industriales mineros y comerciantes ultramarinos de Valapariso, y conformaron una red política que incluyó además de los vínculos económicos, su raigambre en las guerras de independencia, golpes de Estado, la conformación de partidos y su participación en los diferentes gobiernos conservadores y liberales. Aunado a ello, los militares tuvieron un papel relevante especialmente en las diferentes guerras contra Perú y España.
+
+Para el siglo XX, ya estaba conformada la red política en torno a castas dominantes en torno a las cuales se configuraban los diferentes gobiernos, independientemente del partido del presidente, lo cual dotó a la red de cierta estabilidad toda vez que existían altos grados de agrupamiento al interior de la red política hasta 1973. El golpe de Estado que conllevó a la dictadura militar de Augusto Pinochet, destaca de los anteriores golpes por la intervención directa del gobierno de Estados Unidos y coordinada dentro de su esquema colonial denominado "Plan Cóndor" el cual abarcó toda Latinoamérica y el Caribe. La dictadura de Pinochet reconfiguró la antigua clase política del siglo XX, y conformó una red emergente proveniente de las clases empresariales y militares conservadoras, las cuales se vinculan en torno a grupos familiares que conformaron la UDI y RN. 
+
+
+
+El retorno a la democracia trajo de vuelta a la red política tradicional, la cual derribó las barreras ideológicas del siglo XX (Demócrata Cristianos, Radicales, Socialistas, Comunistas) para llevarlos como bloque partidista que duraría 16 años en la presidencia del país. Desde 1989 hasta la actualidad las castas surgidas de la junta militar y aquellas con tradición política durante el siglo XX, compitieron por la presidencia en dos bloques de partidos: Concertación y Pinochetistas. Pero en 2006 emergió una nueva red política proveniente de las clases medias y populares vinculadas por las escuelas y universidades, quienes a través de la organización colectiva lograron ganar la presidencia en 2022 bajo el liderazgo de Gabriel Boric. Esta red emergente se relaciona en torno a clanes vinculados por el trabajo político en los gobiernos de la Concertación, particularmente en los dos periodos de Michelle Bachelet y por otro, en los nuevos movimientos estudiantiles y sociales vinculados a Boric. 
+
+
+
+Dinámica del capital burocrático 
+
+
+
+Cómo se aprecia en el gráfico 3,  el capital burocrático de los aspirantes a la presidencia de Chile desde 1808 hasta 2021 ha sido altamente volátil durante todo el siglo XIX hasta el primer tercio del siglo XX. A partir de las elecciones de 1938 y hasta 1970 el capital burocrático de los candidatos registró poca variación, lo que señala lo similares que llegaron a ser entre ellos a pesar del partido al que pertenecieran. Tras el regreso a la democracia la volatilidad volvió a ser alta, siendo las elecciones de 2009 donde se registró una mayor diferencia de entre los candidatos. Sin embargo a partir del 2013 el kb de los candidatos registró una media inferior a la media histórica, lo que indica un cambio en la acumulación de cargos directivos antes de llegar a ser candidatos.
+
+
+Esta nueva subred se juega su permanencia para los próximos 20 años contra el retorno de la antigua casta pinochetista (UDI, RN, Libertarios, Republicanos). Las subredes que conforman la Coalición Unidad por Chile es la que muestra mayor capital burocrático necesario para demostrar sus capacidad de dirigir el aparato de Estado y continuar con su reforzamiento de la mano de Jeanette Jara, seguido por la Coalición Chile Vamos cuyo retorno podría echar abajo los avances en materia social si José Antonio Kast logra la mayoría en la primera vuelta.
+
+```{r}
+
+```
+
+
+Eso es lo que se está jugando en estas elecciones en Chile.

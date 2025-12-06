@@ -1,0 +1,7 @@
+"0","legend(""topright"", "
+"0","       legend = c(""Hub (alto grado)"", ""Nodo periférico (bajo grado)""),"
+"0","       pch = 21,"
+"0","       pt.bg = c(""#e74c3c"", ""#3498db""),"
+"0","       pt.cex = c(2.5, 1.5),"
+"0","       cex = 0.8,"
+"0","       bty = ""n"")"

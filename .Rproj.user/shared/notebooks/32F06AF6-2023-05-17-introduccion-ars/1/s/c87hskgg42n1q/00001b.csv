@@ -1,0 +1,120 @@
+"0",""
+"0","# ============================================"
+"0","# ANÁLISIS DESCRIPTIVO DE LA RED"
+"0","# ============================================"
+"0",""
+"0","cat(""\n=== ANÁLISIS DESCRIPTIVO DE LA RED ===\n\n"")"
+"1","
+=== ANÁLISIS DESCRIPTIVO DE LA RED ===
+
+"
+"0","# 1. Número de nodos y aristas"
+"0","n_nodos <- vcount(red)"
+"0","n_aristas <- ecount(red)"
+"0",""
+"0","cat(""1. ESTRUCTURA BÁSICA:\n"")"
+"1","1. ESTRUCTURA BÁSICA:
+"
+"0","cat(sprintf(""   - Número de nodos: %d\n"", n_nodos))"
+"1","   - Número de nodos: 42
+"
+"0","cat(sprintf(""   - Número de aristas (vértices): %d\n"", n_aristas))"
+"1","   - Número de aristas (vértices): 81
+"
+"0","# 2. Densidad de la red"
+"0","densidad <- edge_density(red)"
+"0","cat(sprintf(""\n2. DENSIDAD DE LA RED: %.4f\n"", densidad))"
+"1","
+2. DENSIDAD DE LA RED: 0.0941
+"
+"0","cat(sprintf(""   (%.2f%% de las posibles conexiones)\n"", densidad * 100))"
+"1","   (9.41% de las posibles conexiones)
+"
+"0","# 3. Caminos cortos (geodésicas)"
+"0","distancias <- distances(red)"
+"0","camino_promedio <- mean_distance(red)"
+"0","diametro <- diameter(red)"
+"0",""
+"0","cat(sprintf(""\n3. CAMINOS CORTOS (GEODÉSICAS):\n""))"
+"1","
+3. CAMINOS CORTOS (GEODÉSICAS):
+"
+"0","cat(sprintf(""   - Longitud promedio del camino: %.4f\n"", camino_promedio))"
+"1","   - Longitud promedio del camino: 2.5261
+"
+"0","cat(sprintf(""   - Diámetro de la red: %d\n"", diametro))"
+"1","   - Diámetro de la red: 5
+"
+"0","# 4. Grado de centralidad"
+"0","grados <- degree(red)"
+"0","grado_promedio <- mean(grados)"
+"0","grado_max <- max(grados)"
+"0","grado_min <- min(grados)"
+"0",""
+"0","cat(sprintf(""\n4. GRADO DE CENTRALIDAD:\n""))"
+"1","
+4. GRADO DE CENTRALIDAD:
+"
+"0","cat(sprintf(""   - Grado promedio: %.4f\n"", grado_promedio))"
+"1","   - Grado promedio: 3.8571
+"
+"0","cat(sprintf(""   - Grado máximo: %d\n"", grado_max))"
+"1","   - Grado máximo: 14
+"
+"0","cat(sprintf(""   - Grado mínimo: %d\n"", grado_min))"
+"1","   - Grado mínimo: 2
+"
+"0","cat(sprintf(""   - Desviación estándar: %.4f\n"", sd(grados)))"
+"1","   - Desviación estándar: 3.0808
+"
+"0","# 5. Coeficiente de agrupamiento (clustering)"
+"0","clustering_global <- transitivity(red, type = ""global"")"
+"0","clustering_promedio <- transitivity(red, type = ""average"")"
+"0","clustering_local <- transitivity(red, type = ""local"")"
+"0",""
+"0","cat(sprintf(""\n5. COEFICIENTE DE AGRUPAMIENTO (CLUSTERING):\n""))"
+"1","
+5. COEFICIENTE DE AGRUPAMIENTO (CLUSTERING):
+"
+"0","cat(sprintf(""   - Clustering global: %.4f\n"", clustering_global))"
+"1","   - Clustering global: 0.0915
+"
+"0","cat(sprintf(""   - Clustering promedio: %.4f\n"", clustering_promedio))"
+"1","   - Clustering promedio: 0.1440
+"
+"0","cat(sprintf(""   - Clustering local (rango): %.4f - %.4f\n"", "
+"0","            min(clustering_local, na.rm = TRUE), "
+"0","            max(clustering_local, na.rm = TRUE)))"
+"1","   - Clustering local (rango): 0.0000 - 1.0000
+"
+"0","# 6. Otras métricas de centralidad"
+"0","betweenness_promedio <- mean(betweenness(red))"
+"0","closeness_promedio <- mean(closeness(red))"
+"0",""
+"0","cat(sprintf(""\n6. OTRAS MÉTRICAS DE CENTRALIDAD:\n""))"
+"1","
+6. OTRAS MÉTRICAS DE CENTRALIDAD:
+"
+"0","cat(sprintf(""   - Betweenness promedio: %.4f\n"", betweenness_promedio))"
+"1","   - Betweenness promedio: 31.2857
+"
+"0","cat(sprintf(""   - Closeness promedio: %.4f\n"", closeness_promedio))"
+"1","   - Closeness promedio: 0.0098
+"
+"0","# 7. Propiedades de red libre de escala"
+"0","cat(sprintf(""\n7. CARACTERÍSTICAS DE RED LIBRE DE ESCALA:\n""))"
+"1","
+7. CARACTERÍSTICAS DE RED LIBRE DE ESCALA:
+"
+"0","cat(sprintf(""   - Número de hubs (grado > promedio): %d\n"", "
+"0","            sum(grados > grado_promedio)))"
+"1","   - Número de hubs (grado > promedio): 14
+"
+"0","cat(sprintf(""   - Proporción de hubs: %.2f%%\n"", "
+"0","            100 * sum(grados > grado_promedio) / n_nodos))"
+"1","   - Proporción de hubs: 33.33%
+"
+"0","cat(""\n==========================================\n"")"
+"1","
+==========================================
+"
