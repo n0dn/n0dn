@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2023-05-17">
 <meta name="description" content="Contenido migrado desde n0dn.com. Revisa y completa el texto, imágenes y enlaces.">
 
-<title>Introducción al análisis de redes sociales – n0dn</title>
+<title>Introducción al análisis de redes sociales – n0dn | The linked data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -83,7 +118,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">n0dn</span>
+    <span class="navbar-title">n0dn | The linked data</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -99,6 +134,10 @@ ul.task-list li input[type="checkbox"] {
   <li class="nav-item">
     <a class="nav-link" href="../about.html"> 
 <span class="menu-text">Sobre mí</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../descargables.html"> 
+<span class="menu-text">Descargables</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -157,9 +196,259 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<!-- Copia aquí el cuerpo completo del artículo. -->
+<p>El Análisis de Redes Sociales (ARS)estudia el comportamiento colectivo de agentes interrelacionados de manera orgánica ha sido compuesta a lo largo de más de medio siglo por diferentes ciencias, desde las matemáticas de los grafos, la antropología de los grupos sociales, las ciencias de la computación y la sociología de las organizaciones<a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote1sym">1</a>. El ARS posé varias técnicas para la medición, visualización y simulación de los sistemas o redes complejas que compara la relación entre los agentes por medio de la graficación matricial de líneas y puntos<a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote2sym">2</a>. La organización jerárquica fractal de las redes complejas amerita diferentes tipos de mediciones de la red de acuerdo a sus dimensiones para comprender las dinámicas los diferentes subsistemas y su vinculación con el comportamiento de la red en su conjunto. Existen pues, tres tipos generales de medición de las redes: <em>globales</em>, <em>locales</em> y <em>de posición.</em></p>
+<section id="medición-de-las-redes-sociales" class="level4">
+<h4 class="anchored" data-anchor-id="medición-de-las-redes-sociales"><em>Medición de las redes sociales</em></h4>
+<p>Las medidas globales son aquellas que analizan en un sólo indicador al total de la red, por ejemplo, el grado promedio de distribución de grados o el coeficiente de agrupamiento (<em>clustering coefficient</em>), entre otras. Las locales son aquellas que miden las propiedades de los subsistemas o comunidades de la red, por ejemplo la transitividad, <em>K-cliques</em>, la equivalencia estructural, entre otras. Por su parte, las medidas de posición son aquellas que analizan las particularidades de cada nodo con respecto al total de la red o de la comunidad a la que pertenece con mediciones como la centralidad, la cercanía, la intermediación, entre otros<a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote3sym">3</a>. En consecuencia las mediciones globales aquellas que analizan con una sola medida al conjunto de la red, es decir, medidas de tendencia central que describen la distribución de los nodos y sus enlaces. Primordialmente se pueden conocer el tamaño de la red, es decir, el número de nodos y enlaces que le componen, así como el grado de agrupación , la modularidad promedio y las diferentes formas de centralidad<a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote4sym"><em>4</em></a><em>.</em></p>
+<p>Por su parte, la centralidad permite conocer las formas de conexión global de los nodos a partir de cuatro maneras principales: el grado, la cercanía, la intermediación y el Eigenvector. El grado (degree) mide al nodo con mayor número de conexiones entrantes (indegree) o salientes (outdegree) con respecto al total de la red. La cercanía (closeness) mide al nodo que se encuentra a menores pasos del todos los demás, la idea es que un “nodo es central si puede interactuar rápidamente con todos lo demás”<a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote5sym">5</a>. La intermediación (betweeness) mide al nodo que se encuentra en la ruta geodésica que conecta a todos. El <em>eigenvector</em> es la medida proporcional a la suma de centralidad de los vecinos, esto es la medida de los amigos de los amigos que el nodo está vinculado. El uso de este <em>eigenvector</em> de centralidad dirige el problema de cómo diferenciar la centralidad de los actores con respecto a la centralidad de los grupos a los que ellos pertenecen a la centralidad de los grupos de la centralidad de los actores que son contenidos por ellos. En este sentido, la medida asocia patrones de dependencia de unos nodos con respecto a otro.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Establecer semilla para reproducibilidad</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear red libre de escala usando el modelo Barabási-Albert</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 42 nodos, cada nuevo nodo se conecta con 2 nodos existentes</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>red <span class="ot">&lt;-</span> <span class="fu">barabasi.game</span>(<span class="at">n =</span> <span class="dv">42</span>, </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">power =</span> <span class="dv">1</span>, </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">m =</span> <span class="dv">2</span>, </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">directed =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular el layout Fruchterman-Reingold</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>layout_fr <span class="ot">&lt;-</span> <span class="fu">layout_with_fr</span>(red)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular grado de cada nodo para tamaño visual</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>grado <span class="ot">&lt;-</span> <span class="fu">degree</span>(red)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular betweenness para color</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>betweenness_val <span class="ot">&lt;-</span> <span class="fu">betweenness</span>(red)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>colores <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">"#3498db"</span>, <span class="st">"#e74c3c"</span>))(<span class="dv">100</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>indices_color <span class="ot">&lt;-</span> <span class="fu">cut</span>(betweenness_val, <span class="at">breaks =</span> <span class="dv">100</span>, <span class="at">labels =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>colores_nodos <span class="ot">&lt;-</span> colores[indices_color]</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar la red</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(red,</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>     <span class="at">layout =</span> layout_fr,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="fu">sqrt</span>(grado) <span class="sc">*</span> <span class="dv">3</span>,</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.color =</span> colores_nodos,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.frame.color =</span> <span class="st">"white"</span>,</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.color =</span> <span class="st">"gray70"</span>,</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.width =</span> <span class="fl">0.8</span>,</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Ejemplo de una red libre de escala con 42 nodos"</span>)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, </span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Hub (alto grado)"</span>, <span class="st">"Nodo periférico (bajo grado)"</span>),</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">21</span>,</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>       <span class="at">pt.bg =</span> <span class="fu">c</span>(<span class="st">"#e74c3c"</span>, <span class="st">"#3498db"</span>),</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>       <span class="at">pt.cex =</span> <span class="fu">c</span>(<span class="fl">2.5</span>, <span class="fl">1.5</span>),</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>       <span class="at">cex =</span> <span class="fl">0.8</span>,</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>       <span class="at">bty =</span> <span class="st">"n"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="2023-05-17-introduccion-ars_files/figure-html/red-libre-escala-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption>Elaborado por n0dn, 2025</figcaption>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ANÁLISIS DESCRIPTIVO DE LA RED</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">=== ANÁLISIS DESCRIPTIVO DE LA RED ===</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== ANÁLISIS DESCRIPTIVO DE LA RED ===</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Número de nodos y aristas</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>n_nodos <span class="ot">&lt;-</span> <span class="fu">vcount</span>(red)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>n_aristas <span class="ot">&lt;-</span> <span class="fu">ecount</span>(red)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"1. ESTRUCTURA BÁSICA:</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1. ESTRUCTURA BÁSICA:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"   - Número de nodos: %d</span><span class="sc">\n</span><span class="st">"</span>, n_nodos))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   - Número de nodos: 42</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"   - Número de aristas (vértices): %d</span><span class="sc">\n</span><span class="st">"</span>, n_aristas))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   - Número de aristas (vértices): 81</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Densidad de la red</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>densidad <span class="ot">&lt;-</span> <span class="fu">edge_density</span>(red)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">2. DENSIDAD DE LA RED: %.4f</span><span class="sc">\n</span><span class="st">"</span>, densidad))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+2. DENSIDAD DE LA RED: 0.0941</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"   (%.2f%% de las posibles conexiones)</span><span class="sc">\n</span><span class="st">"</span>, densidad <span class="sc">*</span> <span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   (9.41% de las posibles conexiones)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Caminos cortos (geodésicas)</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>distancias <span class="ot">&lt;-</span> <span class="fu">distances</span>(red)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>camino_promedio <span class="ot">&lt;-</span> <span class="fu">mean_distance</span>(red)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>diametro <span class="ot">&lt;-</span> <span class="fu">diameter</span>(red)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">3. CAMINOS CORTOS (GEODÉSICAS):</span><span class="sc">\n</span><span class="st">"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+3. CAMINOS CORTOS (GEODÉSICAS):</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"   - Longitud promedio del camino: %.4f</span><span class="sc">\n</span><span class="st">"</span>, camino_promedio))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   - Longitud promedio del camino: 2.5261</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"   - Diámetro de la red: %d</span><span class="sc">\n</span><span class="st">"</span>, diametro))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   - Diámetro de la red: 5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Grado de centralidad</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>grados <span class="ot">&lt;-</span> <span class="fu">degree</span>(red)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>grado_promedio <span class="ot">&lt;-</span> <span class="fu">mean</span>(grados)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>grado_max <span class="ot">&lt;-</span> <span class="fu">max</span>(grados)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>grado_min <span class="ot">&lt;-</span> <span class="fu">min</span>(grados)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">4. GRADO DE CENTRALIDAD:</span><span class="sc">\n</span><span class="st">"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+4. GRADO DE CENTRALIDAD:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"   - Grado promedio: %.4f</span><span class="sc">\n</span><span class="st">"</span>, grado_promedio))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   - Grado promedio: 3.8571</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"   - Grado máximo: %d</span><span class="sc">\n</span><span class="st">"</span>, grado_max))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   - Grado máximo: 14</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"   - Grado mínimo: %d</span><span class="sc">\n</span><span class="st">"</span>, grado_min))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   - Grado mínimo: 2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"   - Desviación estándar: %.4f</span><span class="sc">\n</span><span class="st">"</span>, <span class="fu">sd</span>(grados)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   - Desviación estándar: 3.0808</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Coeficiente de agrupamiento (clustering)</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>clustering_global <span class="ot">&lt;-</span> <span class="fu">transitivity</span>(red, <span class="at">type =</span> <span class="st">"global"</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>clustering_promedio <span class="ot">&lt;-</span> <span class="fu">transitivity</span>(red, <span class="at">type =</span> <span class="st">"average"</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>clustering_local <span class="ot">&lt;-</span> <span class="fu">transitivity</span>(red, <span class="at">type =</span> <span class="st">"local"</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">5. COEFICIENTE DE AGRUPAMIENTO (CLUSTERING):</span><span class="sc">\n</span><span class="st">"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+5. COEFICIENTE DE AGRUPAMIENTO (CLUSTERING):</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"   - Clustering global: %.4f</span><span class="sc">\n</span><span class="st">"</span>, clustering_global))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   - Clustering global: 0.0915</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"   - Clustering promedio: %.4f</span><span class="sc">\n</span><span class="st">"</span>, clustering_promedio))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   - Clustering promedio: 0.1440</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"   - Clustering local (rango): %.4f - %.4f</span><span class="sc">\n</span><span class="st">"</span>, </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">min</span>(clustering_local, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">max</span>(clustering_local, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   - Clustering local (rango): 0.0000 - 1.0000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 6. Otras métricas de centralidad</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>betweenness_promedio <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">betweenness</span>(red))</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>closeness_promedio <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">closeness</span>(red))</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">6. OTRAS MÉTRICAS DE CENTRALIDAD:</span><span class="sc">\n</span><span class="st">"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+6. OTRAS MÉTRICAS DE CENTRALIDAD:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"   - Betweenness promedio: %.4f</span><span class="sc">\n</span><span class="st">"</span>, betweenness_promedio))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   - Betweenness promedio: 31.2857</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"   - Closeness promedio: %.4f</span><span class="sc">\n</span><span class="st">"</span>, closeness_promedio))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   - Closeness promedio: 0.0098</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 7. Propiedades de red libre de escala</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">7. CARACTERÍSTICAS DE RED LIBRE DE ESCALA:</span><span class="sc">\n</span><span class="st">"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+7. CARACTERÍSTICAS DE RED LIBRE DE ESCALA:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"   - Número de hubs (grado &gt; promedio): %d</span><span class="sc">\n</span><span class="st">"</span>, </span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">sum</span>(grados <span class="sc">&gt;</span> grado_promedio)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   - Número de hubs (grado &gt; promedio): 14</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"   - Proporción de hubs: %.2f%%</span><span class="sc">\n</span><span class="st">"</span>, </span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>            <span class="dv">100</span> <span class="sc">*</span> <span class="fu">sum</span>(grados <span class="sc">&gt;</span> grado_promedio) <span class="sc">/</span> n_nodos))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   - Proporción de hubs: 33.33%</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">==========================================</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+==========================================</code></pre>
+</div>
+</div>
+<p>El gráfico de la red muestra manera de ejemplo, cada una de las medidas de centralidad. En ella se aprecia una red de nodos (N=42) con 81 enlaces o aristas (A=81), que genera una longitud promedio de 2.5261, es decir, la distancia promedio entre cualquiera de los nodos, y una densidad de la red de 0.941 (es decir, sólo están conectadas 9.41% de la totalidad de conexiones posibles). El grado promedio, es decir, el número de enlaces que cada nodo posee es de 3.8571, siendo el nodo con mayor número de enlaces (mayor grado) de 14 enlaces y el menor de 2 grados.</p>
+</section>
+<section id="medidas-locales" class="level4">
+<h4 class="anchored" data-anchor-id="medidas-locales">Medidas locales</h4>
+<p>Las medidas locales permiten conocer la estructura de las subredes que componen una red. Estas subredes se componen por la conexión de tres o más nodos que conforman una camarilla. Para calcular la cantidad de camarillas a la que está relacionada una camarilla <em>k,</em>se utiliza la medición del <em>k</em>-cliqué que al igual que el <em>k</em>-node permite identificar a las camarillas mejor conectadas con respecto al total de la red. Los <em>N-clan</em>, por su parte, identifica los llamados círculos sociales y la pertenencia de un nodo o los miembros de una camarilla a uno o más círculos sociales <a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote7sym">7</a>. No obstante, los círculos sociales y <em>k-cliques</em>sólo toman en cuenta los vínculos directos y no los efectos indirectos o patrones pues como mostraron Cook, Emerson, Gilmore y Yagamashi a partir de experimento de simulaciones matemáticas, la centralidad de los <em>k-clique</em> e incluso los <em>k-nodes</em> no son iguales al poder en redes de intercambio, ya que aquellos nodos o camarillas que poseen mayor centralidad dentro de la red no son los más exitosos en el ejercicio del poder de negociación <a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote8sym">8</a>.</p>
+<p>Si analizamos las medidas locales de la red del gráfico 1 se encontrará que el coeficiente de agrupamiento es de 0.006944, es decir, que existe una probabilidad del menos de 0.694 de conectarse con cualquier nodo, siendo el nodo 3 el mejor conectado con un coeficiente de agrupamiento de 1, seguido del nodo 1 con 0.0833, lo que indica su probabilidad de conectarse con cualquier otro nodo. Sin embargo, sólo el nodo 1 pertenece a una camarilla, por lo que el número de cliques es de 0.33℮. Tanto el nodo 1 como el 3, son los nodos con mayor centralidad de entrada y salida respectivamente <a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote9sym">9</a>.</p>
+</section>
+<section id="medidas-de-posición" class="level4">
+<h4 class="anchored" data-anchor-id="medidas-de-posición">Medidas de posición</h4>
+<p>Las medidas de posición se refieren al lugar que ocupan los nodos con respecto a toda la toda la red o al <em>cluster</em> al que pertenecen. Para ello, se analizan los llamados cierres triádicos, es decir, la entidad numéricamente menor de un clique. El cierre triádico que conecta una red con otra se le conoce como <em>agujero estructura</em>l, que se refiere a la distancia estructural entre los nodos con vínculos fuertes y los nodos con vínculos débiles, en el gráfico 8 está representado por el nodo número 3, que conecta a la red de su vecino el dos con la de sus otros vecinos 10 y 11<a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote10sym">10</a>. Por su parte, la equivalencia estructural se refiere a que dos nodos se encuentran conectados a los mismos nodos como los nodos 4, 5 y 6 del gráfico 6.</p>
+<pre><code>Hasta este punto se han descrito algunas de las medidas más frecuentes para el análisis de las redes sociales a partir de los niveles de dimensión, sean estos globales, locales y de posición de los agentes. Estos elementos cobran mayor sentido sociológico cuando permiten esclarecer las propiedades relacionales en una colectividad que permiten el intercambio de bienes, información, mercancías y poder. Esta cualidad social intrínseca de las relaciones colectivas se denomina capital social y que se relaciona con el análisis topológico de las redes a partir de las cuales han surgido teorías de redes sobre el capital social.</code></pre>
+</section>
+<section id="section" class="level4">
+<h4 class="anchored" data-anchor-id="section"></h4>
+</section>
+<section id="visualización-de-las-redes" class="level4">
+<h4 class="anchored" data-anchor-id="visualización-de-las-redes">Visualización de las redes</h4>
+<p><br>
+La visualización de las redes sociales ha evolucionado gracias al desarrollo de la computación y la informática. Particularmente desde la década de los noventa del siglo pasado, el desarrollo de <em>softwares</em> de análisis de redes ha mostrado un crecimiento considerable<a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote11sym">11</a>. Desde los puentes de Köningsberg hasta los estudios de Moreno sobre las comunidades de niños al interior de las escuelas norteamericanas, la visualización de las relaciones sociales resulta indispensable para la abstracción de las estructuras. La graficación de los nodos y las aristas permite comprender los roles y las probabilidades de vinculación de un agente con su red y la posición de la red con respecto a otras y que se conoce como transitividad. Para esta investigación emplearemos cuatro <em>softwares</em> diferentes pero que comparten la cualidad de ser gratuitos y disponibles a través de internet de código abierto (<em>open source</em>)<a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote12sym">12</a>. En primer lugar utilizaremos el programa Pajek, que es uno de los primeros softwares y uno de los de mayor uso a nivel mundial <a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote13sym">13</a>. El segundo es Gephi, cuyas interfases gráficas permiten mejorar la calidad visual de las redes y ofrece una plataforma más amigable que Pajek para la medición de las variables <a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote14sym">14</a>. El tercero es Socnetv, cuya facilidad para elaborar redes y formas basadas en medidas de centralidad permite una mayor facilidad de análisis visual que las dos anteriores <a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote15sym">15</a>.</p>
+</section>
+<section id="section-1" class="level4">
+<h4 class="anchored" data-anchor-id="section-1"></h4>
+</section>
+<section id="simulación-de-redes" class="level4">
+<h4 class="anchored" data-anchor-id="simulación-de-redes">Simulación de redes</h4>
+<p><br>
+Otro aporte fundamental de la informática al ARS es la posibilidad de simular redes. Robert Shannon define a la simulación como “el proceso de diseñar y desarrollar un modelo computarizado de un sistema o proceso y conducir experimentos con este modelo con el propósito de entender el comportamiento del sistema o evaluar varias estrategias con las cuales se puede opera el sistema”<a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote16sym">16</a>. La simulación computacional puede surgir de experimentos aleatorios basados en el <em>Modelo Montercarlo</em>, lineal logístico través de sistemas dinámicos, evolutivos o discretos, entre otros<a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote17sym">17</a>. La simulación de redes se ha realizado dentro de los sistemas probabilísticos, dinámicos y discretos. Sin embargo, el desarrollo no sólo de la teoría de redes sino de las redes probabilísticas parten de los trabajos de los matemáticos Paul Erdös y Alfred Rényi<a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote18sym">18</a>.</p>
+<p>Pero la investigación en tiempos recientes sobre simulación de redes complejas ha tenido un gran desarrollo gracias a los notables trabajos de Watts, Strogratz y Barabási<a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote19sym">19</a>. La simulación de redes permite por tanto, la posibilidad de comprobar hipótesis o modelos que expliquen dinámicas de los fenómenos de las redes sociales<a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote20sym">20</a>. En este sentido, son una herramienta técnica que permite conocer el comportamiento de los agentes en contexto de conexión a manera de red a partir de la variación de alguno de sus componentes de forma experimental, es decir, tener la posibilidad de tener un laboratorio social desde la abstracción matemática que permite ser computarizada.</p>
+<section id="notas-al-pie" class="level5">
+<h5 class="anchored" data-anchor-id="notas-al-pie">Notas al pie</h5>
+<p><a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote1anc">1</a>Para la matemática de la teoría de grafos Harary, F., <em>Graph Theory</em>, Ed. Wiley, 1969, New York. Sobre los estudios antropológicos sobre las redes culturales , Di Maggio, P., “Cultural Networks”, en Harary, F., <em>Graph Theory</em>, Ed. Wiley, 1969, New York, pp.&nbsp;286-300. Sobre las ciencias de la computación y las redes, Freeman, L.C., “Graphic techniques for exploring social network data” en Carrington, P. J., Scott, J., Wasserman, S., Models and Methods in Social Network Analysis, Cambridge University Press, 2005, Nueva York, pp.&nbsp;248-69. Sobre la sociología de las organizaciones, , Berkowitz, S.D y Fitzgerald, “Corporate control and enterprise structure in the Canadian economy: 1972-1987”, <u>Social Networks Review,</u> Vol 17, No.&nbsp;2, pp.&nbsp;111-27</p>
+<p><a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote2anc">2</a>En el campo de las matemáticas de grafos, a los puntos se les llama vértices y a las líneas arcos, en las ciencias de la computación, nodos y en laces, en la Física, sitios y vínculos, y en la Sociología actores y relaciones, respectivamente. Asimismo a la red se le suele llamar gráfico, particularmente en los estudios relacionados con las fisico-matemáticas.</p>
+<p><a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote3anc">3</a>Los ARS poseen un vocabulario propio, mismo que será de gran utilidad en adelante, por lo que se darán algunos de ellos. Se llama <em>camino</em> (walk) al paso entre dos nodos a través de enlaces. <em>Ruta</em> (path) es un camino que sólo pasa por diferentes nodos sin repetirlos. Ciclo es una caminata que termina justo donde empezó. Nos referimos a una <em>geodésica</em> al camino más corto entre dos nodos y <em>diámetro</em> a la distancia más grande, en tanto llamamos <em>ruta promedio</em> al promedio entre las geodésicas. Por otra parte, las redes pueden ser o no dirigidas, esto se refiere a la dirección y la magnitud de un nodo hacia otro en caso ser dirigida que es representada visualmente por una flecha, mientras que cuando no es dirigida simplemente se observan líneas. La dirección de las líneas puede ser <em>uni-direccional</em> cuando un nodo señala a otro, o bidireccional cuando existe una señal de vuelta. Cabe señalar que en algunos nodos se presenta la dirección reticular, es decir, que el nodo se enlaza consigo mismo, estos caso son muy escasos y poco probables, pero que visualmente se observan como un enlace curvo que empieza e inicia en el mismo nodo sin tocar a otro.</p>
+<p><a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote4anc">4</a>El grado de agrupación depende en primer lugar de la proporción de individuos conectados en toda la red, denominado densidad, así que entre mayor proporción de nodos conectados mayor densidad. Para conocer cuantos de los nodos se encuentran conectados a los <em>k</em> nodos de los grupos se utiliza la medida <em>k-núcleos o k-nodes.</em> La modularidad por su parte se refiere a la densidad de enlaces dentro y fuera de una comunidad identificada. Estas comunidades pueden ser <em>clusters</em> o camarillas. Los clusters son agrupaciones de varias camarillas que tienen enlaces en común, en cambio las camarillas son agrupaciones menos densas que los <em>clusters</em> conformadas por un grupo muy unido de nodos cuyos vínculos son cerrados. Para medir el grado de agrupación se utiliza un coeficiente (clustering coefficient) que mide el grado en el cual los nodos de un grafo tienden a agruparse con base en triadas, por lo que el coeficiente de agrupación también puede ser utilizado como una medida local con el nombre de <em>transitividad.</em> Wasserman, S., y Faust, <em>K., Social Network Analysis. Methods and Applications</em>, Cambridge University Press, 1994, Nueva York, p.&nbsp;243</p>
+<p><a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote5anc">5</a>Wasserman, S., y Faust, K., <em>Íbid</em>, p.&nbsp;181.</p>
+<p><a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote6anc">6</a>Las medidas de centralidad que nos referimos, fueron calculadas por el software especializado en Análisis de Redes, llamado Socetv, de código abierto.</p>
+<p><a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote7anc">7</a>Los círculos sociales están conformados por posiciones sociales temporales, y cuya cohesión de estos círculos se basa en vínculos indirectos que ligan a unos con otros que a su vez “emergen en el curso de la interacción y pueden no ser visibles para aquellos a los que engloban ya que sus ramificaciones son relaciones indirectas muy tenues”Simmel, G., <em>Sociología: estudios sobre las formas de socialización</em>, Alianza Universidad, 1971, Madrid, p.&nbsp;56</p>
+<p><a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote8anc">8</a>, Cook, K.S., Emerson, M.R., Gilmore, T. Yagamashi, K “The distribution of power in excange networks: Theory and experimental results” en <u>American journal of Sociology,</u> 89, Vol. 2, 1983, pp.&nbsp;275-305</p>
+<p><a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote9anc">9</a>(Indegree) Media Nodal de Entrada (InDegree) = 0.916667, Varianza= 1.07639, Maximo Índice de Centralidad de Entrada = 0.363636 (node 1), Mínimo’ = 0 (node 3), IDC classes = 3; (Outdegree) Mean Node OutDegree = 0.916667, OutDegree Variance = 0.576389, Max ODC’ = 0.272727 (node 3), Min ODC’ = 0 (node 1). Wasserman &amp; Faust, <em>Op. Cit.</em>, formula 5.5, p.&nbsp;177.</p>
+<p><a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote10anc">10</a>Burt, R. S., <em>Structural holes: The social structure of competition</em>. Cambridge University Press, 1992, Massachusetts.</p>
+<p><a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote11anc">11</a>De acuerdo con el portal de Wikipedia, existen más de una veintena de softwares de visualización, análisis y simulación de redes. w<a href="http://www.wikipedia.com/socialnetworkanalysis/softwares/">ww.wikipedia.com/socialnetworkanalysis/softwares/</a> visto el 3 de diciembre de 2014.</p>
+<p><a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote12anc">12</a>La variedad en los programas se debe a que cada uno posee cualidades de medición o grafcación que los demás no cuentan.</p>
+<p><a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote13anc">13</a>Pajek (del esloveno pajek o araña) es un programa de ARS desarrollado por los matemáticos eslovenos Vladimir Batagelj y Andrej Mrvar en 1996 cuando salió la primera versión. Permite medir grados de centralidad, realizar particiones de la red, visualizar diferentes redes probabilísticas y análisis de redes dinámicas, cuyos formatos son compatibles con varios softwares. Actualmente existen cuatro versiones disponibles para sistemas operativos Windows, Mac y Linux. Nooy, W. De, Mrvar, A., Batagelj, V., Exploratory Social Network Analysis with Pajek,Batagelj, V., y Mrvar, A., “Pajek: A program for large network analysis”, Connections, No.&nbsp;21, (1998), pp.&nbsp;47-57 Disponible en pajek.imfm.si/doku.php</p>
+<p><a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote14anc">14</a>Gephi es “una plataforma interactiva de visualización y exploración para todo tipo de redes y sistemas complejos, dinámicos y grafos jerárquicos”. También se encuentra disponible para todos los sistemas operativos. Última versión 0.8.2-beta. Bastian, M., Heymann, S., y Jacomy, M., “Gephi: an open source software for exploring and manipulating networks”, International AAAI Conference o Weblogs an Social Media, 2009, Washington. Disponible en gephi.github.io</p>
+<p><a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote15anc">15</a>Socnetv (Social Network Visualizer) es un “proyecto de ARS flexible y amigable, as{i como una herramienta de análisis a través de varias plataformas para la visualización de redes sociales”. Fue desarrollado como parte de la tesis de maestría en computación por el griego Dimitris V. Kalamaras con quien el autor se ha puesto en contacto por correo electrónico para resolver dudas y mejorar la experiencia del uso de este programa. Disponible en <a href="http://socnet.sourceforge.net/" class="uri">http://socnet.sourceforge.net/</a> así como en la paquetería dispuesta en las plataformas basadas en Linux</p>
+<p><a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote16anc">16</a>Shannon, R. E., System simulation: The Art and science, Prentice-Hall, 1975, citado en Coss B., R., <em>Simulación. Un enfoque práctico</em>, Limusa, 2012, México, p.&nbsp;12</p>
+<p><a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote17anc">17</a>Sobre la simulación basada en sistemas aleatorios o Montecarlo -derivado de los juegos del casino ubicado en la isla europea del mismo nombre- es recomendable el libro de Flores Zavala, ya que da una visión amplia sobre la utilización de este tipo de sistemas para diferentes estudios científicos. Flores Zavala T.T, V.M., <em>Simulación. Apuntes y ejercicios</em>, Universidad Iberoamericana, 2013, México. En cuanto a la simulación basada en sistemas dinámicos discretos se recomienda el libro de Kíng y Méndez para la aplicación en Ciencias Sociales. King D., J. E., y Méndez L., H., <em>Sistemas dinámicos discretos</em>, Facultad de Ciencias, UNAM, 2014, México. Para la investigación de sistemas evolutivos, es decir, de aquellos que aprenden a adaptarse a los cambios del entorno de manera autónoma, también conocidos como machine learning basado en algoritmos evolutivos se recomienda el trabajo de Araujo y Cervigón. Araujo, L., y Cervigón, C., <em>Algoritmos evolutivos. Un enfoque práctico</em>, Alfaomega, 2009, México.</p>
+<p><a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote18anc">18</a>Erdös, P., y Rényi, A., “On random graphs. I”, <u>Publicationes Matematicae</u>, Núm. 6, 1959, pp.&nbsp;290-297. Así también su artículo sobre la evolución de grafos aleatorios. Erdös, P., y Rényi, A., “On the evolution of random graphs”, en<u>Publications of the Mathematical Institute of the Hungarian Academy of Science</u>, Vol. 5, 1960, pp.&nbsp;17-61</p>
+<p><a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote19anc">19</a>Sobre la simulación de redes basados en los trabajos de Watts, Strogratz y Barabási pueden ser consultados dentro de la biblioteca de modelos del software de simulación Netlogo, con los nombres Small Worlds Wilensky, U., <em>NetLogo Small Worlds model</em>. http://ccl.northwestern.edu/netlogo/models/SmallWorlds. Center for Connected Learning and Computer-Based Modeling, Northwestern University, 2005, Evanston. y Giant Component Wilensky, U., <em>NetLogo Giant Component model</em>. http://ccl.northwestern.edu/netlogo/models/GiantComponent. Center for Connected Learning and Computer-Based Modeling, Northwestern University, 2005, Evanston. En cuanto a las investigaciones de Barabási se encuentra el modelo Preferential Attatchment. Wilensky, U., <em>NetLogo Preferential Attachment model.</em> http://ccl.northwestern.edu/netlogo/models/PreferentialAttachment. Center for Connected Learning and Computer-Based Modeling, Northwestern University, 2005, Evanston.</p>
+<p><a href="https://manage.wix.com/dashboard/52d1d589-dd24-4db0-a3f8-e7d658bec3f3/blog/create-post?tab=published&amp;lang=es#sdfootnote20anc">20</a>Tanto Gephi como Rsiena permiten realizar dichos estudios, sin embargo el programa Netlogo permite una mayor capacidad de simulación gráfica y estadística a través de un lenguaje de programación relativamente sencilloDisponible en la página http://ccl.northwestern.edu/netlogo (visitada en diciembre de 2013)</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -565,7 +854,7 @@ ul.task-list li input[type="checkbox"] {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>© 2025 n0dn. Todos los derechos reservados.</p>
+<p>© 2025 n0dn | The linked Data. Todos los derechos reservados.</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;

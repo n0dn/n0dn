@@ -1,1 +1,68 @@
-/* css styles */
+/*
+ * Archivo: styles.css
+ * Tema base: Cosmo (Bootstrap)
+*
+ * Archivo: styles.css
+ * Tema base: Cosmo (Bootstrap) con tipografía Roboto
+ */
+
+/* 1. Importar la fuente Roboto */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+/* 2. Aplicar justificación a todos los párrafos */
+p, .justify-text {
+  text-align: justify;
+}
+
+/* 2. Aplicar Roboto al cuerpo del documento (texto general) */
+body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400; /* Regular */
+}
+
+/* 3. Aplicar Roboto a los encabezados (h1 a h6) */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700; /* Negrita */
+  color: var(--bs-heading-color);
+  margin-top: 1.5rem;
+}
+
+
+/* 4. Definición del color de la marca (importante para 'brand.scss' en _quarto.yml) */
+:root {
+  --bs-primary: #0056b3; 
+  --bs-primary-rgb: 0, 86, 179;
+}
+
+/* 5. Estilo del Callout Tip (bloque de definición) */
+.callout-tip {
+  border-left-color: var(--bs-primary) !important;
+  background-color: var(--bs-gray-100); 
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+/* 6. Estilo de los enlaces para que sean más prominentes */
+a {
+  color: var(--bs-primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #003c7a; 
+  text-decoration: underline;
+}
+
+/* 7. Estilo para el botón en la sección de Proyectos */
+.btn-outline-primary {
+    --bs-btn-color: var(--bs-primary);
+    --bs-btn-border-color: var(--bs-primary);
+}
+
+.btn-outline-primary:hover {
+    --bs-btn-bg: var(--bs-primary);
+    --bs-btn-color: #fff;
+}

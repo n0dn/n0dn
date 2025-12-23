@@ -4,7 +4,7 @@ title: "Sobre mí"
 
 ![Dr. Norberto Bustos](images/edu.png){fig-align="left" width="50%"}
 
-Soy **Norberto Bustos**, un politólogo latinoamericano con una fascinación profunda por las **redes políticas en América Latina y el Caribe**. Mi pasión es ir más allá de los discursos y las anécdotas, para **descifrar los patrones de conexión** que verdaderamente mueven las decisiones públicas en nuestra región.
+Soy un politólogo latinoamericano con una fascinación profunda por las **redes políticas en América Latina y el Caribe**. Mi pasión es ir más allá de los discursos y las anécdotas, para **descifrar los patrones de conexión** que verdaderamente mueven las decisiones públicas en nuestra región.
 
 **¿Por qué las redes?** Porque son el entramado oculto detrás de cada elección, negociación o movimiento social. Al analizarlas, transformamos la política de una serie de eventos aislados en un sistema comprensible, donde los datos nos revelan las verdaderas dinámicas de poder e influencia.
 

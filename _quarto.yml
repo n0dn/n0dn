@@ -3,13 +3,16 @@ project:
 
 website:
   title: "n0dn | The linked data"
+  # Menú de navegación
   navbar:
     left:
       - href: index.qmd
-        text: "🏠 Home"
+        text: "🏠 Inicio" # Cambio "Home" por "Inicio" para consistencia en español
       - about.qmd
       - href: descargables.qmd
+        text: "Descargables" # Añadido texto visible para el enlace descargables.qmd
       
+  # Pie de página
   page-footer:
     left: "© 2025 n0dn | The linked Data. Todos los derechos reservados."
     right:
@@ -26,7 +29,7 @@ format:
       - cosmo
       - brand
     css: styles.css
-    toc: true
-    dark_mode: true
+    toc: true # Tabla de contenidos
+    dark_mode: true # Soporte para modo oscuro
 
 editor: visual
