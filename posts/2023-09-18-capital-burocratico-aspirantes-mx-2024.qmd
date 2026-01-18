@@ -1,17 +1,29 @@
 ---
-title: "El capital burocrático de los aspirantes presidenciales en México con mira a las elecciones de 2024"
+title: "El Capital burocratico de los candidatos a la presidencia de México 2024"
 author: "Dr. Norberto Bustos"
-date: 2023-09-18
-categories: [México, capital burocrático, aspirantes presidenciales]
-description: "Contenido migrado desde n0dn.com. Revisa y completa el texto, imágenes y enlaces."
-image: ""
+format: 
+  html: 
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: flatly
+    link-external-icon: true
+editor: visual
+params:
+  datafile1: "~/Documentos/web_n0dn/n0dn/dataframes/Mex_Precandidatos_kp_2024.csv"
+lang: es
+fontsize: 12pt
+callout-appearence: simple
+execute: 
+  warning: false
+  message: false
 ---
 
 # El capital burocrático de los aspirantes presidenciales en México con mira a las elecciones de 2024
 
 Las elecciones presidenciales de 2024 serán quizás las más compartidas de los últimos 15 años, dada la conformación de dos bloques de partidos, fenómeno que no se presentaba desde las elecciones de 1940. A partir del mes de septiembre de 2023, iniciarán las contiendas internas para definir al candidato o candidata presidencial, y la cuestión sobre cuál es el mejor perfil para liderar cada bloque resulta necesario tanto para la cúpula de los partidos como para los electores.
 
-En [**n0dn**](http://n0dn.com/)nos hemos dado a la tarea de comparar los perfiles de los 47 aspirantes a la candidatura presidencial de 2024 de todos los partidos, con el objetivo ofrecer una herramienta de análisis a partir de la medición del capital burocrático para comparar la experiencia en cargos directivos dentro y fuera del Estado.
+En **n0dn** nos hemos dado a la tarea de comparar los perfiles de los 47 aspirantes a la candidatura presidencial de 2024 de todos los partidos, con el objetivo ofrecer una herramienta de análisis a partir de la medición del capital burocrático para comparar la experiencia en cargos directivos dentro y fuera del Estado.
 
 2. Los 47 aspirantes a la presidencia de México
 
@@ -24,7 +36,53 @@ Las últimas 4 elecciones los candidatos presidenciales presentaron un capital b
 
 
 Tabla 2. Candidatos presidenciales en México y su capital burocrático. (2000-2018)
+```{r}
+#| label: tb1-generales-kb-mex
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Tabla 1. Datos generales de los aspirantes"
 
+#librerías
+library(foreign)
+library(tidyverse)
+library(dplyr)
+library(scales)
+library(kableExtra)
+library(readr)
+library(readxl)
+library(ggplot2)
+library(forcats)
+
+kb <- read_xlsx(params$datafile1)
+
+# Tabla
+tb_aspirantes_kb <-kb %>% 
+  dplyr::select(Nombre, Edad_contienda,Genero,Departamento,Coalición,Partido, Activo, kb) %>% 
+  rename(Candidato = Nombre, 
+         Edad = Edad_contienda,
+         Género = Sexo,
+         "Departamento de nacimiento" = Departamento,
+         "Candidatura activa" = Activo,
+         "Capital burocrático" = kb
+         ) %>% 
+  mutate(Género = case_when(Género == "H"~"Hombre",
+                            Género == "M"~"Mujer")) %>% 
+  arrange(desc(`Capital burocrático`))
+
+# Luego aplicas kable y kableExtra sobre ese data frame
+tb_aspirantes_kb %>%
+  kable() %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+    full_width = FALSE,
+    position = "center",
+    font_size = 14
+  ) %>%
+  #add_header_above(c("<img src='D:/Users/eduardo.bustos/Documents/HND/Images/logo_n0dn.png' style='width:100%;height:60px;'/>" = 8), escape = FALSE) %>%
+  row_spec(0, bold = TRUE, background = "#006AA7", color = "#FECC02") %>%
+  column_spec(1, bold = TRUE, color = "#0B3B0B")
+```
 ree
 
 Fuente: Elaboración propia con datos del Instituto Nacional Electoral.

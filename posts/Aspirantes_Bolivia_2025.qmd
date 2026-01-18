@@ -1,0 +1,557 @@
+---
+title: "El Capital burocratico de los candidatos a la presidencia de Bolivia 2025"
+author: "Dr. Norberto Bustos"
+format: 
+  html: 
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: flatly
+    link-external-icon: true
+editor: visual
+params:
+  datafile1: "~/Documentos/web_n0dn/n0dn/dataframes/Bolivia/Aspirantes_Bolivia_2025.csv"
+  datafile2: "~/Documentos/web_n0dn/n0dn/dataframes/Bolivia/bolivia_pobreza_nacional_2002_2022.csv"
+  datafile3: "~/Documentos/web_n0dn/n0dn/dataframes/Bolivia/Var_PIB_Bol.xlsx"
+  datafile4: "~/Documentos/web_n0dn/n0dn/dataframes/Bolivia/Var_IPC_12m_Bol.xlsx"
+lang: es
+fontsize: 12pt
+callout-appearence: simple
+execute: 
+  warning: false
+  message: false
+---
+
+# Introducción
+
+Dos candidatos, ambos de derecha, avanzaron a la segunda vuelta electoral tras obtener las mayores votaciones el pasado 17 de agosto de 2025. Por un lado, se encuentra Rodrigo Paz Pereira, quien alcanzó el 32.06% de los votos, la mayor proporción entre los ocho aspirantes. Paz Pereira es hijo del expresidente Jaime Paz Zamora (1989-1993) y sobrino nieto del exdictador Víctor Paz Estenssoro (1952-1956, 1960-1964, 1985-1989), quienes gobernaron con mano dura hacia la población y mano extendida hacia los empresarios, siempre alineados con los intereses del gobierno estadounidense bajo el marco del "Plan Cóndor".
+
+El otro candidato es el expresidente Jorge 'Tuto' Quiroga, de la Coalición Alianza Libre obtuvo 26.70% de los votos de acuerdo con el [Organo Electoral Plurinacional (OEP)](https://computo.oep.org.bo/){.external target="_blank"}. Eduardo Del Castillo, representante del MAS, que ha gobernado el país andino los últimos 20 años, obtuvo 3.17% de los votos, su peor resultado electoral en la historia del partido @gr0-mas.
+
+La casta hereditaria ha regresado a Bolivia. Tras la primera vuelta, el futuro presidente será alguno de los dos rostros del bloque conservador. La conclusión de los 19 años de hegemonía del MAS marca el fin de un ciclo histórico que transformó al país: crecimiento productivo, mejoras salariales y, sobre todo, avances para las mayorías indígenas quechuas y aimaras, que constituyen alrededor del 80% de la población. Sin embargo, el desgaste es inevitable, y el liderazgo carismático de Evo Morales se fue diluyendo entre conflictos internos, corrupción y una oposición persistente que supo aprovechar el descontento social. Las elecciones de 2025 representan, entonces, el retorno de la tradicional clase latifundista que dominó Bolivia desde mediados del siglo XX.
+
+```{r}
+#| label: gr0-mas
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Votos por el Movimiento al Socialismo"
+
+library(tidyverse)
+library(ggplot2)
+library(foreign)
+
+periodo <- c(2002,2005,2009,2014,2019,2020,2025)
+candidato <- c("Evo Morales","Evo Morales","Evo Morales","Evo Morales","Evo Morales","Luis Arce", "Carlos Del Castillo")
+votos <- c(20.94,53.74,64.22,61.36,47.08,55.11,3.17)
+exito <- c("Perdedor","Ganador","Ganador","Ganador","Ganador","Ganador","Perdedor")
+
+mas <- data.frame(periodo,candidato,votos,exito)
+
+mas %>% 
+  ggplot(aes(x=periodo,y=votos)) +
+  geom_line(colour = "#006AA7", lwd = 1, linetype = 1)+
+  geom_point()+
+  geom_text(aes(label = paste(candidato, "\n", votos, "\n", exito)), vjust = 0.8, size = 3) +
+  labs(title = "Evolución del voto por el partido Movimiento al Socialismo (MAS)",
+       subtitle = "Periodo: 2002-2025",
+       x= "Años de contienda electoral",
+       y = "% votos",
+       caption = "Elaboracion propia con datos del Órgano Electoral Plurinacional de Bolivia")+
+  theme_bw()
+```
+
+Este artículo analizará el capital burocrático de los candidatos presidenciales que participaron en la primera vuelta de 2025. Nos interesa observar cómo sus trayectorias políticas se vinculan con las estrategias de los partidos y con los estilos de gobierno que orientan la formulación de políticas públicas.
+
+# La crisis económica, el fratricidio y el derribo de la base soc)ial del MAS
+
+El ex-vicepresidente de Bolivia, Álvaro García Linera, señaló en una [entrevista](https://www.jornada.com.mx/noticia/2025/08/16/mundo/por-que-la-izquierda-y-el-progresismo-pierden-elecciones){.external target="_blank"} que las causas del histórico fracaso electoral del MAS se encuentran en la mala gestión económica de Luis Arce y en la fractura interna entre Arce y Evo Morales. Ambos factores deterioraron la vida de las bases sociales del MAS, restaron legitimidad y fragmentaron el electorado.
+
+La crisis también se reflejó en las candidaturas escindidas del MAS: Andrónico Rodríguez, ex brazo derecho de Morales, y Eva Copa, exdirigente masista y alcaldesa de El Alto, quien finalmente renunció a su postulación una semana antes de los comicios tras denuncias de acoso político. La suma de errores políticos facilitó el viraje del electorado hacia el regreso de políticas neoliberales representadas por Paz y Quiroga.
+
+A la explicación de García Linera, conviene agregar otro elemento: el **capital burocrático** de los candidatos y su capacidad para movilizar capital social.
+
+Si bien la calidad de vida mejoró notablemente durante el ciclo 2006-202 5\@gr1-pobreza-pib-bol, con crecimientos económicos promedios de 3.7% y una reducción histórica de la pobreza, la crisis de 2024 rompió esa estabilidad. Bloqueos, escasez y alzas de precios elevaron la inflación del 5% al 25% en un año, un golpe severo tras casi dos décadas de estabilidad incluso en contextos como el golpe de 2022.
+
+El MAS, debilitado, perdió apoyo no solo dentro del país, sino también en la diáspora boliviana, donde las votaciones favorecieron ampliamente a partidos de derecha en Argentina, Brasil, Chile, Ecuador, Estados Unidos y Perú. La caída fue generalizada, mientras la oposición se consolidaba en torno a viejas élites políticas. Sin embargo, debido a una mala gestión económica en 2024 aunado a los bloqueos de las carreteras que provocaron escasez en varias ciudades resultaron en un aumento generalizado de los precios. Como se aprecia en el @gr1-pobreza-pib-bol desde agosto de 2024 hasta agosto de 2025 se registró un alza generalizada en los precios de acuerdo al [IPC](https://www.ine.gob.bo/index.php/graficos-ipc/){.external target="_blank"} que pasó de 5% a 25% lo cual resulta en un aumento considerable en inflación en un solo año. El aumento de los precios rompió con el periodo de 18 años de estabilidad económica que se mantuvo incluso durante el periodo del golpe de Estado de 2022.
+
+```{r}
+#| label: gr1-pobreza-pib-bol
+#| layout-ncol: 3
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: 
+#|   - "Evolución del porcentaje de personas en situación de pobreza"
+#|   - "Crecimiento del PIB"
+#|   - "Variación del IPC"
+
+library(tidyverse)
+library(ggplot2)
+library(foreign)
+library(scales)
+library(readxl)
+library(stringr)
+
+pobreza <- read.csv(params$datafile2) 
+pib <- read_xlsx(params$datafile3)
+ipc <- read_xlsx(params$datafile4)
+
+#Gráfico de línea
+pobreza %>% 
+  rename(Periodo = Año,
+         T_pobreza = Tasa_de_pobreza_.) %>% 
+  ggplot(aes(x=Periodo, y = T_pobreza)) +
+  geom_line(colour = "#006AA7", lwd = 1, linetype = 1)+
+  geom_point()+
+  geom_text(aes(label = T_pobreza), vjust = -0.5, size = 3.5) +
+  labs(
+    title = "Tasa de pobreza nacional (% de la población)",
+    subtitle = "Periodo: 2002-2022",
+    x= "Año ",
+    y = "Tasa de pobreza (%)",
+    caption = "Elaboración propia con datos de WDI/UNdata y Banco Mundial"
+  )+
+  theme_bw()
+# Tasa de Crecimiento del PIB de Bolivia a precios constantes
+pib %>% 
+  mutate(`Var. PIB (%)` = str_remove_all(`Var. PIB (%)`, "%"),   # Quitar el %
+         `Var. PIB (%)` = str_replace_all(`Var. PIB (%)`, ",", "."), # Reemplazar la coma decimal por punto
+         `Var. PIB (%)` = as.numeric(`Var. PIB (%)`)
+         ) %>% 
+  rename(Periodo = Fecha,
+         var_pib = `Var. PIB (%)`) %>% 
+  ggplot(aes(x=Periodo, y = var_pib)) +
+  geom_rect(aes(xmin=2005, xmax=2024, ymin = -Inf,ymax= Inf ),
+            fill = "#006AA7", aplha = 0.8, inherit.aes = FALSE) +
+  geom_line(colour = "#FECC02", lwd = 1, linetype = 1)+
+  geom_point()+
+    geom_text(aes(x=2015.05, y=max(var_pib, na.rm = TRUE)+ 1),
+              label = "Gobiernos del MAS", color = "#FECC02", size = 5, fontface = "bold")+
+  scale_x_continuous(breaks = 1961:2024, labels = as.character(1961:2024)) +
+  labs(
+    title = "Tasa de crecimiento del PIB a precios constantes",
+    subtitle = "Periodo: 1961-2024",
+    x= "Periodo",
+    y = "Variación del PIB (%)",
+    caption = "Elaboración propia con datos de datosmacro.com"
+  )+
+  theme_bw()+
+  theme(panel.background = element_rect(fill = "#FAF6F5", color = NA),
+        axis.text.x = element_text(angle = 90, hjust = 1))
+## IPC
+
+# Convertir a formato largo
+ipc_long <- ipc %>%
+  pivot_longer(
+    cols = -MES,   # todas las columnas excepto MES
+    names_to = "Año",
+    values_to = "Valor"
+  ) %>%
+  mutate(
+    # Crear un factor para ordenar los meses si se quiere
+    MES = factor(MES, levels = c("Enero", "Febrero", "Marzo", "Abril", "Mayo", 
+                                "Junio", "Julio", "Agosto", "Septiembre", 
+                                "Octubre", "Noviembre", "Diciembre")),
+    Año = as.integer(Año)
+  )
+
+# Graficar línea
+ggplot(ipc_long, aes(x = MES, y = Valor, group = Año, color = factor(Año))) +
+  geom_line() +
+  geom_point() +
+  labs(
+    title = "Variación mensual del IPC por año",
+    x = "Mes",
+    y = "Valor",
+    color = "Año",
+    caption = "Elaboración propia con datos del\n Instituto Nacional de Estadísticas de Bolivia, 2025"
+  ) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+Con estas variables económicas se aprecia pues, que el año anterior a las elecciones generales de 2025, deterioraron el apoyo de la base social del MAS, la cual afectó no inclusive el apoyo de los bolivianos fuera del país. De acuerdos con datos de la OEP, el apoyo del MAS de los bolivianos residentes en Argentina, donde radica la mayor proporción de ciudadanos fuera de Bolivia fue 4.63%, mientras que el apoyo al PDC fue de 29.49% y AP 27.65%, y Libre 13.13%. En Brasil, MAS 2.56%, PDC 48.47%, AP 22.45% y Libre 11.08%. En Chile MAS 1.76%, PDC 35.81%, AP 5.58% y Libre 27.4%. Ecuador MAS 0%, PDC 5%, AP 12.5%, Libre 52.5%, Estados Unidos MAS 0.89%, PDC 4.09%, AP 2.75% Libre 64.19%, y Perú MAS 5.04%, PDC 9.95%, AP7.49% Unidad 25.75% y Libre 42.64%.
+
+Lo anterior muestra diferencias importantes de apoyo hacia los partidos de derechas, pero una constante a la baja al candidato del MAS. En este sentido, podemos afirmar que la caída del MAS fue generalizada como partido dominante en la arena política boliviana, pero también el resurgimiento de los partidos de derechas con candidatos representantes de las antiguas oligarquías muestra un giro del electorado por el retorno al pasado, pues no apoyaron nuevos partidos.
+
+## ¿Quiénes son l\@s candidatos?
+
+Para conocer el perfil de quienes contendrán por la presidencia de Chile, hemos analizado biografías de candidatas y candidatos a fin de medir y comparar su capital burocrático con el objetivo de conocer su experiencia en la dirección de cargos dentro del Estado.
+
+#### Representantes de coaliciones y partidos \[Activos\]
+
+***Rodrigo Paz Pereira*** (Partido Demócrata Cristiano) Tiene 57 años, es senador y fue alcalde de Tarija entre 2015 y 2020. Economista de formación, hijo del expresidente Jaime Paz Zamora, ha ejercido como legislador y está consolidado en espacios intermedios de poder político. Se presenta como reformista moderado, con propuestas como el modelo económico “50-50” (redistribución equitativa de recursos entre gobierno central y gobiernos regionales) y el uso de tecnología blockchain para mayor transparencia
+
+***Jorge “Tuto” Quiroga*** (Alianza Libre) Expresidente en funciones (2001-2002), con antecedente como vicepresidente más joven en 1997, representa a la derecha conservadora. Ha ocupado cargos en sectores minero-financieros y organismos internacionales (FMI, Banco Mundial), y promueve políticas de ajuste fiscal, reforma judicial y apertura al libre mercado con apoyo del FMI
+
+#### Representantes de coaliciones y partidos \[No Activos\]
+
+***Samuel Doria Medina*** (Alianza Unidad) Empresario exitoso: dueño de Burger King Bolivia, Hotel Los Tajibos y desarrollador de rascacielos en Santa Cruz. Fue ministro de Planificación en los 90, miembro de la Asamblea Constituyente (2009) y ha buscado la presidencia en varias ocasiones.
+
+***Andrónico Rodríguez*** (Alianza Popular) Politólogo, dirigente cocalero y presidente del Senado desde 2020. Candidato identificado con una nueva generación de la izquierda que se distancia del MAS.
+
+***Manfred Reyes Villa*** (Autonomía Para Bolivia–Súmate) Exmilitar y empresario; fue alcalde de Cochabamba y prefecto de ese departamento. Fundó una fuerza política regional y aboga por el orden en oposición a los partidos tradicionales.
+
+***Eduardo Del Castillo*** (Movimiento al Socialismo - MAS) Abogado y joven exministro de Gobierno. Representa la renovación del MAS luego de la renuncia de Luis Arce; busca continuar el “proceso de cambio”.
+
+***Jhonny Fernández*** (Alianza Fuerza del Pueblo) Alcalde de Santa Cruz, postuló junto a Edwin Rodríguez. Propone reformas capitales, reducción de burocracia e incentivo económico desde una perspectiva populista.
+
+***Antonio Saravia*** (Alianza Libertad y Progreso – ADN) Ingeniero y candidato del bloque ADN. Aunque de menor perfil, representa una oferta liberal-nacionalista dentro de la derecha fragmentada.
+
+***Eva Copa*** (Movimiento Renovación Nacional – Morena) Alcaldesa de El Alto, sufrió baja en encuestas y finalmente renunció en julio por motivos de acoso político, aunque su nombre se mantuvo en boletas.
+
+# El capital burocrático de los candidatos
+
+Como describimos en artículos anteriores, el [**capital burocrático**]() es el cúmulo de competencias, experiencia, conocimientos y relaciones que poseen los agentes dentro de una burocracia, y que les permite operar eficaz y legítimamente en el marco institucional estatal o corporativo. A partir de la sistematización de los cargos directivos según su posición en torno al poder ejecutivo es posible medir y comparar la experiencia de cualquier actor, partido o coalición política desde las guerras de Independencia hasta la actualidad. Por su puesto, es un esfuerzo metodológico que aun se encuentra en fase de desarrollo y se requieren aún varias pruebas y detección de errores para mejorar su calibración.
+
+Por ello, inicaremos nuestro análisis presentando los rasgos generalizados de cada actor como se muestra en @tb1-aspirantes-kb-bol la mayoría de los candidatos provienen de Cochabamba, Santa Cruz y La Paz, aunque el candidato Paz Pereira nació en Galicia, España, pero se encuentra fuertemente vinculado al departamento de Tarija.
+
+como se aprecia en @tb1-generales-kb-bol de los 9 candidatos presentados en las elecciones 6 se identifican con programas e ideologías de derecha y 3 de izquierda. De esos 6 candidatos de derechas 5 cuentan con amplia experiencia en cargos públicos y uno de ellos sólo tiene experiencia en el sector privado, que fue el caso de Pavel Aracena. La edad promedio de los candidatos fue de 54.2 años, en un rango de 70 años máxima por Manfred Reyes y 37 mínima que fueron los candidatos de izquierda de Andrónico Rodríguez, Carlos del Castillo y Eva Copa con 38. Este dato de la edad será relevante cuando examinemos la experiencia por bloques.
+
+```{r}
+#| label: tb1-generales-kb-bol
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Tabla 1. Datos generales de los aspirantes"
+
+#librerías
+library(foreign)
+library(tidyverse)
+library(dplyr)
+library(scales)
+library(kableExtra)
+library(readr)
+library(readxl)
+library(ggplot2)
+library(forcats)
+
+kb <- read.csv(params$datafile1, fileEncoding = "Latin1", stringsAsFactors = FALSE) 
+
+tb_aspirantes_kb <-kb %>% 
+  dplyr::select(Nombre, Edad_contienda,Genero,Departamento,Coalición,Partido,Bloque, Activo, kb, Votos) %>% 
+  rename(Candidato = Nombre, 
+         Edad = Edad_contienda,
+         Género = Genero,
+         "Departamento de nacimiento" = Departamento,
+         "Activo" = Activo,
+         "Capital burocrático" = kb,
+         " % de Votos\n1°vuelta " = Votos
+         ) %>% 
+  mutate(Género = case_when(Género == "H"~"Hombre",
+                            Género == "M"~"Mujer")) %>% 
+  arrange(desc(`Capital burocrático`))
+
+# Luego aplicas kable y kableExtra sobre ese data frame
+tb_aspirantes_kb %>%
+  kable(caption = "Elaborado por: n0dn | The linked data", booktabs = TRUE, linesep = "") %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+    full_width = FALSE,
+    position = "center",
+    font_size = 10
+  ) %>%
+  row_spec(0, bold = TRUE, background = "#006AA7", color = "#FECC02") %>%  # encabezado azul y blanco
+  row_spec(which(tb_aspirantes_kb$`Candidatura activa\npara Segunda Vuelta` == "Sí"), background = "#D9EAD3") %>%  # filas activas en verde suave
+  column_spec(1, bold = TRUE, color = "#0B3B0B") %>%   # Columna candidato en negrita y color
+  add_header_above(c(" " = 1, "Información básica" = 3, "Afiliación política" = 3, "Actividad electoral" = 3))
+```
+
+# ¿Qué relación tiene el capital burocrático con los votos obtenidos por cada bloque?
+
+Los candidatos de los bloques de derechas como Samuel Doria, Jorge Quiroga, Manfred Reyes, Jhonny Fernández, Rodrigo Paz y Pavel Aracena en conjunto tienen mayor capital burocrático que los candidatos de izquierda Carlos Castillo, Andrónoco Roddríguez y Eva Copa. A su vez, encontramos que si sumamos el porcentaje de votos por bloque, 88.32% fueron votos para los candidatos de derechas y 11.68% para candidatos de izquierdas. En este sentido cabe suponer que existe alguna relación entre los votos con el capital burocrático de los candidatos.
+
+Partimos de una muestra pequeña de 9 casos, y entre los principales hallazgos encontramos que existe una correlación positiva de 0.6283 entre el porcentaje de votos obtenido con el capital burocrático de los candidatos, y entre los tipos de capital burocrático con mayor correlación se encuentran el capital intra-burocrático es decir, con cargos directivos en la presidencia, vicepresidencia y ministerios de Estado con 0.53, el capital sub-burocrático en particular la actividad en partidos políticos con 0.5 grados de correlación y también participaciones en movimientos insurgentes con 0.49 (véase @gf2-cor-votos-bol).
+
+En este sentido a mayor a mayor cantidad de votos, mayor capital burocrático. Lo anterior resulta notable toda vez que en análisis anteriores sobre elecciones en Argentina, México, Chile y Venezuela los grados de correlación no son tan significativos, pues rondan entre 0.3 al 0.4. De esta manera nos preguntamos si existe esta diferencia por bloque de partidos que pudiera dar mayor información sobre los resultados electorales.
+
+```{r}
+#| label: gf2-cor-votos-bol
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Gráfico 2. Correlación de votos y capital burocrático"
+
+library(tidyverse)
+library(dplyr)
+library(corrplot)
+
+# Suponiendo que el dataframe se llama df y está cargado
+kb_d <- read.csv(params$datafile1, fileEncoding = "Latin1", stringsAsFactors = FALSE)
+
+# Seleccionar solo variables numéricas para correlación
+df_num <- kb_d %>% 
+  dplyr::select(where(is.numeric))
+
+# Calcular matriz de correlación (uso de método Pearson por default)
+cor_matrix <- cor(df_num, use = "pairwise.complete.obs")
+
+# Visualizar matriz de correlación
+corrplot(cor_matrix, method = "color", type = "upper", 
+         tl.cex = 0.7, tl.col = "black",
+         addCoef.col = "black", number.cex = 0.6)
+
+# Extraer correlaciones con 'Votos'
+cor_with_votos <- cor_matrix[, "Votos"]
+cor_with_votos <- sort(cor_with_votos, decreasing = TRUE)
+
+print(cor_with_votos)
+
+# Modelo lineal simple con las variables más correlacionadas
+# Por ejemplo, con la variable con mayor correlación positiva (excepto Votos consigo mismo)
+top_var <- names(cor_with_votos)[2]  # Segunda, primera es 'Votos'
+
+lm_model <- lm(Votos ~ get(top_var), data = kb_d)
+summary(lm_model)
+```
+
+Nuestros hallazgos muestran que al sumar el capital burocrático por bloque de partidos, los candidatos de la derecha acumulan mayor experiencia en cargos de dirección dentro del Estado con respecto a los candidatos de izquierda, una diferencia de 2,297 puntos de kb acumulados. La mayor diferencia se encuentra en el capital sub-burocrático que corresponde a la experiencia en particos políticos que es de 1087 kbs, es decir, los candidatos de derecha cuentan con 10 veces mayor experiencia en partidos que los candidatos de izquierda. Además la diferencia en capital intra-burocrático es de 631 kb y en capital exa-burocrático la diferencia es de 448 kb. La menor diferencia entre bloque se encontró en el capital sub-burocrático con 113 kb y 18 en exa-burocrático como se aprecia en @gf3-votos-bloque-bol.
+
+Lo anterior lleva a cuestionarnos si la selección de candidatos con tan bajo capital burocrático por parte de los partidos de izquierda fue un evento intencionado, un mal cálculo electoral o el resultado de la lucha política entre sus líderes. Si bien Evo Morales mostraba un desgaste electoral y político para el MAS, lo cierto es que sin su apoyo y capital político las elecciones no se ganan. Luis Arce no sólo condujo mal la economía del país, aunado al boicót de Evo tras ser proscrito por Arce para participar en la contienda de 2025. El resultado de su lucha política personal, conllevó al desastre electoral y el producto de ello fue la presentación de candidatos con poca experiencia en la conducción del Estado. Se presentaron como partido opositor minoritario pero fragmentado.
+
+```{r}
+#| label: gf3-votos-bloque-bol
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Gráfico 1. Votos y capital burocrático por bloque"
+
+library(tidyverse)
+library(gtExtras)
+library(gt)
+library(dplyr)
+
+
+kb_d <- read.csv(params$datafile1, fileEncoding = "Latin1", stringsAsFactors = FALSE)
+
+# Apilar datos
+long_kbtyp <- kb_d %>%
+  pivot_longer(
+    cols = c("Intra", "Para", "Sub", "Exa", 
+             "Ana"),
+    names_to = "Tipo_de_capital",
+    values_to = "cantidad"
+  )
+## Sumar los datos por coalición
+long_kbtyp_suma <- long_kbtyp %>%
+  group_by(Bloque, Tipo_de_capital) %>%
+  summarise(cantidad = sum(cantidad, na.rm = TRUE), .groups = "drop") %>% 
+  mutate(Tipo_de_capital = factor(Tipo_de_capital, 
+                                  levels = c("Intra", "Para", "Sub", "Exa", "Ana")))
+
+#Tabla con suma total de kb por Coalición (para las etiquetas)
+suma_total_bloque <- long_kbtyp_suma %>%
+  group_by(Bloque) %>%
+  summarise(total_kb = sum(cantidad, na.rm = TRUE), .groups = "drop")
+
+## Ordenar levels de Coalición de mayor a menor por total_kb
+orden_bloque <- suma_total_bloque %>%
+  arrange(desc(total_kb)) %>%
+  pull(Bloque)
+
+# Aplicar orden al factor en el dataset long_kbtyp_suma
+long_kbtyp_suma$Bloque <- factor(long_kbtyp_suma$Bloque, levels = orden_bloque)
+
+# También en la tabla de sumas para etiquetas
+suma_total_bloque$bloque <- factor(suma_total_bloque$Bloque, levels = orden_bloque)
+
+# Los niveles de un factor deben ser únicos, pero aquí estás usando una lista con repeticiones por lo que se deben corregir con unique
+kb_d$Bloque <- factor(kb_d$Bloque, levels = unique(kb_d$Bloque[order(kb_d$kb)]))
+
+# Colores por tipo de capital
+
+colores_tkb <- c(
+  "Intra" = "#07979C",
+  "Para" = "#022674",
+  "Sub" = "#821291",
+  "Exa" = "#CD040E",
+  "Ana" = "#FFA600"
+)
+
+## Gráfica de barras apiladas por tipo de capital burocático de cada aspirante
+ggplot(data = long_kbtyp_suma, aes(x = Bloque, y = cantidad, fill = Tipo_de_capital)) +
+  geom_col() +
+    geom_text(aes(label = scales::comma(cantidad)),            # Mostrar valor numérico con separadores de miles
+            position = position_stack(vjust = 0.5),          # Centrar verticalmente dentro de cada barra
+            color = "gold",                                  # Texto color blanco
+            size = 3,                                        # Tamaño del texto
+            fontface = "plain") +
+  scale_y_continuous(labels = comma) +           # Coma cada millar en eje Y
+  scale_fill_manual(values = colores_tkb) +          # Paleta de colores agradable
+  coord_flip() +
+  geom_text(data = suma_total_bloque, 
+            aes(x=Bloque, y= total_kb +50,
+                label = comma(round(total_kb))),
+            size = 5, fontface = "bold", color = "black",
+            inherit.aes = FALSE) +
+  labs(title = "Capital burocrático acumulado por bloque ideológico",
+       subtitle = "Bolivia, 2025",
+       caption = "Fuente: n0dn | The linked data\ncon datos de Wikipedia.com",
+       x = "Bloque ideológico",
+       y = "capital burocrático (kb)",
+       fill = "Tipo de Capital Burocrático") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 0, hjust = 1, vjust = 1),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.caption = element_text(size = 7, face = "italic"),
+        legend.position = "bottom",
+        panel.background = element_rect(fill = "white", color = NA)
+  )
+```
+
+Generalmente, los partidos oficialistas proponen candidatos con capital burocrático superior a la media histórica, sin embargo, el MAS y los partidos surgidos de él, impulsaron candidatos con muy bajo capital burocrático. En cambio, la derecha aprovechó esa inexperiencia para impulsar a viejos lobos de mar, representantes de las oligarquías tradicionales para ganar la contienda ante un escenario de desgaste y fractura del MAS.
+
+::: {.callout-note appearance="simple"}
+## Nota
+
+La trayectoria política es el resultado de la intención, persistencia y capacidad de adaptación de las personas para lograr un objetivo propuesto desde temprana edad.
+:::
+
+Recordemos que el capital burocrático es un indicador de ese esfuerzo y capacidad en actividades directivas que le dotan del prestigio necesario para acceder a posiciones cada vez más estratégicas dentro del aparato de Estado que les permitan alcanzar los recursos necesarios para llevar a cabo los programas políticos y solventar temas de interés de su subred política.
+
+###¿Qué tan diferentes son los candidatos que se presentaron en 2025 con respecto al resto de candidatos que se han presentado en la historia de las elecciones en Bolivia?
+
+A partir de un estudio previo sobre el capital burocrático de 210 candidatos a la presidencia de Bolivia durante el periodo de 1825 a 2020, se encontró que la media histórica es de 305.04 kb. Si calculamos la desviación estándar de cada actor presentado en 2025 con respecto a la media histórica, encontramos tres categorías que se detallarán a continuación:
+
+#### **Muy alto**
+
+Son aquellos candidatos con una desviación stándar mayor a 100 puntos base y que sólo considera a dos actores, Samuel Doria Medina y Jorge Quiroga con una desviación estándar -669.96 y -664.96 con respecto a la media histórica. Estos dos son los candidatos con mayor experiencia en cargos directivos, siendo Quiroga el único de los nueve candidatos con experiencia previa en la Presidencia y Vicepresidencia así como la mayor acumulación de kb en cargos ministeriales. En cambio Samuel Doria posee mayor experiencia en dirección de partidos políticos, empresas y en ministerios de estado respectivamente como se puede apreciar en @gr2-Dist-cargos.
+
+```{r}
+#| label: gr2-Dist-cargos
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Gráfico 2. Distribución por tipo de kb por candidato" 
+
+#librerías
+library(foreign)
+library(tidyverse)
+library(dplyr)
+library(scales)
+library(kableExtra)
+library(readr)
+library(readxl)
+library(ggplot2)
+
+kb_c <-  read.csv(params$datafile1, fileEncoding = "Latin1", stringsAsFactors = FALSE) # Para codificar en windows
+# Gráfico de barras apiladas
+# Reordenar el nombre por kb
+
+kb_c$Nombre <- factor(kb_c$Nombre, levels = kb_c$Nombre[order(kb_c$kb)])
+# Apilar datos
+datos_long <- kb_c %>%
+  pivot_longer(
+    cols = c("Presidencia", "Vicepresidencia", "Ministerio", "Gobernatura", 
+             "Ejercito", "Suprema.Corte", "Legislatura", "Alcaldia", 
+             "Partidos_Politicos", "Empresas", "Sociedad_Civil"),
+    names_to = "institucion",
+    values_to = "cantidad"
+  )
+# Posición en la parte de arriba
+
+# Ordenar manualmente las instituciones
+# Orden manual de instituciones
+orden_instituciones <- c(
+  "Presidencia", "Vicepresidencia", "Ministerio", "Gobernatura",
+  "Ejercito", "Suprema.Corte", "Legislatura", "Alcaldia",
+  "Partidos_Politicos", "Empresas", "Sociedad_Civil"
+)
+datos_long$institucion <- factor(datos_long$institucion, 
+                                 levels = orden_instituciones)
+# Colores instituciones
+colores_institucion <- c(
+  "Presidencia"        = "#53EAFD",
+  "Vicepresidencia"    = "#02B7CF",
+  "Ministerio"         = "#016774",
+  "Gobernatura"        = "#5E90FD",
+  "Ejercito"           = "#155DFC",
+  "Suprema.Corte"      = "#0235A1",
+  "Legislatura"        = "#022674",
+  "Alcaldia"           = "#D545E8",
+  "Partidos_Politicos" = "#821291",
+  "Empresas"           = "#FC5F67",
+  "Sociedad_Civil"     = "#CD040E"
+)
+
+## Hline
+# Hline o lineas de intersección
+lineas_kb <- tibble(
+  yintercept = 305.04,
+  label_text = c("kb histórico = 305.04"),
+  color_code = c(7, 2) # Usar códigos de color o nombres para que coincidan con hline
+)
+# Posición vertical para labels de lineas_kb (arriba)
+pos_y_superior <- max(datos_long$cantidad, na.rm = TRUE) * 1.05
+## Gráfica de barras apiladas por tipo de capital burocático de cada aspirante
+
+ggplot(datos_long, aes(x = Nombre, y = cantidad, fill = institucion)) +
+  geom_col() +
+  labs(
+    title = "",
+    x = "Candidato",
+    y = "Cantidad",
+    fill = "Institución"
+  ) +
+  scale_y_continuous(labels = comma) +           # Coma cada millar en eje Y
+  scale_fill_manual(values = colores_institucion) + # Paleta de colores institución
+  coord_flip() +
+  geom_hline(
+    aes(yintercept = yintercept, 
+        linetype = as.factor(color_code)),
+    data = lineas_kb,
+    show.legend = FALSE
+  ) +
+  geom_label(data = lineas_kb,
+             aes(x = length(unique(kb_c$Nombre)), 
+                 y = pos_y_superior, 
+                 label = label_text), 
+             hjust = 1, vjust = -0.5, # Ajusta justificación para que quede sobre la línea
+             fill = "white", color = "black", size = 3, # Fondo blanco, texto negro
+             label.padding = unit(0.25, "lines"), label.size = 0) + # Margen y borde del label
+  geom_text(aes(x=Nombre, y= kb +20,
+                label = comma(round(kb))), # recuerda usar la librería scales para que salga la coma
+            size = 3.5) +
+  geom_label(
+  data = lineas_kb,
+  aes(x = length(unique(kb_c$Nombre)), 
+      y = 1,  # parte inferior
+      label = label_text),
+  hjust = 1, vjust = 1.5,
+  fill = "white", color = "black", size = 3,
+  label.padding = unit(0.25, "lines"), label.size = 0
+) +
+  labs(title = "Candidatos para la presidencia de Bolivia, 2025",
+       subtitle = "Capital burocrático por tipo",
+       caption = "Elaborado por n0dn | The linked data",
+       x = "",
+       y = "capital burocrático (kb)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 1),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank())
+```
+
+#### **Medio**
+
+El segundo grupo son aquellos cercanos a la media histórica, se encuentran Mandred Reyes, Johonny Fernández, Rodrigo Paz, Eva Copa y Andrónico Rodríguez quienes registraron una desviación estándar de -496, 204, 904, 44.04 y 79.04 respectivamente. Estos candidatos son los que mayor semejanza tienen con un candidato promedio en las elecciones presidenciales. La característica más notable de estos candidatos es la acumulación de cargos dentro de las alcaldías y en las legislaturas. Sólo en el caso de Manfed Reyes tiene experiencia en la gubernatura departamental. En menor medida, cuentan con experiencia en partidos políticos, sociedad civil y empresas. Ninguno cuenta con experiencia en el capital intra-burocrático, es decir, no cuentan con cargos en el poder ejecutivo plurinacional.
+
+### **Bajo**
+
+En cambio, aquellos que registran un capital burocrático por debajo del promedio se encuentran Carlos Eduardo del Castillo y Pavel Aracena con una desviación estándar de 195.04 y 265.04 respectivamente. Este grupo se caracteriza por acumular un solo tipo de capital burocrático, ya sea como ministro de Estado en el caso de Castillo y como empresario en el caso de Aracena, pues como vimos anteriormente, los candidatos tienden a acumular diferentes tipos de capital burocrático en sus trayectorias polítcas antes de postularse a un cargo presidencial. Como señalamos al inicio del análisis, el MAS impulsó la candidatura de un actor con tan poca experiencia en la administración pública que se asemeja más a un actor sin experiencia alguna que a un político promedio.
+
+# Conclusion: El resgreso de la *rancia oligarquía* y la fragmentación de la izquierda
+
+La primera vuelta electoral en Bolivia muestra el desgaste del MAS como maquinaria electoral ganadora y la revitalización de la oligarquía tradicional. El expresidente Quiroga, bien conocido por sus políticas de privatización y sometimiento a los intereses norteamericanos regresó no por las propuestas innovadoras para mejorar la calidad de vida de la mayoría de los bolivianos, que más del 80% descienden de los pueblos originarios, sino para frenar la inflación que beneficie a los exportadores. En caso de ganar Quiroga, seguramente privatizará las industrias bolivianas que han sido el puntal del desarrollo económico que por décadas estuvo suprimido por las oligarquías y terratenientes mineros, y que bajo el modelo neoliberal sólo aumentó la desigualdad y la represión.
+
+La experiencia muestra que Quiroga sólo ofrece un programa anquilosado de promesas revasadas por la historia reciente del país andino. Será el retorno a un país atrasado y desigual donde los terrateniente buscarán recuperar los privilegios que creen haber sido arrebatados por los millones de bolivianos que salieron de la pobreza en los últimos veinte años.
+
+Por su parte, con Paz Pereira, un candidato tibio - o como dicen ahora, de Centro-Centro - ligado familarmente por dos expresidentes del MIR, su padre y su abuelo. Ambos prvenientes de un partido ideológicamente de izquierda pero en la práctica aplicaron políticas neoliberales favorables a la privatización de empresas públicas y posicionamiento del mercado sobre las necesidades sociales. Paz Pereira no ha distado mucho del programa neoliberal como alcalde de Tarija, incluso en sus promesas de campaña propone que el gobierno central controle la mitad de los recursos públicos y la otra los privados. ***¿Dónde hemos visto esa película donde las grandes mayorías pierden?***
+
+A nivel regional, el regreso de la oligarquía boliviana servirá para fortalecer el bloque de gobiernos de extrema derecha liderada por el presidente argentino Javier Milei, quienes han impulsado políticas favorables al colonialismo norteamericano en sudamérica capaces de garantizar la extracción de materias primas necesarias para la industria estadounidense, hoy en crisis por el avance chino. Habrá que esperar que en el mediano plazo Bolivia vuelva a poner en venta el gas, litio y demás riquezas mineras posee el país y que favorecerá a los mismos que causaron, por sus fallas, el ascenso del MAS.
+
+Por lo tanto, esta grave derrota deberá servir a la izquierda boliviana como un gran aprendizaje primero programático, particularmente sobre las revoluciones constantes y la atención por nuevos derechos y mejoras en lugar de quedarse estancados cuando se llega a un punto. Segundo, los conflictos personales de sus dirigencias no deben escalar al punto de inmolar al movimiento en su conjunto. Tercero, la formación de cuadros jóvenes con capacidades técnicas y sociales aun está en marcha pero sigue cruda.
+
+***En política, las batallas tienen varios finales***

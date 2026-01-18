@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -34,14 +34,15 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-b5731bf74bedef94f4dd3ac5242f76cc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-15dab21ea30b8ebe024a42c8ccc6ab20.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -113,7 +114,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -151,7 +152,7 @@ window.Quarto = {
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="./index.html"> 
-<span class="menu-text">🏠 Home</span></a>
+<span class="menu-text">🏠 Inicio</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./about.html"> 
@@ -174,7 +175,7 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(17)</span></div><div class="category" data-category="QXJnZW50aW5h">Argentina <span class="quarto-category-count">(1)</span></div><div class="category" data-category="YXNwaXJhbnRlcyUyMHByZXNpZGVuY2lhbGVz">aspirantes presidenciales <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Y2FwaXRhbCUyMGJ1cm9jciVDMyVBMXRpY28=">capital burocrático <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Y2FwaXRhbCUyMHNvY2lhbA==">capital social <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q29uZmVyZW5jaWFz">Conferencias <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Y3Jpc2lzJTIwZmluYW5jaWVyYXM=">crisis financieras <span class="quarto-category-count">(4)</span></div><div class="category" data-category="ZWNvbm9tJUMzJUFEYSUyMHBvbCVDMyVBRHRpY2E=">economía política <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bWV0b2RvbG9nJUMzJUFEYQ==">metodología <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TSVDMyVBOXhpY28=">México <span class="quarto-category-count">(4)</span></div><div class="category" data-category="cmVkZXM=">redes <span class="quarto-category-count">(4)</span></div><div class="category" data-category="VGFsbGVyZXM=">Talleres <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dGVvciVDMyVBRGE=">teoría <span class="quarto-category-count">(2)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(18)</span></div><div class="category" data-category="QXJnZW50aW5h">Argentina <span class="quarto-category-count">(1)</span></div><div class="category" data-category="YXNwaXJhbnRlcyUyMHByZXNpZGVuY2lhbGVz">aspirantes presidenciales <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Y2FwaXRhbCUyMGJ1cm9jciVDMyVBMXRpY28=">capital burocrático <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Y2FwaXRhbCUyMHNvY2lhbA==">capital social <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q29uZmVyZW5jaWFz">Conferencias <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Y3Jpc2lzJTIwZmluYW5jaWVyYXM=">crisis financieras <span class="quarto-category-count">(4)</span></div><div class="category" data-category="ZWNvbm9tJUMzJUFEYSUyMHBvbCVDMyVBRHRpY2E=">economía política <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bWV0b2RvbG9nJUMzJUFEYQ==">metodología <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TSVDMyVBOXhpY28=">México <span class="quarto-category-count">(4)</span></div><div class="category" data-category="cmVkZXM=">redes <span class="quarto-category-count">(4)</span></div><div class="category" data-category="VGFsbGVyZXM=">Talleres <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dGVvciVDMyVBRGE=">teoría <span class="quarto-category-count">(2)</span></div></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -226,7 +227,7 @@ Dr.&nbsp;Norberto Bustos
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-listing-file-modified-sort="1764826336503" data-listing-reading-time-sort="11" data-listing-word-count-sort="2085">
+<div class="quarto-post image-right" data-index="1" data-listing-file-modified-sort="1766456694641" data-listing-reading-time-sort="11" data-listing-word-count-sort="2085">
 <div class="thumbnail"><a href="./posts/El capital burocrático.html" class="no-external">
 
 <p class="card-img-top"><img src="images/Mex_full_rpm.png" alt="Red Política Histórica de los gobernantes de México (1821-2018)"  class="thumbnail-image card-img"/></p>
@@ -270,7 +271,29 @@ Dr.&nbsp;Norberto Bustos
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="TSVDMyVBOXhpY28lMkNDb25mZXJlbmNpYXM=" data-listing-date-sort="1724911200000" data-listing-file-modified-sort="1755507212000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="9">
+<div class="quarto-post image-right" data-index="3" data-listing-file-modified-sort="1766467786440" data-listing-reading-time-sort="30" data-listing-word-count-sort="5872">
+<div class="thumbnail"><a href="./posts/Aspirantes_Bolivia_2025.html" class="no-external">
+
+<p class="card-img-top"><img src="posts/Aspirantes_Bolivia_2025_files/figure-html/gr0-mas-1.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/Aspirantes_Bolivia_2025.html" class="no-external">El Capital burocratico de los candidatos a la presidencia de Bolivia 2025</a>
+</h3>
+<div class="delink listing-description"><a href="./posts/Aspirantes_Bolivia_2025.html" class="no-external">
+Dos candidatos, ambos de derecha, avanzaron a la segunda vuelta electoral tras obtener las mayores votaciones el pasado 17 de agosto de 2025. Por un lado, se encuentra…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/Aspirantes_Bolivia_2025.html" class="no-external">
+<div class="listing-author">
+Dr.&nbsp;Norberto Bustos
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="4" data-categories="TSVDMyVBOXhpY28lMkNDb25mZXJlbmNpYXM=" data-listing-date-sort="1724911200000" data-listing-file-modified-sort="1755507212000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="9">
 <div class="thumbnail"><a href="./posts/2024-08-29-invitacion-coloquio-mexico-vision-2060.html" class="no-external">
 
 <img loading="lazy" src="./posts" class="thumbnail-image">
@@ -302,7 +325,7 @@ Eduardo BxN
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="VGFsbGVyZXM=" data-listing-date-sort="1722837600000" data-listing-file-modified-sort="1755507212000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="9">
+<div class="quarto-post image-right" data-index="5" data-categories="VGFsbGVyZXM=" data-listing-date-sort="1722837600000" data-listing-file-modified-sort="1755507212000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="9">
 <div class="thumbnail"><a href="./posts/2024-08-05-taller-de-constelaciones-familiares.html" class="no-external">
 
 <img loading="lazy" src="./posts" class="thumbnail-image">
@@ -332,7 +355,7 @@ Eduardo BxN
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="QXJnZW50aW5hJTJDYXNwaXJhbnRlcyUyMHByZXNpZGVuY2lhbGVzJTJDY2FwaXRhbCUyMGJ1cm9jciVDMyVBMXRpY28=" data-listing-date-sort="1696226400000" data-listing-file-modified-sort="1759120142203" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="9">
+<div class="quarto-post image-right" data-index="6" data-categories="QXJnZW50aW5hJTJDYXNwaXJhbnRlcyUyMHByZXNpZGVuY2lhbGVzJTJDY2FwaXRhbCUyMGJ1cm9jciVDMyVBMXRpY28=" data-listing-date-sort="1696226400000" data-listing-file-modified-sort="1759120142203" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="9">
 <div class="thumbnail"><a href="./posts/2023-10-02-capital-burocratico-argentina-2023.html" class="no-external">
 
 <img loading="lazy" src="./posts" class="thumbnail-image">
@@ -366,7 +389,7 @@ Dr.&nbsp;Norberto Bustos
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="TSVDMyVBOXhpY28lMkNjYXBpdGFsJTIwYnVyb2NyJUMzJUExdGljbyUyQ2FzcGlyYW50ZXMlMjBwcmVzaWRlbmNpYWxlcw==" data-listing-date-sort="1695016800000" data-listing-file-modified-sort="1756622055200" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2246">
+<div class="quarto-post image-right" data-index="7" data-categories="TSVDMyVBOXhpY28lMkNjYXBpdGFsJTIwYnVyb2NyJUMzJUExdGljbyUyQ2FzcGlyYW50ZXMlMjBwcmVzaWRlbmNpYWxlcw==" data-listing-date-sort="1695016800000" data-listing-file-modified-sort="1756622055200" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2246">
 <div class="thumbnail"><a href="./posts/2023-09-18-capital-burocratico-aspirantes-mx-2024.html" class="no-external">
 
 <img loading="lazy" src="./posts" class="thumbnail-image">
@@ -400,7 +423,7 @@ Dr.&nbsp;Norberto Bustos
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="TSVDMyVBOXhpY28lMkNjcmlzaXMlMjBmaW5hbmNpZXJhcw==" data-listing-date-sort="1687327200000" data-listing-file-modified-sort="1755507212000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="9">
+<div class="quarto-post image-right" data-index="8" data-categories="TSVDMyVBOXhpY28lMkNjcmlzaXMlMjBmaW5hbmNpZXJhcw==" data-listing-date-sort="1687327200000" data-listing-file-modified-sort="1755507212000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="9">
 <div class="thumbnail"><a href="./posts/2023-06-21-gabinetes-crisis-1994.html" class="no-external">
 
 <img loading="lazy" src="./posts" class="thumbnail-image">
@@ -432,7 +455,7 @@ Eduardo BxN
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="TSVDMyVBOXhpY28lMkNjcmlzaXMlMjBmaW5hbmNpZXJhcw==" data-listing-date-sort="1686722400000" data-listing-file-modified-sort="1755507212000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="9">
+<div class="quarto-post image-right" data-index="9" data-categories="TSVDMyVBOXhpY28lMkNjcmlzaXMlMjBmaW5hbmNpZXJhcw==" data-listing-date-sort="1686722400000" data-listing-file-modified-sort="1755507212000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="9">
 <div class="thumbnail"><a href="./posts/2023-06-14-gabinetes-crisis-1982.html" class="no-external">
 
 <img loading="lazy" src="./posts" class="thumbnail-image">
@@ -464,7 +487,7 @@ Eduardo BxN
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="Y3Jpc2lzJTIwZmluYW5jaWVyYXMlMkNyZWRlcw==" data-listing-date-sort="1686117600000" data-listing-file-modified-sort="1755507212000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="9">
+<div class="quarto-post image-right" data-index="10" data-categories="Y3Jpc2lzJTIwZmluYW5jaWVyYXMlMkNyZWRlcw==" data-listing-date-sort="1686117600000" data-listing-file-modified-sort="1755507212000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="9">
 <div class="thumbnail"><a href="./posts/2023-06-07-red-emergente-gobernabilidad.html" class="no-external">
 
 <img loading="lazy" src="./posts" class="thumbnail-image">
@@ -496,7 +519,7 @@ Eduardo BxN
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="cmVkZXMlMkNjYXBpdGFsJTIwc29jaWFs" data-listing-date-sort="1684908000000" data-listing-file-modified-sort="1755507212000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="9">
+<div class="quarto-post image-right" data-index="11" data-categories="cmVkZXMlMkNjYXBpdGFsJTIwc29jaWFs" data-listing-date-sort="1684908000000" data-listing-file-modified-sort="1755507212000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="9">
 <div class="thumbnail"><a href="./posts/2023-05-24-capital-social-redes.html" class="no-external">
 
 <img loading="lazy" src="./posts" class="thumbnail-image">
@@ -528,7 +551,7 @@ Eduardo BxN
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="11" data-categories="cmVkZXMlMkNtZXRvZG9sb2clQzMlQURh" data-listing-date-sort="1684303200000" data-listing-file-modified-sort="1764825895994" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="19" data-listing-word-count-sort="3608">
+<div class="quarto-post image-right" data-index="12" data-categories="cmVkZXMlMkNtZXRvZG9sb2clQzMlQURh" data-listing-date-sort="1684303200000" data-listing-file-modified-sort="1764825895994" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="19" data-listing-word-count-sort="3608">
 <div class="thumbnail"><a href="./posts/2023-05-17-introduccion-ars.html" class="no-external">
 
 <img loading="lazy" src="./posts" class="thumbnail-image">
@@ -560,7 +583,7 @@ Eduardo BxN
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="12" data-categories="ZWNvbm9tJUMzJUFEYSUyMHBvbCVDMyVBRHRpY2E=" data-listing-date-sort="1683957600000" data-listing-file-modified-sort="1764824591425" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3422">
+<div class="quarto-post image-right" data-index="13" data-categories="ZWNvbm9tJUMzJUFEYSUyMHBvbCVDMyVBRHRpY2E=" data-listing-date-sort="1683957600000" data-listing-file-modified-sort="1764824591425" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3422">
 <div class="thumbnail"><a href="./posts/2023-05-13-ciclos-capital-tasa-ganancia.html" class="no-external">
 
 <img loading="lazy" src="./posts" class="thumbnail-image">
@@ -590,7 +613,7 @@ Eduardo BxN
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="13" data-categories="Y3Jpc2lzJTIwZmluYW5jaWVyYXM=" data-listing-date-sort="1683180000000" data-listing-file-modified-sort="1764821542375" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3117">
+<div class="quarto-post image-right" data-index="14" data-categories="Y3Jpc2lzJTIwZmluYW5jaWVyYXM=" data-listing-date-sort="1683180000000" data-listing-file-modified-sort="1764821542375" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3117">
 <div class="thumbnail"><a href="./posts/2023-05-04-problema-gestion-crisis.html" class="no-external">
 
 <img loading="lazy" src="./posts" class="thumbnail-image">
@@ -620,7 +643,7 @@ Eduardo BxN
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="14" data-categories="dGVvciVDMyVBRGE=" data-listing-date-sort="1646805600000" data-listing-file-modified-sort="1764821398118" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="757">
+<div class="quarto-post image-right" data-index="15" data-categories="dGVvciVDMyVBRGE=" data-listing-date-sort="1646805600000" data-listing-file-modified-sort="1764821398118" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="757">
 <div class="thumbnail"><a href="./posts/2022-03-09-oligarquia-organizacion.html" class="no-external">
 
 <img loading="lazy" src="./posts" class="thumbnail-image">
@@ -650,7 +673,7 @@ Eduardo BxN
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="15" data-categories="dGVvciVDMyVBRGE=" data-listing-date-sort="1646200800000" data-listing-file-modified-sort="1764821268242" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="654">
+<div class="quarto-post image-right" data-index="16" data-categories="dGVvciVDMyVBRGE=" data-listing-date-sort="1646200800000" data-listing-file-modified-sort="1764821268242" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="654">
 <div class="thumbnail"><a href="./posts/2022-03-02-capitales.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -680,7 +703,7 @@ Eduardo BxN
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="16" data-categories="cmVkZXM=" data-listing-date-sort="1645596000000" data-listing-file-modified-sort="1764820924558" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="513">
+<div class="quarto-post image-right" data-index="17" data-categories="cmVkZXM=" data-listing-date-sort="1645596000000" data-listing-file-modified-sort="1764820924558" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="513">
 <div class="thumbnail"><a href="./posts/2022-02-23-estrategas-de-la-red.html" class="no-external">
 
 <img loading="lazy" src="./posts" class="thumbnail-image">
@@ -764,13 +787,14 @@ Eduardo BxN
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
