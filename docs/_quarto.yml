@@ -26,7 +26,7 @@ website:
 format:
   html:
     theme:
-      - cosmo
+      - solar
       - brand
     css: styles.css
     toc: true # Tabla de contenidos
