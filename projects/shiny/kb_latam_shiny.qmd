@@ -1,0 +1,459 @@
+---
+title: "Capital burocrático de los candidatos a la presidencia en América Latina"
+subtitle: "Desde la independencia hasta nuestros días"
+format: 
+  html:
+    page-layout: full
+server: shiny
+---
+
+```{r}
+#| context: setup
+#| include: false
+
+library(shiny)
+library(tidyverse)
+library(scales)
+library(sf)
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(bslib)
+library(bsicons)
+library(plotly)
+library(readxl)
+
+# Cargar datos desde Excel
+datos_kb_raw <-read_excel("~/Documentos/web_n0dn/n0dn/dataframes/bd_kb.xlsx")
+```
+
+```{r}
+#| panel: sidebar
+
+selectizeInput("anio_filtro", 
+               "Año de la contienda:",
+               choices = NULL,
+               multiple = TRUE,
+               options = list(
+                 placeholder = 'Seleccione año(s)',
+                 maxItems = NULL
+               ))
+
+selectizeInput("pais_filtro", 
+               "País:",
+               choices = NULL,
+               multiple = TRUE,
+               options = list(
+                 placeholder = 'Seleccione país(es)',
+                 maxItems = NULL
+               ))
+```
+
+##  {.tabset}
+
+### Datos generales
+
+#### Número de candidaturas
+
+```{r}
+#| layout-ncol: 3
+
+value_box(
+  title = "Total de candidaturas",
+  value = textOutput("total_candidaturas"),
+  showcase = bsicons::bs_icon("person-badge"),
+  theme = "primary"
+)
+
+value_box(
+  title = "Candidaturas únicas",
+  value = textOutput("candidaturas_unicas"),
+  showcase = bsicons::bs_icon("person-check"),
+  theme = "info"
+)
+
+value_box(
+  title = "Candidaturas repetidas",
+  value = textOutput("candidaturas_repetidas"),
+  showcase = bsicons::bs_icon("arrow-repeat"),
+  theme = "warning"
+)
+```
+
+#### Tipo de éxito
+
+```{r}
+#| layout-ncol: 3
+
+value_box(
+  title = "Ganadores",
+  value = textOutput("ganadores"),
+  showcase = bsicons::bs_icon("trophy"),
+  theme = "success"
+)
+
+value_box(
+  title = "Perdedores",
+  value = textOutput("perdedores"),
+  showcase = bsicons::bs_icon("x-circle"),
+  theme = "danger"
+)
+
+value_box(
+  title = "De facto",
+  value = textOutput("de_facto"),
+  showcase = bsicons::bs_icon("shield-exclamation"),
+  theme = "secondary"
+)
+```
+
+#### Partidos predominantes
+
+```{r}
+plotOutput("partidos_top3", height = "300px")
+```
+
+#### Análisis detallado
+
+```{r}
+#| layout-ncol: 2
+
+# Columna izquierda
+htmltools::div(
+  htmltools::h4("Los 10 candidatos con mayor capital burocrático"),
+  tableOutput("top10_candidatos"),
+  htmltools::br(),
+  htmltools::h4("Evolución del Capital Burocrático"),
+  plotOutput("evolucion_kb", height = "400px")
+)
+
+# Columna derecha
+htmltools::div(
+  htmltools::h4("Países con información de kb"),
+  plotOutput("mapa_paises", height = "500px")
+)
+```
+
+### Composición del capital burocrático por contienda
+
+```{r}
+#| panel: sidebar
+
+selectInput("anio_contienda", "Año de la contienda:",
+            choices = NULL,
+            selected = NULL)
+```
+
+```{r}
+plotOutput("composicion_kb", height = "800px")
+```
+
+```{r}
+#| context: server
+
+# 1. Procesamiento reactivo de los datos
+datos_kb <- reactive({
+  req(nrow(datos_kb_raw) > 0)
+  
+  datos_kb_raw %>%
+    mutate(
+      kb = as.numeric(kb),
+      intra = as.numeric(intra),
+      para = as.numeric(para),
+      sub = as.numeric(sub),
+      exa = as.numeric(exa),
+      ana = as.numeric(ana),
+      # Convertir columnas de instituciones
+      across(c(presidencia, vicepresidencia, ministerio, gobernatura, 
+               ejercito, corte_suprema, legislatura, alcaldia, 
+               partido_politico, empresas, soc_civil, mov_rev), 
+             ~as.numeric(replace_na(., 0))),
+      anio = as.numeric(anio)
+    )
+})
+
+# 2. Actualizar las opciones de los filtros
+observe({
+  req(datos_kb())
+  datos <- datos_kb()
+  
+  updateSelectizeInput(session, "anio_filtro",
+                    choices = sort(unique(datos$anio)),
+                    server = TRUE)
+  
+  updateSelectizeInput(session, "pais_filtro",
+                    choices = sort(unique(datos$pais)),
+                    server = TRUE)
+  
+  updateSelectInput(session, "anio_contienda",
+                    choices = sort(unique(datos$anio)),
+                    selected = max(datos$anio))
+})
+
+# 3. Datos Filtrados
+datos_filtrados <- reactive({
+  req(datos_kb())
+  datos <- datos_kb()
+  
+  if (!is.null(input$anio_filtro) && length(input$anio_filtro) > 0) {
+    datos <- datos %>% filter(anio %in% input$anio_filtro)
+  }
+  
+  if (!is.null(input$pais_filtro) && length(input$pais_filtro) > 0) {
+    datos <- datos %>% filter(pais %in% input$pais_filtro)
+  }
+  
+  datos
+})
+
+# --- OUTPUTS PANEL 1 ---
+
+output$total_candidaturas <- renderText({
+  req(datos_filtrados())
+  format(nrow(datos_filtrados()), big.mark = ",")
+})
+
+output$candidaturas_unicas <- renderText({
+  req(datos_filtrados())
+  datos <- datos_filtrados()
+  if(nrow(datos) == 0) return("0")
+  
+  unicas <- datos %>% 
+    group_by(id_candidato) %>% 
+    summarise(n = n()) %>% 
+    filter(n == 1) %>% 
+    nrow()
+  
+  porc <- round(unicas / nrow(datos) * 100, 1)
+  paste0(unicas, " (", porc, "%)")
+})
+
+output$candidaturas_repetidas <- renderText({
+  req(datos_filtrados())
+  datos <- datos_filtrados()
+  if(nrow(datos) == 0) return("0")
+  
+  n_total_unicos <- n_distinct(datos$id_candidato)
+  if(n_total_unicos == 0) return("0")
+  
+  repetidas <- datos %>% 
+    group_by(id_candidato) %>% 
+    summarise(n = n()) %>% 
+    filter(n > 1) %>% 
+    nrow()
+  
+  porc <- round(repetidas / n_total_unicos * 100, 1)
+  paste0(repetidas, " (", porc, "%)")
+})
+
+output$ganadores <- renderText({
+  req(datos_filtrados())
+  datos <- datos_filtrados()
+  if(nrow(datos) == 0) return("0")
+  ganadores <- sum(datos$exito == "Ganador", na.rm = TRUE)
+  porc <- round(ganadores / nrow(datos) * 100, 1)
+  paste0(ganadores, " (", porc, "%)")
+})
+
+output$perdedores <- renderText({
+  req(datos_filtrados())
+  datos <- datos_filtrados()
+  if(nrow(datos) == 0) return("0")
+  perdedores <- sum(datos$exito == "Perdedor", na.rm = TRUE)
+  porc <- round(perdedores / nrow(datos) * 100, 1)
+  paste0(perdedores, " (", porc, "%)")
+})
+
+output$de_facto <- renderText({
+  req(datos_filtrados())
+  datos <- datos_filtrados()
+  if(nrow(datos) == 0) return("0")
+  de_facto <- sum(datos$exito == "De facto", na.rm = TRUE)
+  porc <- round(de_facto / nrow(datos) * 100, 1)
+  paste0(de_facto, " (", porc, "%)")
+})
+
+output$partidos_top3 <- renderPlot({
+  req(datos_filtrados())
+  datos <- datos_filtrados()
+  
+  if(nrow(datos) == 0) return(NULL)
+  
+  datos_plot <- datos %>%
+    filter(exito %in% c("Ganador", "De facto")) %>%
+    count(partidos, sort = TRUE) %>%
+    head(3)
+  
+  if(nrow(datos_plot) == 0) return(NULL)
+  
+  ggplot(datos_plot, aes(x = reorder(partidos, n), y = n)) +
+    geom_col(fill = "#CD040E") +
+    geom_text(aes(label = n), hjust = -0.2, size = 4) +
+    coord_flip() +
+    labs(x = "", y = "Número de candidatos exitosos",
+         title = "Top 3 Partidos Predominantes") +
+    theme_minimal() +
+    theme(panel.grid.major.y = element_blank())
+})
+
+output$top10_candidatos <- renderTable({
+  req(datos_filtrados())
+  datos_filtrados() %>%
+    arrange(desc(kb)) %>%
+    head(10) %>%
+    select(Candidato = candidato, KB = kb, Año = anio, País = pais) %>%
+    mutate(KB = round(KB, 2))
+}, striped = TRUE, hover = TRUE)
+
+output$evolucion_kb <- renderPlot({
+  req(datos_filtrados())
+  datos <- datos_filtrados()
+  
+  if(nrow(datos) == 0) return(NULL)
+  
+  datos_resumen <- datos %>%
+    group_by(anio) %>%
+    summarise(
+      Intra = mean(intra, na.rm = TRUE),
+      Para = mean(para, na.rm = TRUE),
+      Sub = mean(sub, na.rm = TRUE),
+      Exa = mean(exa, na.rm = TRUE),
+      Ana = mean(ana, na.rm = TRUE)
+    ) %>%
+    pivot_longer(cols = c(Intra, Para, Sub, Exa, Ana),
+                 names_to = "tipo",
+                 values_to = "valor")
+  
+  colores <- c("Intra" = "#07979C", "Para" = "#022674", 
+               "Sub" = "#821291", "Exa" = "#CD040E", "Ana" = "#FFA600")
+  
+  ggplot(datos_resumen, aes(x = anio, y = valor, color = tipo)) +
+    geom_line(linewidth = 1.2) +
+    scale_color_manual(values = colores) +
+    labs(x = "Año", y = "Valor promedio", 
+         color = "Tipo de capital") +
+    theme_minimal() +
+    theme(legend.position = "bottom")
+})
+
+output$mapa_paises <- renderPlot({
+  req(datos_filtrados())
+  
+  # Obtener geometría
+  america <- ne_countries(continent = c("North America", "South America"), 
+                          returnclass = "sf", scale = "medium")
+  
+  # Calcular promedio de KB por país
+  datos_mapa <- datos_filtrados() %>%
+    group_by(pais) %>%
+    summarise(kb_promedio = mean(kb, na.rm = TRUE))
+  
+  # Diccionario de códigos a nombres en inglés
+  dict_paises <- c(
+    "ARG" = "Argentina", "BOL" = "Bolivia", "BRA" = "Brazil", 
+    "CHI" = "Chile", "COL" = "Colombia", "COR" = "Costa Rica", 
+    "CUB" = "Cuba", "MEX" = "Mexico", "PAN" = "Panama"
+  )
+  
+  # Convertir códigos a nombres completos
+  datos_mapa <- datos_mapa %>%
+    mutate(pais_nombre = dict_paises[pais])
+  
+  # Unir geometría con datos
+  america_data <- america %>%
+    left_join(datos_mapa, by = c("name" = "pais_nombre"))
+  
+  # Graficar
+  ggplot(america_data) +
+    geom_sf(aes(fill = kb_promedio), color = "white", size = 0.2) +
+    geom_sf_text(
+    aes(label = ifelse(is.na(kb_promedio), "", round(kb_promedio, 1))),
+    color = "white",
+    size = 3,
+    fontface = "bold",
+    check_overlap = TRUE  # Evita que los textos se encimen si los países son pequeños
+  ) +
+    scale_fill_viridis_c(
+      option = "plasma", 
+      name = "KB Promedio",
+      na.value = "#E0E0E0",
+      direction = 1
+    ) +
+    coord_sf(xlim = c(-120, -35), ylim = c(-56, 33), expand = FALSE) +
+    theme_void() +
+    theme(
+      legend.position = "bottom",
+      legend.key.width = unit(2, "cm"),
+      legend.key.height = unit(0.5, "cm")
+    )
+})
+
+# --- OUTPUTS PANEL 2 ---
+
+output$composicion_kb <- renderPlot({
+  req(input$anio_contienda, datos_kb())
+  
+  kb_c <- datos_kb() %>%
+    filter(anio == input$anio_contienda) %>%
+    arrange(desc(kb))
+  
+  if(nrow(kb_c) == 0) return(NULL)
+  
+  kb_c$candidato <- factor(kb_c$candidato, 
+                           levels = kb_c$candidato[order(kb_c$kb)])
+  
+  datos_long <- kb_c %>%
+    pivot_longer(
+      cols = c(presidencia, vicepresidencia, ministerio, gobernatura, 
+               ejercito, corte_suprema, legislatura, alcaldia, 
+               partido_politico, empresas, soc_civil, mov_rev),
+      names_to = "institucion",
+      values_to = "cantidad"
+    )
+  
+  etiquetas_institucion <- c(
+    "presidencia" = "Presidencia", 
+    "vicepresidencia" = "Vicepresidencia",
+    "ministerio" = "Ministerio", 
+    "gobernatura" = "Gobernatura",
+    "ejercito" = "Ejército", 
+    "corte_suprema" = "Corte Suprema",
+    "legislatura" = "Legislatura", 
+    "alcaldia" = "Alcaldía",
+    "partido_politico" = "Partidos Políticos", 
+    "empresas" = "Empresas",
+    "soc_civil" = "Sociedad Civil", 
+    "mov_rev" = "Mov. Insurgentes"
+  )
+  
+  colores_institucion <- c(
+    "presidencia" = "#53EAFD", "vicepresidencia" = "#02B7CF",
+    "ministerio" = "#016774", "gobernatura" = "#5E90FD",
+    "ejercito" = "#155DFC", "corte_suprema" = "#0235A1",
+    "legislatura" = "#022674", "alcaldia" = "#D545E8",
+    "partido_politico" = "#821291", "empresas" = "#FC5F67",
+    "soc_civil" = "#CD040E", "mov_rev" = "#F5B027"
+  )
+  
+  kb_medio <- mean(kb_c$kb, na.rm = TRUE)
+  
+  ggplot(datos_long, aes(x = candidato, y = cantidad, fill = institucion)) +
+    geom_col() +
+    scale_y_continuous(labels = comma) +
+    scale_fill_manual(values = colores_institucion, labels = etiquetas_institucion) +
+    coord_flip() +
+    geom_hline(yintercept = kb_medio, linetype = "dashed", color = "black", size = 0.8) +
+    geom_text(aes(x = candidato, y = kb + (max(kb)*0.05), label = comma(round(kb, 1))), 
+              data = kb_c, size = 3.5, inherit.aes = FALSE) +
+    labs(title = paste("Composición del capital burocrático -", input$anio_contienda),
+         subtitle = "Desglose por tipo de institución",
+         x = "", y = "Capital burocrático (kb)",
+         fill = "Institución") +
+    theme_minimal() +
+    theme(
+      panel.grid.major.y = element_blank(),
+      panel.grid.minor.y = element_blank(),
+      legend.position = "right",
+      axis.text.y = element_text(size = 9)
+    )
+})
+```
