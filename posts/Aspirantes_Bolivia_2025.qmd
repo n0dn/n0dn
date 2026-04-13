@@ -1,6 +1,10 @@
 ---
 title: "El Capital burocratico de los candidatos a la presidencia de Bolivia 2025"
 author: "Dr. Norberto Bustos"
+date: "2025-09-01"
+description: "Análisis del capital burocrático de los candidatos presidenciales de Bolivia en 2025."
+image: "/images/Bolivia_2025.png"
+categories: [analisis, politica,capital burocrático, Bolivia]
 format: 
   html: 
     toc: true
@@ -20,6 +24,8 @@ callout-appearence: simple
 execute: 
   warning: false
   message: false
+bibliography: referencias.bib
+link-citations: true
 ---
 
 # Introducción
@@ -252,7 +258,7 @@ tb_aspirantes_kb %>%
     position = "center",
     font_size = 10
   ) %>%
-  row_spec(0, bold = TRUE, background = "#006AA7", color = "#FECC02") %>%  # encabezado azul y blanco
+  row_spec(0, bold = TRUE, background = "#03293c", color = "cyan") %>%  # encabezado azul y blanco
   row_spec(which(tb_aspirantes_kb$`Candidatura activa\npara Segunda Vuelta` == "Sí"), background = "#D9EAD3") %>%  # filas activas en verde suave
   column_spec(1, bold = TRUE, color = "#0B3B0B") %>%   # Columna candidato en negrita y color
   add_header_above(c(" " = 1, "Información básica" = 3, "Afiliación política" = 3, "Actividad electoral" = 3))
@@ -536,11 +542,11 @@ ggplot(datos_long, aes(x = Nombre, y = cantidad, fill = institucion)) +
 
 #### **Medio**
 
-El segundo grupo son aquellos cercanos a la media histórica, se encuentran Mandred Reyes, Johonny Fernández, Rodrigo Paz, Eva Copa y Andrónico Rodríguez quienes registraron una desviación estándar de -496, 204, 904, 44.04 y 79.04 respectivamente. Estos candidatos son los que mayor semejanza tienen con un candidato promedio en las elecciones presidenciales. La característica más notable de estos candidatos es la acumulación de cargos dentro de las alcaldías y en las legislaturas. Sólo en el caso de Manfed Reyes tiene experiencia en la gubernatura departamental. En menor medida, cuentan con experiencia en partidos políticos, sociedad civil y empresas. Ninguno cuenta con experiencia en el capital intra-burocrático, es decir, no cuentan con cargos en el poder ejecutivo plurinacional.
+El segundo grupo son aquellos cercanos a la media histórica, se encuentran Mandred Reyes, Johonny Fernández, Rodrigo Paz, Eva Copa y Andrónico Rodríguez quienes registraron una desviación estándar de *-496, 204, 904, 44.04 y 79.04* respectivamente. Estos candidatos son los que mayor semejanza tienen con un candidato promedio en las elecciones presidenciales. La característica más notable de estos candidatos es la acumulación de cargos dentro de las alcaldías y en las legislaturas. Sólo en el caso de Manfed Reyes tiene experiencia en la gubernatura departamental. En menor medida, cuentan con experiencia en partidos políticos, sociedad civil y empresas. Ninguno cuenta con experiencia en el capital intra-burocrático, es decir, no cuentan con cargos en el poder ejecutivo plurinacional.
 
 ### **Bajo**
 
-En cambio, aquellos que registran un capital burocrático por debajo del promedio se encuentran Carlos Eduardo del Castillo y Pavel Aracena con una desviación estándar de 195.04 y 265.04 respectivamente. Este grupo se caracteriza por acumular un solo tipo de capital burocrático, ya sea como ministro de Estado en el caso de Castillo y como empresario en el caso de Aracena, pues como vimos anteriormente, los candidatos tienden a acumular diferentes tipos de capital burocrático en sus trayectorias polítcas antes de postularse a un cargo presidencial. Como señalamos al inicio del análisis, el MAS impulsó la candidatura de un actor con tan poca experiencia en la administración pública que se asemeja más a un actor sin experiencia alguna que a un político promedio.
+En cambio, aquellos que registran un capital burocrático por debajo del promedio se encuentran Carlos Eduardo del Castillo y Pavel Aracena con una desviación estándar de *195.04* y *265.04* respectivamente. Este grupo se caracteriza por acumular un solo tipo de capital burocrático, ya sea como ministro de Estado en el caso de Castillo y como empresario en el caso de Aracena, pues como vimos anteriormente, los candidatos tienden a acumular diferentes tipos de capital burocrático en sus trayectorias polítcas antes de postularse a un cargo presidencial. Como señalamos al inicio del análisis, el MAS impulsó la candidatura de un actor con tan poca experiencia en la administración pública que se asemeja más a un actor sin experiencia alguna que a un político promedio.
 
 # Conclusion: El resgreso de la *rancia oligarquía* y la fragmentación de la izquierda
 
@@ -548,10 +554,8 @@ La primera vuelta electoral en Bolivia muestra el desgaste del MAS como maquinar
 
 La experiencia muestra que Quiroga sólo ofrece un programa anquilosado de promesas revasadas por la historia reciente del país andino. Será el retorno a un país atrasado y desigual donde los terrateniente buscarán recuperar los privilegios que creen haber sido arrebatados por los millones de bolivianos que salieron de la pobreza en los últimos veinte años.
 
-Por su parte, con Paz Pereira, un candidato tibio - o como dicen ahora, de Centro-Centro - ligado familarmente por dos expresidentes del MIR, su padre y su abuelo. Ambos prvenientes de un partido ideológicamente de izquierda pero en la práctica aplicaron políticas neoliberales favorables a la privatización de empresas públicas y posicionamiento del mercado sobre las necesidades sociales. Paz Pereira no ha distado mucho del programa neoliberal como alcalde de Tarija, incluso en sus promesas de campaña propone que el gobierno central controle la mitad de los recursos públicos y la otra los privados. ***¿Dónde hemos visto esa película donde las grandes mayorías pierden?***
+Por su parte, con Paz Pereira, un candidato tibio - o como dicen ahora, de Centro-Centro - ligado familarmente por dos expresidentes del MIR, su padre y su abuelo. Ambos prvenientes de un partido ideológicamente de izquierda pero en la práctica aplicaron políticas neoliberales favorables a la privatización de empresas públicas y posicionamiento del mercado sobre las necesidades sociales. Paz Pereira no ha distado mucho del programa neoliberal como alcalde de Tarija, incluso en sus promesas de campaña propone que el gobierno central controle la mitad de los recursos públicos y la otra los privados.
 
 A nivel regional, el regreso de la oligarquía boliviana servirá para fortalecer el bloque de gobiernos de extrema derecha liderada por el presidente argentino Javier Milei, quienes han impulsado políticas favorables al colonialismo norteamericano en sudamérica capaces de garantizar la extracción de materias primas necesarias para la industria estadounidense, hoy en crisis por el avance chino. Habrá que esperar que en el mediano plazo Bolivia vuelva a poner en venta el gas, litio y demás riquezas mineras posee el país y que favorecerá a los mismos que causaron, por sus fallas, el ascenso del MAS.
 
 Por lo tanto, esta grave derrota deberá servir a la izquierda boliviana como un gran aprendizaje primero programático, particularmente sobre las revoluciones constantes y la atención por nuevos derechos y mejoras en lugar de quedarse estancados cuando se llega a un punto. Segundo, los conflictos personales de sus dirigencias no deben escalar al punto de inmolar al movimiento en su conjunto. Tercero, la formación de cuadros jóvenes con capacidades técnicas y sociales aun está en marcha pero sigue cruda.
-
-***En política, las batallas tienen varios finales***

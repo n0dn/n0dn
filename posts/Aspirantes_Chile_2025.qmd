@@ -1,6 +1,10 @@
 ---
 title: "Capital burocrático de los aspirantes a la presidencia de Chile 2025"
 author: "Dr. Norberto Bustos"
+date: "2025-08-22"
+description: "Análisis del capital burocrático de los candidatos presidenciales de Chile en 2025."
+image: "/images/Chile_2025.png"
+categories: [analisis, politica,capital burocrático, Chile]
 format: 
   html: 
     toc: true
@@ -9,12 +13,15 @@ format:
     theme: lumen
 editor: visual
 params:
-  datafile: "~/Documentos/web_n0dn/n0dn/dataframes/Aspirantes_Chile_2025_v2.csv"
+  datafile1: "~/Documentos/web_n0dn/n0dn/dataframes/Aspirantes_Chile_2025.csv"
 lang: es
 fontsize: 12pt
+callout-appearence: simple
 execute: 
   warning: false
   message: false
+bibliography: referencias.bib
+link-citations: true
 ---
 
 # Introducción
@@ -91,8 +98,8 @@ library(readxl)
 library(ggplot2)
 library(forcats)
 
-kb_d <- read.csv(params$datafile, fileEncoding = "Latin1", stringsAsFactors = FALSE) # Para codificar en windows
-tb_aspirantes_kb <-kb_d %>% 
+kb_chile <- read.csv(params$datafile1) # Para codificar en windows
+tb_aspirantes_kb <- kb_chile %>% 
   dplyr::select(Nombre, Edad_contienda,Genero,Comuna,Coalición,Partido, Activo, kb) %>% 
   rename(Aspirante = Nombre, 
          Edad = Edad_contienda,
@@ -107,7 +114,8 @@ tb_aspirantes_kb <-kb_d %>%
    kable(caption = "Elaborado por: n0dn | The linked data") %>%
    kable_styling(bootstrap_options = c("striped", "responsive"),
                  full_width = FALSE, 
-                 position = "center") 
+                 position = "center") %>% 
+  row_spec(0, bold = TRUE, background = "#03293c", color = "cyan")
 
 tb_aspirantes_kb
 ```
@@ -129,10 +137,8 @@ library(gt)
 library(dplyr)
 
 
-kb_e <- read.csv(params$datafile, fileEncoding = "Latin1", stringsAsFactors = FALSE) # Para codificar en windows
-
 # Calcular rango antes
-rango_prom_kb <- kb_e %>%
+rango_prom_kb <- kb_chile %>%
   dplyr::select(Nombre, Coalición, Activo, kb) %>%
   rename(Aspirante = Nombre, "Candidatura activa" = Activo) %>%
   group_by(Coalición, Aspirante) %>%
@@ -147,7 +153,7 @@ min_val <- rango_prom_kb$min_val
 max_val <- rango_prom_kb$max_val
 
 # Ahora generar la tabla
-kb_e %>%
+kb_chile %>%
   dplyr::select(Nombre, Edad_contienda, Genero, Coalición, Activo, kb) %>%
   rename(
     Aspirante = Nombre,
@@ -249,11 +255,8 @@ library(readxl)
 library(ggplot2)
 library(forcats)
 
-kb_c <- read.csv(params$datafile, fileEncoding = "Latin1", stringsAsFactors = FALSE) # Para codificar en windows
-# Gráfico de barras apiladas
-
 # Apilar datos
-long_kbtyp <- kb_c %>%
+long_kbtyp <- kb_chile %>%
   pivot_longer(
     cols = c("Intra", "Para", "Sub", "Exa", 
              "Ana"),
@@ -284,7 +287,7 @@ long_kbtyp_suma$Coalición <- factor(long_kbtyp_suma$Coalición, levels = orden_
 suma_total_coalicion$Coalición <- factor(suma_total_coalicion$Coalición, levels = orden_coalicion)
 
 # Los niveles de un factor deben ser únicos, pero aquí estás usando una lista con repeticiones por lo que se deben corregir con unique
-kb_c$Coalición <- factor(kb_c$Coalición, levels = unique(kb_c$Coalición[order(kb_c$kb)]))
+kb_chile$Coalición <- factor(kb_chile$Coalición, levels = unique(kb_chile$Coalición[order(kb_chile$kb)]))
 
 # Colores por tipo de capital
 
@@ -358,13 +361,10 @@ library(readr)
 library(readxl)
 library(ggplot2)
 
-kb_a <-  read.csv(params$datafile, fileEncoding = "Latin1", stringsAsFactors = FALSE) # Para codificar en windows
-# Gráfico de barras apiladas
-# Reordenar el nombre por kb
 
-kb_a$Nombre <- factor(kb_a$Nombre, levels = kb_a$Nombre[order(kb_a$kb)])
+kb_chile$Nombre <- factor(kb_chile$Nombre, levels = kb_chile$Nombre[order(kb_chile$kb)])
 # Apilar datos
-datos_long <- kb_a %>%
+datos_long <- kb_chile %>%
   pivot_longer(
     cols = c("Presidencia", "Vicepresidencia", "Ministerio", "Gobernatura", 
              "Ejercito", "Suprema.Corte", "Legislatura", "Alcaldia", 
@@ -427,7 +427,7 @@ ggplot(datos_long, aes(x = Nombre, y = cantidad, fill = institucion)) +
     show.legend = FALSE
   ) +
   geom_label(data = lineas_kb,
-             aes(x = length(unique(kb_a$Nombre)), 
+             aes(x = length(unique(kb_chile$Nombre)), 
                  y = pos_y_superior, 
                  label = label_text), 
              hjust = 1, vjust = -0.5, # Ajusta justificación para que quede sobre la línea
@@ -438,7 +438,7 @@ ggplot(datos_long, aes(x = Nombre, y = cantidad, fill = institucion)) +
             size = 3.5) +
   geom_label(
   data = lineas_kb,
-  aes(x = length(unique(kb_a$Nombre)), 
+  aes(x = length(unique(kb_chile$Nombre)), 
       y = 1,  # parte inferior
       label = label_text),
   hjust = 1, vjust = 1.5,
@@ -447,7 +447,7 @@ ggplot(datos_long, aes(x = Nombre, y = cantidad, fill = institucion)) +
 ) +
   labs(title = "Aspirantes para la presidencia de Chile, 2025",
        subtitle = "Capital burocrático por tipo",
-       caption = "Fuente: n0dn.com con datos de Wikipedia.com",
+       caption = "Fuente: n0dn | The linked data\ncon datos de Wikipedia.com",
        x = "",
        y = "capital burocrático (kb)") +
   theme_minimal() +
@@ -483,28 +483,14 @@ La diferencia más importante de un político además de su capital burocrático
 -   **Clan**: grupo social basado principalmente en la descendencia común, generalmente en sociedades donde lazos de parentesco y consanguinidad constituyen la unidad fundamental de organización política y social. Los clanes funcionan en sistemas segmentarios o de linaje, donde la solidaridad interna y la identidad colectiva se construyen sobre la genealogía compartida, pudiendo incluir reglas específicas de alianza y conflicto con otros grupos. Son grupos relativamente abiertos y flexibles, donde el parentesco es importante para la cohesión y la expresión de la vida política, pero sin una jerarquía rígida de estatus o privilegios heredados.
 :::
 
-La red política chilena se caracteriza por la densidad de sus vínculos estables que van desde el útlimo tercio del siglo XVIII por la clase colonial española (vascos) y criollos chilenos, la cual participó activamente en la construcción de la República que surgió de la guerra de independencia en el primer tercio del siglo XIX y que se acomodó como nueva clase dominante, junto con migrantes ingleses, norteamericanos, franceses, croatas y alemanes que transitaron su acumulación de capital económico del fundo a las industrias y a la banca. Durante todo el siglo XIX, la red política chilena comenzó a consolidarse en torno a los vínculos de los antiguos latifundios con los nuevos industriales mineros y comerciantes ultramarinos de Valapariso, y conformaron una red política que incluyó además de los vínculos económicos, su raigambre en las guerras de independencia, golpes de Estado, la conformación de partidos y su participación en los diferentes gobiernos conservadores y liberales. Aunado a ello, los militares tuvieron un papel relevante especialmente en las diferentes guerras contra Perú y España.
+La red política chilena se caracteriza por la densidad de sus vínculos estables que van desde el útlimo tercio del siglo XVIII por la clase colonial española (vascos) y criollos chilenos, la cual participó activamente en la construcción de la República que surgió de la guerra de independencia en el primer tercio del siglo XIX y que se acomodó como nueva clase dominante, junto con migrantes ingleses, norteamericanos, franceses, croatas y alemanes que transitaron su acumulación de capital económico del fundo a las industrias y a la banca [@historia2017]. Durante todo el siglo XIX, la red política chilena comenzó a consolidarse en torno a los vínculos de los antiguos latifundios con los nuevos industriales mineros y comerciantes ultramarinos de Valapariso, y conformaron una red política que incluyó además de los vínculos económicos, su raigambre en las guerras de independencia, golpes de Estado, la conformación de partidos y su participación en los diferentes gobiernos conservadores y liberales[@collier1999]. Aunado a ello, los militares tuvieron un papel relevante especialmente en las diferentes guerras contra Perú y España.
 
-Para el siglo XX, ya estaba conformada la red política en torno a castas dominantes en torno a las cuales se configuraban los diferentes gobiernos, independientemente del partido del presidente, lo cual dotó a la red de cierta estabilidad toda vez que existían altos grados de agrupamiento al interior de la red política hasta 1973. El golpe de Estado que conllevó a la dictadura militar de Augusto Pinochet, destaca de los anteriores golpes por la intervención directa del gobierno de Estados Unidos y coordinada dentro de su esquema colonial denominado "Plan Cóndor" el cual abarcó toda Latinoamérica y el Caribe. La dictadura de Pinochet reconfiguró la antigua clase política del siglo XX, y conformó una red emergente proveniente de las clases empresariales y militares conservadoras, las cuales se vinculan en torno a grupos familiares que conformaron la UDI y RN. 
+Para el siglo XX, ya estaba conformada la red política en torno a castas dominantes en torno a las cuales se configuraban los diferentes gobiernos, independientemente del partido del presidente, lo cual dotó a la red de cierta estabilidad toda vez que existían altos grados de agrupamiento al interior de la red política hasta 1973. El golpe de Estado que conllevó a la dictadura militar de Augusto Pinochet, destaca de los anteriores golpes por la intervención directa del gobierno de Estados Unidos y coordinada dentro de su esquema colonial denominado "Plan Cóndor" el cual abarcó toda Latinoamérica y el Caribe. La dictadura de Pinochet reconfiguró la antigua clase política del siglo XX, y conformó una red emergente proveniente de las clases empresariales y militares conservadoras, las cuales se vinculan en torno a grupos familiares que conformaron la UDI y RN.
 
+El retorno a la democracia trajo de vuelta a la red política tradicional, la cual derribó las barreras ideológicas del siglo XX (Demócrata Cristianos, Radicales, Socialistas, Comunistas) para llevarlos como bloque partidista que duraría 16 años en la presidencia del país. Desde 1989 hasta la actualidad las castas surgidas de la junta militar y aquellas con tradición política durante el siglo XX, compitieron por la presidencia en dos bloques de partidos: Concertación y Pinochetistas. Pero en 2006 emergió una nueva red política proveniente de las clases medias y populares vinculadas por las escuelas y universidades, quienes a través de la organización colectiva lograron ganar la presidencia en 2022 bajo el liderazgo de Gabriel Boric. Esta red emergente se relaciona en torno a clanes vinculados por el trabajo político en los gobiernos de la Concertación, particularmente en los dos periodos de Michelle Bachelet y por otro, en los nuevos movimientos estudiantiles y sociales vinculados a Boric.
 
+### Dinámica del capital burocrático
 
-El retorno a la democracia trajo de vuelta a la red política tradicional, la cual derribó las barreras ideológicas del siglo XX (Demócrata Cristianos, Radicales, Socialistas, Comunistas) para llevarlos como bloque partidista que duraría 16 años en la presidencia del país. Desde 1989 hasta la actualidad las castas surgidas de la junta militar y aquellas con tradición política durante el siglo XX, compitieron por la presidencia en dos bloques de partidos: Concertación y Pinochetistas. Pero en 2006 emergió una nueva red política proveniente de las clases medias y populares vinculadas por las escuelas y universidades, quienes a través de la organización colectiva lograron ganar la presidencia en 2022 bajo el liderazgo de Gabriel Boric. Esta red emergente se relaciona en torno a clanes vinculados por el trabajo político en los gobiernos de la Concertación, particularmente en los dos periodos de Michelle Bachelet y por otro, en los nuevos movimientos estudiantiles y sociales vinculados a Boric. 
-
-
-
-Dinámica del capital burocrático 
-
-
-
-Cómo se aprecia en el gráfico 3,  el capital burocrático de los aspirantes a la presidencia de Chile desde 1808 hasta 2021 ha sido altamente volátil durante todo el siglo XIX hasta el primer tercio del siglo XX. A partir de las elecciones de 1938 y hasta 1970 el capital burocrático de los candidatos registró poca variación, lo que señala lo similares que llegaron a ser entre ellos a pesar del partido al que pertenecieran. Tras el regreso a la democracia la volatilidad volvió a ser alta, siendo las elecciones de 2009 donde se registró una mayor diferencia de entre los candidatos. Sin embargo a partir del 2013 el kb de los candidatos registró una media inferior a la media histórica, lo que indica un cambio en la acumulación de cargos directivos antes de llegar a ser candidatos.
-
+Cómo se aprecia en el gráfico 3, el capital burocrático de los aspirantes a la presidencia de Chile desde 1808 hasta 2021 ha sido altamente volátil durante todo el siglo XIX hasta el primer tercio del siglo XX. A partir de las elecciones de 1938 y hasta 1970 el capital burocrático de los candidatos registró poca variación, lo que señala lo similares que llegaron a ser entre ellos a pesar del partido al que pertenecieran. Tras el regreso a la democracia la volatilidad volvió a ser alta, siendo las elecciones de 2009 donde se registró una mayor diferencia de entre los candidatos. Sin embargo a partir del 2013 el kb de los candidatos registró una media inferior a la media histórica, lo que indica un cambio en la acumulación de cargos directivos antes de llegar a ser candidatos.
 
 Esta nueva subred se juega su permanencia para los próximos 20 años contra el retorno de la antigua casta pinochetista (UDI, RN, Libertarios, Republicanos). Las subredes que conforman la Coalición Unidad por Chile es la que muestra mayor capital burocrático necesario para demostrar sus capacidad de dirigir el aparato de Estado y continuar con su reforzamiento de la mano de Jeanette Jara, seguido por la Coalición Chile Vamos cuyo retorno podría echar abajo los avances en materia social si José Antonio Kast logra la mayoría en la primera vuelta.
-
-```{r}
-
-```
-
-
-Eso es lo que se está jugando en estas elecciones en Chile.

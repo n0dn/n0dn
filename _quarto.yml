@@ -1,20 +1,23 @@
 project:
   type: website
+  output-dir: docs
 
 website:
   title: "n0dn | The linked data"
   # Menú de navegación
   navbar:
+    logo: /images/simbolo_n0dn.png
     left:
       - href: index.qmd
         text: "🏠 Inicio" # Cambio "Home" por "Inicio" para consistencia en español
-      - about.qmd
+      - href: about.qmd
+        text: "Sobre mi"
       - href: descargables.qmd
         text: "Descargables" # Añadido texto visible para el enlace descargables.qmd
       
   # Pie de página
   page-footer:
-    left: "© 2025 n0dn | The linked Data. Todos los derechos reservados."
+    left: "© 2021-2026 n0dn | The linked Data. Todos los derechos reservados."
     right:
       - icon: twitter
         href: https://x.com/n0dn_
@@ -26,8 +29,8 @@ website:
 format:
   html:
     theme:
-      - solar
-      - brand
+      light: flatly
+      dark: darkly
     css: styles.css
     toc: true # Tabla de contenidos
     dark_mode: true # Soporte para modo oscuro

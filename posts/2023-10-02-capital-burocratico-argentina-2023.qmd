@@ -1,9 +1,29 @@
 ---
-title: "El capital burocrático de los aspirantes a la presidencia de Argentina en 2023"
+title: "El Capital burocratico de los candidatos a la presidencia de Argentina en 2023"
 author: "Dr. Norberto Bustos"
-date: 2023-10-02
-categories: [Argentina, aspirantes presidenciales, capital burocrático]
-description: "Contenido migrado desde n0dn.com. Revisa y completa el texto, imágenes y enlaces."
+date: "2023-10-02"
+description: "Análisis del capital burocrático de los candidatos presidenciales de Argentina en 2023."
+image: "/images/Argentina_2023.png"
+categories: [analisis, politica,capital burocrático, Argentina]
+format: 
+  html: 
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: flatly
+    link-external-icon: true
+editor: visual
+params:
+  datafile1: "/home/eduardo/Documentos/web_n0dn/n0dn/dataframes/Arg_precan_2023.csv" # Base de aspirantes Argentina 2023
+  datafile2: "/home/eduardo/Documentos/web_n0dn/n0dn/dataframes/Argentina_kb.csv" #base completa Argentina
+lang: es
+fontsize: 12pt
+callout-appearence: simple
+execute: 
+  warning: false
+  message: false
+bibliography: referencias.bib
+link-citations: true
 ---
 
 Las elecciones primarias en Argentina del 14 de agosto de 2023 reflejaron el descontento debido al manejo de la política fiscal durante la pandemia de COVID-19 y la renegociación de la deuda con el FMI, contraída durante el gobierno de Mauricio Macri (2015-2019). El presidente Alberto Fernández (2019-2023) heredó el país con una tasa de inflación de alrededor del 60% anual, una crisis cambiaria significativa y la posibilidad de incumplir con los acreedores de la deuda externa. La discordia en el gabinete de Fernández sobre las negociaciones con el Fondo Monetario Internacional (FMI) resultó en la destitución de Martín Guzmán como ministro de Economía, reemplazado por el entonces presidente de la Cámara de Diputados, Sergio Massa, quien prometió cambios estructurales para resolver la situación.
@@ -16,7 +36,7 @@ Los datos de las PASO muestran que las diferencias entre los tres bloques son de
 
 En **n0dn**nos hemos propuesto comparar los perfiles de los 22 aspirantes a la candidatura presidencial que participaron en las elecciones PASO, con miras a la contienda programada para el 22 de octubre de 2023. Estos aspirantes provienen de diversas listas y bloques, y nuestro objetivo es ofrecer una herramienta de análisis basada en la medición del capital burocrático, lo que nos permitirá evaluar su experiencia en cargos directivos, tanto dentro como fuera del Estado.
 
-### 1. Los 22 aspirantes a la presidencia de Argentina
+## Los 22 aspirantes a la presidencia de Argentina
 
 Argentina, un país con una larga historia de altibajos económicos y problemas políticos crónicos, ha vivido una sorpresa en estas elecciones. Se trata de un candidato que carece de experiencia en cargos políticos tradicionales pero que tiene fuertes vínculos con gobiernos de derecha y propuestas poco convencionales.
 
@@ -28,8 +48,51 @@ Por otro lado, está el peronismo neoliberal liderado por Carlos Menem (1989-199
 
 En la Tabla 1, se pueden observar los resultados de las últimas cinco elecciones, donde predominan los bloques peronistas y no peronistas. El capital burocrático promedio de los candidatos ganadores es de 781.53 kb, con un porcentaje promedio de votos obtenidos del 39.96%.
 
-****
-![Tabla 1. Candidatos presidenciales peronistas y no peronistas y capital burocrático](/images/peronistas_kb_arg.png)
+```{r}
+#| label: tb1-peronistas
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Tabla 1. Candidatos presidenciales  peronistas y no peronistas y capital burocrático"
+
+#librerías
+library(foreign)
+library(tidyverse)
+library(dplyr)
+library(scales)
+library(kableExtra)
+library(readr)
+library(readxl)
+library(ggplot2)
+
+arg <- read_delim(params$datafile2, delim = ";")
+
+tb_peronistas <- arg %>%
+  select(anio, candidato,partidos,votos,kb, exito) %>%
+  filter(candidato %in% c("Carlos Menem", "Ricardo López Murphy","Elisa Carrió","Hermes Binner", "Cristina Fernández", "Daniel Scioli", "Mauricio Macri", "Alberto Fernández ") &
+                          anio %in% c(2003,2007,2011, 2015, 2019)) %>%
+  mutate(pernonistas_no_peronista = case_when(candidato =="Carlos Menem"~"Peronista",
+                                 candidato =="Cristina Fernández"~"Peronista", 
+                                 candidato =="Daniel Scioli"~"Peronista",
+                                 candidato =="Alberto Fernández "~"Peronista",
+                                 candidato =="Ricardo López Murphy"~"No peronista",
+                                 candidato =="Elisa Carrió"~"No peronista",
+                                 candidato =="Hermes Binner"~"No peronista",
+                                 candidato =="Mauricio Macri"~"No peronista")) %>%
+  rename(Año = anio, Candidato = candidato, Votos = votos, Éxito = exito, Partido = partidos, Adscripción = pernonistas_no_peronista)
+  
+  tb_peronistas %>%
+  kable(caption = "Elaborado por: n0dn | The linked data", booktabs = TRUE, linesep = "") %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+    full_width = FALSE,
+    position = "center",
+    font_size = 10
+  ) %>%
+  row_spec(0, bold = TRUE, background = "#03293c", color = "cyan") %>%  # encabezado azul y blanco
+  column_spec(1, bold = TRUE, color = "#0B3B0B") %>%   # Columna candidato en negrita y color
+  add_header_above(c("Información básica" = 2, "Actividad electoral" = 4, "Adscripción política" = 1))
+```
 
 Desde 2009, las elecciones PASO han sido el método democrático para seleccionar candidatos presidenciales y legislativos. Para calificar, los aspirantes deben obtener al menos el 1.5% de los votos emitidos. En estas elecciones primarias, Sergio Massa, del bloque "Unión por la Patria", sorprendió al lograr el tercer lugar con un 27.27% de los votos, lo que plantea dudas sobre el futuro del proyecto kirchnerista. La credibilidad de este proyecto se ha visto afectada por la gestión de la crisis financiera heredada del gobierno de Mauricio Macri y por los escándalos de corrupción que involucran a la Vicepresidenta y ex Presidenta, Cristina Fernández, en el caso del Grupo Austral. A pesar de las sospechas de mal uso de recursos públicos, estas acusaciones no han tenido un impacto significativo debido al fuero de la vicepresidenta y a las numerosas apelaciones presentadas.
 
@@ -37,11 +100,298 @@ Por otro lado, Patricia Bullrich, candidata del bloque de derecha "Juntos por el
 
 La mayor sorpresa provino de la propuesta neoliberal radical de Javier Milei, quien obtuvo un 30.04% de las preferencias. Sus propuestas de privatización de los bienes nacionales, los servicios de salud y educación, la eliminación del Banco Central y la dolarización de la economía argentina llamaron la atención de los votantes. Sin embargo, muchos olvidaron que medidas similares ya se habían implementado durante el gobierno de la dictadura militar y el de Menem, lo que resultó en crisis financieras y políticas recurrentes. A pesar de sus estrechas conexiones con políticos de esa época, Milei se presenta como el principal crítico de la "casta peronista". Esta crítica ha generado divisiones entre quienes lo respaldan y quienes lo culpan por la crisis financiera actual.
 
-### 1.1 Capital burocrático por bloques y partidos políticos
+### Capital burocrático por bloques y partidos políticos
 
-La experiencia en cargos directivos es fundamental para conocer las capacidades relativas al manejo de la administración pública y del gobierno. Este factor que denominamos capital burocrático (kb), permite medir dicha experiencia por bloque, partido y aspirante. En las elecciones primarias argentinas se registraron 22 aspirantes dentro de 15 bloques de partidos políticos.
+La experiencia en cargos directivos es fundamental para conocer las capacidades relativas al manejo de la administración pública y del gobierno. Este factor que denominamos capital burocrático (kb), permite medir dicha experiencia por bloque, partido y aspirante. En las elecciones primarias argentinas se registraron 22 aspirantes dentro de 15 bloques de partidos políticos. De ellos, por género fueron 18 hombres (81.8 %), 3 mujeres (13.6%) y 1 mujer trans (4.5%). Sin embargo, de los cinco candidatos que pasarán a contender en la elección presidencial, 3 de ellos son varones (60%) y 2 mujeres (40%), como se describirá más adelante.
 
-Se presentaron 18 hombres (81.8 %), 3 mujeres (13.6%) y 1 mujer trans (4.5%), sin embargo, de los cinco candidatos que pasarán a contender en la elección presidencial, 3 de ellos son varones (60%) y 2 mujeres (40%), como se describirá más adelante.
+En relación al capital burocrático de los aspirantes, según se refleja en la Tabla 3, el bloque "Hacemos por Nuestro País" muestra el indicador más alto con 1210 kb, seguido por los aspirantes de "Juntos por el Cambio" con 994 kb, "Principios y Valores" con 745 kb, y "Unidos por la Patria" con 523 kb. En contraste, los bloques con candidatos de menor capital burocrático son el derechista "LiberAr" con 70 kb y el izquierdista "MAS" con 45 kb.
 
-****
-![Tabla 2. Género de los aspirantes que participaron en las PASO de 2023](/images/sexo_aspiran_arg.png)
+::: callout-tip
+La media del capital burocrático de los 22 aspirantes es de **344.27 kb**
+:::
+
+Al analizar a los tres aspirantes con el mayor capital burocrático (kb), como se muestra en la Tabla 3, notamos que el bloque "Hacemos por nuestro país", que presentó únicamente la candidatura de Juan Schiaretti, registró el mayor capital burocrático entre los aspirantes, alcanzando los 1,210 kb. A pesar de obtener solo un 3.83% de los votos en las primarias, logró asegurarse un lugar en la siguiente ronda para competir por la presidencia. Le sigue Horacio Rodríguez Larreta, del bloque "Juntos por el Cambio", con 1,193 kb, aunque no logró obtener el porcentaje de votos necesario para la nominación dentro de su bloque. Sergio Massa, candidato del bloque oficialista "Unidos por la Patria", ocupó el tercer lugar en cuanto al capital burocrático, con 927 kb y un 21.41% de la votación, lo que le permitirá avanzar hacia las elecciones presidenciales. Lo más destacado en el kb de estos tres candidatos es su experiencia como ministros de Estado (intra-burocrático), combinada con cargos en gobiernos provinciales, legislaturas (para-burocrático), y su participación en la fundación o dirección de partidos políticos.
+
+Por otro lado, los tres aspirantes con menor capital burocrático, como se detalla en la Tabla 4, son, en orden ascendente, Manuela Castañeira del bloque del "MAS", con 45 kb, ya que solo cuenta con experiencia en el ámbito de las organizaciones civiles. Le sigue la candidata trans Reyna Xiomara Ibañez con 49 kb y un 0.01% de los votos, y en tercer lugar se encuentra el candidato del bloque derechista "LiberAR", con 50 kb y un 0.03% de los votos. La característica más destacada de estos tres candidatos es que las dos últimas candidatas tienen experiencia en militancia o "acompañamiento", pero no en la dirección de organizaciones civiles. En el caso de Nazareno Etchepare, la información sobre su currículum en Internet es limitada, y solo se pudo encontrar que es fundador y dirigente de la agrupación política Demos.
+
+
+```{r}
+#| label: tb2-generales-kb-arg
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Tabla 2. Datos generales de los aspirantes"
+
+#librerías
+library(foreign)
+library(tidyverse)
+library(dplyr)
+library(scales)
+library(kableExtra)
+library(readr)
+library(readxl)
+library(ggplot2)
+library(forcats)
+
+aspiran_arg <- read.csv(params$datafile1) 
+
+tb_aspirantes_kb <-aspiran_arg %>% 
+  select(candidato, edad_contienda, Sexo, Entidad_nacimiento, bloque, estrategia, Activo, kb, votos) %>% 
+  rename(Candidato = candidato,
+         "Entidad de nacimiento" = Entidad_nacimiento,
+         Edad = edad_contienda,
+         Género = Sexo,
+        "Capital burocrático" = kb,
+        Bloque = bloque,
+        Estrategia = estrategia,
+        Votos = votos
+         ) %>% 
+  arrange(desc(`Capital burocrático`))
+
+# Luego aplicas kable y kableExtra sobre ese data frame
+tb_aspirantes_kb %>%
+  kable(caption = "Elaborado por: n0dn | The linked data", booktabs = TRUE, linesep = "") %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+    full_width = FALSE,
+    position = "center",
+    font_size = 10
+  ) %>%
+  row_spec(0, bold = TRUE, background = "#03293c", color = "cyan") %>%  # encabezado azul y blanco
+  row_spec(which(tb_aspirantes_kb$`Candidatura activa\npara Segunda Vuelta` == "Sí"), background = "#D9EAD3") %>%  # filas activas en verde suave
+  column_spec(1, bold = TRUE, color = "#0B3B0B") %>%   # Columna candidato en negrita y color
+  add_header_above(c("Información básica" = 4, "Afiliación política" = 2, "Actividad electoral" = 3))
+```
+
+Ciertamente, el capital burocrático de los aspirantes es un indicador que evidencia la desigualdad en la experiencia de los actores políticos que compiten por el mismo cargo público. Como se observa en la gráfica 1, solo 4 bloques están por encima de la media de kb, y representan a las fuerzas tradicionales que ya han gobernado el país. Los otros 12 bloques presentan candidatos con experiencia directiva política por debajo de la media y que nunca han ocupado cargos ejecutivos. En este sentido, la competencia con actores experimentados en la administración pública se concentra en 4 bloques. 
+
+```{r}
+#| label: tb3-kb-candidatos-arg
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Gráfico 1. Capital burocrático por bloque electoral que participó en las PASO"
+
+#librerías
+library(foreign)
+library(tidyverse)
+library(dplyr)
+library(scales)
+library(kableExtra)
+library(readr)
+library(readxl)
+library(ggplot2)
+library(forcats)
+
+# Apilar datos
+long_kbtyp <- aspiran_arg %>%
+  pivot_longer(
+    cols = c("intra", "para", "sub", "exa", "ana"),
+    names_to = "Tipo_de_capital",
+    values_to = "cantidad"
+  )
+
+# Sumar los datos por coalición
+long_kbtyp_suma <- long_kbtyp %>%
+  group_by(bloque, Tipo_de_capital) %>%
+  summarise(cantidad = sum(cantidad, na.rm = TRUE), .groups = "drop") %>% 
+  mutate(Tipo_de_capital = factor(Tipo_de_capital, 
+                                  levels = c("intra", "para", "sub", "exa", "ana")))
+
+# Tabla con suma total de kb por Coalición (para las etiquetas)
+suma_total_bloque <- long_kbtyp_suma %>%
+  group_by(bloque) %>%
+  summarise(total_kb = sum(cantidad, na.rm = TRUE), .groups = "drop")
+
+# Ordenar levels de bloque de mayor a menor por total_kb
+orden_bloque <- suma_total_bloque %>%
+  arrange(desc(total_kb)) %>%
+  pull(bloque)
+
+# Aplicar orden
+long_kbtyp_suma$bloque <- factor(long_kbtyp_suma$bloque, levels = orden_bloque)
+suma_total_bloque$bloque <- factor(suma_total_bloque$bloque, levels = orden_bloque)
+
+# Eliminar línea innecesaria (aspiran_arg$bloque ya no se usa aquí)
+# aspiran_arg$bloque <- factor(... )  # Removida
+
+# Colores por tipo de capital
+colores_tkb <- c(
+  "intra" = "#07979C",
+  "para" = "#022674",
+  "sub" = "#821291",
+  "exa" = "#CD040E",
+  "ana" = "#FFA600"
+)
+
+# Gráfica SIN etiquetas internas, solo total al final
+ggplot(data = long_kbtyp_suma, aes(x = bloque, y = cantidad, fill = Tipo_de_capital)) +
+  geom_col() +  # Barras apiladas sin texto interno
+  scale_y_continuous(labels = scales::comma) +  # Formato eje Y
+  scale_fill_manual(values = colores_tkb) +
+  coord_flip() +
+  # Solo total_kb al final de cada barra (fuera del apilado)
+  geom_text(data = suma_total_bloque, 
+            aes(x = bloque, y = total_kb + max(suma_total_bloque$total_kb) * 0.01,  # Pequeño offset arriba
+                label = scales::comma(round(total_kb))),
+            size = 5, fontface = "bold", color = "black",
+            inherit.aes = FALSE) +
+  labs(title = "Capital burocrático acumulado por bloque partidista",
+       subtitle = "Argentina, 2023",
+       caption = "Fuente: n0dn | The linked data, 2023\ncon datos de Wikipedia.com",
+       x = "Bloque partidista",
+       y = "capital burocrático (kb)",
+       fill = "Tipo de Capital Burocrático") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 0, hjust = 1, vjust = 1),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.caption = element_text(size = 7, face = "italic"),
+        legend.position = "bottom",
+        panel.background = element_rect(fill = "white", color = NA))
+```
+La distinción entre candidatos orgánicos y no orgánicos en el contexto del aparato de Estado argentino se basa en la acumulación de capital intra, para, y sub-burocrático. Los candidatos orgánicos son aquellos que han adquirido experiencia en estas esferas, mientras que los no orgánicos solo tienen experiencia exa y ana-burocrática.
+
+Los bloques "Hacemos por nuestro país", "Juntos por el Cambio", "Principios y Valores", y "Unidos por la Patria" son las agrupaciones políticas que presentan candidatos orgánicos del aparato de Estado. Por otro lado, los bloques "Frente de Izquierda", "Libres", "Política Obrera", "APA", y "Libertad Avanza" son agrupaciones políticas cuyos candidatos poseen capital burocrático localizado en el poder legislativo y en los partidos políticos, aunque siguen siendo considerados orgánicos. En cambio, los bloques "MIJD", "FPL", "Comp Vecinal", "PJ", "LiberAr", y "MAS" presentan candidatos no orgánicos, ya que su capital burocrático proviene de organizaciones de la sociedad civil, sindicatos o empresas privadas.
+
+Un aspecto destacado es la presencia de tres agrupaciones con candidatos que cuentan con experiencia ana-burocrática en organizaciones de insurgencia o movimientos revolucionarios, en particular, ex militantes de izquierda peronista que lucharon clandestinamente durante la dictadura militar. Un ejemplo de esto es Patricia Bullrich, candidata de Juntos por el Cambio y ex ministra en varias carteras durante la administración de Mauricio Macri, quien en su juventud militó en movimientos y partidos de izquierda durante la dictadura militar.
+
+## El capital burocrático de los candidatos ganadores de las primarias.
+
+De los 22 aspirantes, solamente cinco lograron obtener más del 3 por ciento de los votos emitidos en las elecciones primarias. El capital burocrático de los candidatos ganadores del primarias. Solamente cinco lograron obtener más del 3 por ciento de los votos emitidos en las elecciones primarias, lo que es necesario para competir por la presidencia en las elecciones de octubre próximo. Estos cinco candidatos son Juan Schiaretti, Sergio Massa, Patricia Bullrich, Myriam Bregman y Javier Milei. A excepción de Bregman y Milei, el resto de los candidatos son considerados políticos tradicionales.
+
+Como se puede observar en la tabla 6, el candidato más votado en las primarias, Javier Milei, es quien posee el menor capital burocrático de los cinco finalistas. Contrario a lo que su campaña propone, Milei no se clasifica como un candidato no orgánico o, como algunos periodistas lo llaman, "outsider", ya que registra 56 kb-para debido a su cargo de legislador por Buenos Aires y 95 kb-sub por su rol como dirigente y fundador del partido Libertad Avanza. Por otro lado, la abogada y defensora de víctimas de la dictadura y trabajadores, Myriam Bregman, fue la candidata con menos votos, obteniendo el 1.87% de los sufragios. No obstante, ha sido la única voz crítica al gobierno de Alberto Fernández desde una perspectiva de izquierda militante y como representante legislativa, acumulando así 353 kb.
+
+```{r}
+#| label: gr2-kb-candidato
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Gráfico 2. Capital burocrático por candidato" 
+
+#librerías
+library(foreign)
+library(tidyverse)
+library(dplyr)
+library(scales)
+library(kableExtra)
+library(readr)
+library(readxl)
+library(ggplot2)
+
+# Gráfico de barras apiladas
+
+candidatos_arg <- aspiran_arg %>% 
+  filter(Activo == "si")
+  
+# Reordenar el nombre por kb
+
+candidatos_arg$candidato <- factor(candidatos_arg$candidato, levels = candidatos_arg$candidato[order(candidatos_arg$kb)])
+# Apilar datos
+datos_long <- candidatos_arg %>%
+  pivot_longer(
+    cols = c("presidencia", "vicepresidencia", "ministerio", "gobernatura", 
+             "ejercito", "corte_suprema", "legislatura", "alcaldia", 
+             "partido_politico", "empresas", "soc_civil", "mov_rev"),
+    names_to = "institucion",
+    values_to = "cantidad"
+  )
+# Posición en la parte de arriba
+
+# Ordenar manualmente las instituciones
+# Orden manual de instituciones
+orden_instituciones <- c(
+  "presidencia", "vicepresidencia", "ministerio", "gobernatura", 
+             "ejercito", "corte_suprema", "legislatura", "alcaldia", 
+             "partido_politico", "empresas", "soc_civil", "mov_rev"
+)
+datos_long$institucion <- factor(datos_long$institucion, 
+                                 levels = orden_instituciones)
+# Colores instituciones
+colores_institucion <- c(
+  "presidencia"        = "#53EAFD",
+  "vicepresidencia"    = "#02B7CF",
+  "ministerio"         = "#016774",
+  "gobernatura"        = "#5E90FD",
+  "ejercito"           = "#155DFC",
+  "corte_suprema"      = "#0235A1",
+  "legislatura"        = "#022674",
+  "alcaldia"           = "#D545E8",
+  "partido_politico" = "#821291",
+  "empresas"           = "#FC5F67",
+  "soc_civil"     = "#CD040E",
+  "mov_rev" = "#ffdf00"
+)
+
+## Hline
+# Hline o lineas de intersección
+lineas_kb <- tibble(
+  yintercept = 503.3,
+  label_text = c("kb histórico (1826-2023) = 503.3"),
+  color_code = c(7, 2) # Usar códigos de color o candidatos para que coincidan con hline
+)
+# Posición vertical para labels de lineas_kb (arriba)
+pos_y_superior <- max(datos_long$cantidad, na.rm = TRUE) * 1.05
+## Gráfica de barras apiladas por tipo de capital burocático de cada aspirante
+
+ggplot(datos_long, aes(x = candidato, y = cantidad, fill = institucion)) +
+  geom_col() +
+  labs(
+    title = "",
+    x = "Candidato",
+    y = "Cantidad",
+    fill = "Institución"
+  ) +
+  scale_y_continuous(labels = comma) +           # Coma cada millar en eje Y
+  scale_fill_manual(values = colores_institucion) + # Paleta de colores institución
+  coord_flip() +
+  geom_hline(
+    aes(yintercept = yintercept, 
+        linetype = as.factor(color_code)),
+    data = lineas_kb,
+    show.legend = FALSE
+  ) +
+  geom_label(data = lineas_kb,
+             aes(x = length(unique(candidatos_arg$candidato)), 
+                 y = pos_y_superior, 
+                 label = label_text), 
+             hjust = 1, vjust = -0.5, # Ajusta justificación para que quede sobre la línea
+             fill = "white", color = "black", size = 3, # Fondo blanco, texto negro
+             label.padding = unit(0.25, "lines"), label.size = 0) + # Margen y borde del label
+  geom_text(aes(x=candidato, y= kb +20,
+                label = comma(round(kb))), # recuerda usar la librería scales para que salga la coma
+            size = 3.5) +
+  geom_label(
+  data = lineas_kb,
+  aes(x = length(unique(candidatos_arg$candidato)), 
+      y = 1,  # parte inferior
+      label = label_text),
+  hjust = 1, vjust = 1.5,
+  fill = "white", color = "black", size = 3,
+  label.padding = unit(0.25, "lines"), label.size = 0
+) +
+  labs(title = "Candidatos para la presidencia de Argentina, 2023",
+       subtitle = "Capital burocrático por tipo",
+       caption = "Elaborado por n0dn | The linked data, 2023",
+       x = "",
+       y = "capital burocrático (kb)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 1),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank())
+```
+En cuanto a la composición del capital burocrático, encontramos un factor común para los cinco candidatos: su experiencia en el poder legislativo y la dirección de partidos políticos. Sin embargo, la diferencia más significativa radica en que tres candidatos tienen experiencia intra-burocrática debido a su trabajo como ministros o secretarios de Estado, destacando Sergio Massa y Patricia Bullrich con una experiencia similar de 484 y 429 kb-intra, respectivamente. Por su parte, Juan Schiaretti posee la mayor experiencia para-burocrática con 792 kb-para, gracias a su experiencia en el gobierno y en el poder legislativo.
+
+## Conclusión
+
+La contienda presidencial en Argentina se librará entre candidatos profesionales de la política y un político aficionado. El capital burocrático de los cinco candidatos finalistas muestra que Javier Milei, quien lidera en intención de votos y podría ganar la elección, es el candidato con menos experiencia, tanto dentro como fuera del Estado.
+
+En comparación con los 22 aspirantes registrados, Milei se encuentra por debajo del promedio, solo superado por 7 aspirantes con menos experiencia política. Esto nos lleva a considerar que, para lograr los acuerdos necesarios, tendrá que apoyarse en otros actores con mayor capital político que le permitan llevar a cabo los cambios que propone, lo cual será complicado de negociar debido a su baja conexión con el Estado.
+
+Lo anterior podría ser visto por otros políticos profesionales de derecha como una oportunidad para acercarse a Milei y formar parte de su gabinete, incluso peronistas que trabajaron en el gobierno de Menem, a quien Milei ha manifestado su admiración. La paradoja radica en la dificultad de llevar a cabo el desmantelamiento del aparato de Estado con un bajo capital burocrático, ya que requiere habilidades y experiencia que actualmente Milei no posee
+
+la aceptación del electorado que es insuficiente para gobernar cuando se carece de estructura política para moverse dentro y fuera del Estado. A menos que pida estructura prestada de la red política que Milei denomina "casta".
+
+::: callout-tip
+**Si deseas descargar la base del capital burocrático de aspirantes a la presidencia de la Argentina, visita la sección *Descargables > Análisis de redes* y da click en el enlace**
+:::

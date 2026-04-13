@@ -8,6 +8,9 @@
     ],
     "blog.qmd": [
       "posts"
+    ],
+    "docs/index.qmd": [
+      "posts"
     ]
   }
 }

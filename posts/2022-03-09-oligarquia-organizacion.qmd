@@ -1,19 +1,35 @@
 ---
 title: "¿Oligarquía = organización?"
-author: "Eduardo BxN"
-date: 2022-03-09
+author: "Dr. Norberto Bustos"
+date: "2022-03-09"
 categories: [teoría]
-description: "Contenido migrado desde n0dn.com. Revisa y completa el texto, imágenes y enlaces."
-image: ""
+description: "Discutimos la formación de oligarquías en las sociedades"
+image: "/images/oligarquia.png"
+format: 
+  html: 
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: flatly
+    link-external-icon: true
+editor: visual
+lang: es
+fontsize: 12pt
+callout-appearence: simple
+execute: 
+  warning: false
+  message: false
+bibliography: referencias.bib
+link-citations: true
 ---
 
-Robert Michels, en su libro "[[Los Partidos Políticos]{.underline}](https://books.google.com.mx/books/about/Los_partidos_pol%C3%ADticos.html?id=hFhKAQAACAAJ&redir_esc=y). Un estudio sociológico de las tendencias oligárquicas de la democracia moderna" señala la relación entre la organización y la oligarquía como:
+Robert Michels, en su libro *Los partidos políticos. Un estudio sociológico de las tendencias oligárquicas de la democracia moderna* [@michels2008] señala la relación entre la organización y la oligarquía como:
 
 > "*La organización es lo que da origen a la dominación de los elegidos sobre los electores, de los mandatarios sobre los mandantes, de los delegados sobre los delegadores. Quien dice organización dice oligarquía.*"
 
 Esta sentencia sobre la ecuación organización = oligarquía que a su vez Michels denominaría como la "ley de hierro de la oligarquía", se debe a que a medida que la población crece y las relaciones incrementan su complejidad, los entes de gobierno se burocratizan con el objetivo de mantener mayor control, lo que deriva en una concentración de recursos que, genera oligarquías. Sin embargo, la palabra oligarquía no necesariamente aplica a cualquier organización. La diferencia radica en que una oligarquía es aquella subred que concentra recursos estratégicos de la red. Así que pueden existir organizaciones no controladas por oligarquías, sino por comités, colegios, representantes que no necesariamente concentren recursos sino responsabilidades derivadas de sus cargos. También existen organizaciones compuestas por diferentes oligarquías como los cárteles, los consejos de administración, *holdings*, entre otros.
 
-Sin embargo, el fenómeno de la creación de oligarquías ya había sido descrito desde un punto de vista histórico y sociológico en el siglo XIII por Ibn Jaldún en [[*Al-Muqaddimah*]{.underline}](https://books.google.com.mx/books/about/The_Muqaddimah.html?id=XRCnDwAAQBAJ&redir_esc=y)acerca de los califatos y sultanatos en el norte de África y Medio oriente, y que contrastaba con las comunidades "salvajes" o *mutawahhisha* quienes por su menor número de pobladores se organizaban en torno al poder social o *'asabiyya*. Ibn Jaldún sostiene que las poblaciones con mayor número de habitantes son las que mejor resisten los cambios o crisis provocadas por el medio ambiente, guerras u otras causas. A su vez, sugiere la necesidad de contar con liderazgos y burocracias capaces de guiar procesos de crisis.
+Sin embargo, el fenómeno de la creación de oligarquías ya había sido descrito desde un punto de vista histórico y sociológico en el siglo XIII por Ibn Jaldún en *Al-Muqaddimah* [@ibnhaldun2008] acerca de los califatos y sultanatos en el norte de África y Medio oriente, y que contrastaba con las comunidades "salvajes" o *mutawahhisha* quienes por su menor número de pobladores se organizaban en torno al poder social o *'asabiyya*. Ibn Jaldún sostiene que las poblaciones con mayor número de habitantes son las que mejor resisten los cambios o crisis provocadas por el medio ambiente, guerras u otras causas. A su vez, sugiere la necesidad de contar con liderazgos y burocracias capaces de guiar procesos de crisis.
 
 En este sentido, la organización juega un papel fundamental para la supervivencia humana especialmente cuando la población incrementa y sus instituciones se hacen más complejas. En este sentido, la organización se refiere a la creación de estructuras de relación en función de objetivos comunes para una red local con alcances globales.
 
@@ -27,6 +43,6 @@ Como señala Michels, ese vínculo se debe a la concentración de recursos para 
 
 Estos intermediarios son los agentes políticos de la red capaces de movilizar diferentes tipos de capitales disponibles hacia un objetivo común. La movilización del capital social es la capacidad de un nodo, subred o red global para llevar a cabo planes mediante los recursos incrustados en las relaciones de la red. Entre mayor sea la capacidad de movilizar capital social mayor será la influencia del agente para orientar el poder de la red.
 
-Entre mayor sea la influencia de un agente político, mayor será su prestigio como explicaría [[Nowak]{.underline}](https://books.google.com.mx/books?id=_GF5tgAACAAJ&dq=supercooperadores&hl=es&sa=X&redir_esc=y) a propósito de la cooperación, o sea, el crédito que los otros nodos le otorgan por la confianza generada en eventos anteriores, ya sea de forma directa o indirecta y que condiciona la cooperación con otro.
+Entre mayor sea la influencia de un agente político, mayor será su prestigio como explicaría [Nowak]{.underline} [@nowak] a propósito de la cooperación, o sea, el crédito que los otros nodos le otorgan por la confianza generada en eventos anteriores, ya sea de forma directa o indirecta y que condiciona la cooperación con otro.
 
 En suma, el incremento de la población genera un incremento en las interacciones sociales que a su vez le dan mayor complejidad a las relaciones sociales que requieren adaptaciones en la orientación política de las estructuras sociales de manera tal que traduzcan la complejidad en patrones más simples. Eso conlleva a la concentración de intermediarios de subredes o agentes políticos que tengan la capacidad de movilizar los capitales disponibles de la red en función de objetivos estratégicos. Estos clusters de intermediarios son las denominadas oligarquías.

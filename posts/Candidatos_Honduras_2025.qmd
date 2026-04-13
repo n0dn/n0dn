@@ -1,6 +1,10 @@
 ---
 title: "El Capital burocratico de los candidatos a la presidencia de Honduras 2025"
 author: "Dr. Norberto Bustos"
+date: "2025-09-25"
+description: "Análisis del capital burocrático de los candidatos presidenciales de Honduras en 2025."
+image: "/images/Honduras_2025.png"
+categories: [analisis, politica,capital burocrático, Honduras]
 format: 
   html: 
     toc: true
@@ -17,13 +21,15 @@ callout-appearence: simple
 execute: 
   warning: false
   message: false
+bibliography: referencias.bib
+link-citations: true
 ---
 
 # Introducción
 
 En las elecciones generales contempladas para el 30 de noviembre 2025 en Honduras, se elegirán 1 presidente de la nación, 128 diputados para el Congreso Nacional, 20 diputados para el Congreso Centroamericano, 298 alcaldes y vice-alcaldes así como 2,128 regidores. Sin embargo, a nivel presidencial se advierte la repetición de rostros y alianzas estratégicas entre las redes políticas y sus líderes conservadores, liberales y libres.
 
-Nasri Afura, será candidato será candidato por segunda ocasión consecutiva por el conservador Partido Nacional, así como Salvador Nasrala que competirá en su cuarta contienda consecutiva tras haberse desempeñado como Primer Designado o Vicepresidente de la fórmula de la actual presidenta Xiomara Castro. Por otra parte, se encuentra la candidata oficialista Rixi Moncada quien ha ocupado los Ministerios de Defensa, Finanzas y Trabajo así como gerencias de entidades descentralizadas como la Empresa Nacional de Energía Eléctrica entre otras, y quien será su primera contienda electoral. Finalmente, está la candidatura de Mario Enrique Rivera, un candidato que pretende ser un outsider del sistema político, pero en realidad ha sido regidor de Tegucigalpa, y ha sido dueño de dos medios de comunicación donde a su vez se ha desempeñado como analista político. Rivera es el único que propone que el país se anexe a Estados Unidos, en un intento desesperado y fuera de toda proporción, para erradicar la corrupción. Sin embargo, lo que mayormente destaca de los 5 candidatos son los casos de corrupción en los que han sido implicados, ya sea por fraude a la nación, desvío de recursos millonarios, cuentas en paraísos fiscales, apoyo al golpe de Estado de 2009, entre otros.
+Nasri Afura, será candidato por segunda ocasión consecutiva por el conservador Partido Nacional, así como Salvador Nasrala que competirá en su cuarta contienda consecutiva tras haberse desempeñado como Primer Designado o Vicepresidente de la fórmula de la actual presidenta Xiomara Castro. Por otra parte, se encuentra la candidata oficialista Rixi Moncada quien ha ocupado los Ministerios de Defensa, Finanzas y Trabajo así como gerencias de entidades descentralizadas como la Empresa Nacional de Energía Eléctrica entre otras, y quien será su primera contienda electoral. Finalmente, está la candidatura de Mario Enrique Rivera, un candidato que pretende ser un outsider del sistema político, pero en realidad ha sido regidor de Tegucigalpa, y ha sido dueño de dos medios de comunicación donde a su vez se ha desempeñado como analista político. Rivera es el único que propone que el país se anexe a Estados Unidos, en un intento desesperado y fuera de toda proporción, para erradicar la corrupción. Sin embargo, lo que mayormente destaca de los 5 candidatos son los casos de corrupción en los que han sido implicados, ya sea por fraude a la nación, desvío de recursos millonarios, cuentas en paraísos fiscales, apoyo al golpe de Estado de 2009, entre otros.
 
 Honduras aparentemente se encuentra a merced de dos propouestas de gobierno: 1) la propuesta de continuidad del programa de Centro-Izquierda del partido Libre y de la red política de esquema de linaje de Manuel Zelaya y su esposa Xiomara Castro, ligadas al progresismo latinoamericano; 2) La propuesta conservadora que pretende recuperar el poder después de la extradición por narcotráfico de Juan Orlando Hernández quien fuese candidato del Partido Nacional de Honduras (PNH). Una tercera opción sería quizás la del Partido Liberal, que representa una intersección entre el Conservadurismo y el partido Libre en donde se encuentra parte de la red de Manuel Zelaya quien fuera presidente por ese partido así como de anteriores expresidentes. Por tanto, no parece ser una competencia entre diferentes programas de gobierno, sino de estilos personales, toda vez que la clase política hondureña se encuentra entrelazada y cohesionada en diferentes sectores dentro y fuera del Estado.
 
@@ -127,7 +133,7 @@ tb_aspirantes_kb %>%
     font_size = 14
   ) %>%
   #add_header_above(c("<img src='D:/Users/eduardo.bustos/Documents/HND/Images/logo_n0dn.png' style='width:100%;height:60px;'/>" = 8), escape = FALSE) %>%
-  row_spec(0, bold = TRUE, background = "#006AA7", color = "#FECC02") %>%
+  row_spec(0, bold = TRUE, background = "#03293c", color = "cyan") %>%
   column_spec(1, bold = TRUE, color = "#0B3B0B")
 ```
 
@@ -223,7 +229,7 @@ ggplot(data = long_kbtyp_suma, aes(x = Partido, y = cantidad, fill = Tipo_de_cap
        subtitle = "Honduras, 2025",
        x = "Partido político",
        y = "capital burocrático (kb)",
-       caption = "Elaborado por: n0dn ! the linked data, 2025",
+       caption = "Elaborado por: n0dn | the linked data, 2025",
        fill = "Tipo de Capital Burocrático") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 0, hjust = 1, vjust = 1),

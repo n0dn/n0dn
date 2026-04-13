@@ -1,0 +1,36 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "n0dn | The linked data"
+  # Menú de navegación
+  navbar:
+    left:
+      - href: index.qmd
+        text: "🏠 Inicio" # Cambio "Home" por "Inicio" para consistencia en español
+      - href: about.qmd
+        text: "Bio" 
+      - href: descargables.qmd
+        text: "Descargables" # Añadido texto visible para el enlace descargables.qmd
+      
+  # Pie de página
+  page-footer:
+    left: "© 2025 n0dn | The linked Data. Todos los derechos reservados."
+    right:
+      - icon: twitter
+        href: https://x.com/n0dn_
+      - icon: linkedin
+        href: https://www.linkedin.com/in/norberto-bustos/
+      - text: "n0dn.info@proton.me"
+        href: "mailto:n0dn.info@proton.me"
+
+format:
+  html:
+    theme:
+      - solar
+    css: styles.css
+    toc: true # Tabla de contenidos
+    dark_mode: true # Soporte para modo oscuro
+
+editor: visual
