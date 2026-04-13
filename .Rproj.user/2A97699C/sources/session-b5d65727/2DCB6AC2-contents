@@ -1,0 +1,54 @@
+---
+title: "Las Redes del Capital Político de América Latina"
+format: 
+  html:
+    theme: solar
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: true
+  feed: true
+page-layout: full
+---
+
+::: callout-tip
+### ¿Qué es el Capital Político?
+
+El **capital político (kp)** se refiere al conjunto de recursos que acumula un actor, camarilla o red que facilita la influencia en las relaciones políticas a partir del uso instrumental del prestigio personal, cargos burocráticos, financieros, militares o sociales, así como su capacidad de movilización de diversos recursos para lograr objetivos estratégicos.
+
+Aquí exploramos, analizamos, medimos y visualizamos las redes de **capital político** en América Latina y el Caribe.
+:::
+
+------------------------------------------------------------------------
+
+## 🔎 Proyectos Centrales
+
+::: {.grid .g-col-2 .g-col-lg-2}
+### <i class="fas fa-landmark"></i> Redes históricas
+
+Estudiamos los modos en los que ha cambiado el capital político en América Latina desde las Guerras de Independencia del Siglo XIX hasta la actualidad.
+
+### 🗳️ Candidaturas presidenciales
+
+Analizamos el capital burocrático de los candidatos presidenciales que participan en las elecciones más actuales
+
+:::
+
+------------------------------------------------------------------------
+
+## 📧 Formulario de Suscripción
+
+::: {.card .text-center .p-3}
+### ¡Suscríbete a nuestro boletín!
+
+Para recibir actualizaciones sobre nuestros proyectos y publicaciones, envía un correo a: \[cite_start\]
+
+<p class="lead">
+
+<strong>n0dn.info\@proton.me</strong>
+
+</p>
+
+\[cite: 7\]
+:::

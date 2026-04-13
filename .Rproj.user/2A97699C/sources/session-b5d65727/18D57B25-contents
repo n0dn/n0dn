@@ -1,0 +1,345 @@
+# 🔧 Correcciones Necesarias para tu Estructura
+
+## ❌ ERRORES CRÍTICOS ENCONTRADOS
+
+### 1. **Archivo `n0dn.Rproj` en lugar incorrecto**
+```
+❌ INCORRECTO:
+docs/
+  └── n0dn.Rproj  # ¡NO debe estar aquí!
+
+✅ CORRECTO:
+n0dn/
+  ├── n0dn.Rproj  # Debe estar en la RAÍZ
+  └── docs/       # Esta carpeta se GENERA automáticamente
+```
+
+**ACCIÓN**: Mover `n0dn.Rproj` de `docs/` a la raíz del proyecto.
+
+```bash
+mv docs/n0dn.Rproj ./
+```
+
+---
+
+### 2. **Carpeta `docs/` mal ubicada**
+
+La carpeta `docs/` NO debe contener archivos manuales. Debe estar **vacía** inicialmente y será **generada automáticamente** por Quarto al renderizar.
+
+```bash
+# Limpiar docs/
+rm -rf docs/*
+
+# Quarto la regenerará al hacer render
+```
+
+---
+
+### 3. **Archivo `styles.css` en ubicación incorrecta**
+
+```
+❌ INCORRECTO:
+docs/styles.css
+
+✅ CORRECTO:
+styles.css  # En la raíz del proyecto
+```
+
+**ACCIÓN**: Mover `styles.css` a la raíz.
+
+```bash
+mv docs/styles.css ./
+```
+
+---
+
+### 4. **Falta configuración `output-dir` en `_quarto.yml`**
+
+Tu `_quarto.yml` actual NO especifica dónde generar el sitio. Esto causará errores en GitHub Pages.
+
+**DEBE contener:**
+```yaml
+project:
+  type: website
+  output-dir: docs  # ⭐ CRÍTICO
+```
+
+---
+
+### 5. **Falta archivo `.nojekyll`**
+
+GitHub Pages necesita este archivo para procesar correctamente el sitio de Quarto.
+
+**ACCIÓN**: Crear en la raíz.
+
+```bash
+touch .nojekyll
+```
+
+---
+
+### 6. **Falta `blog.qmd` y `projects.qmd`**
+
+Tu `_quarto.yml` tiene enlaces a estas páginas en el navbar, pero **no existen**.
+
+```yaml
+navbar:
+  left:
+    - text: "📝 Blog"
+      href: blog.qmd      # ⚠️ Este archivo NO existe
+    - text: "📊 Proyectos"
+      href: projects.qmd  # ⚠️ Este archivo NO existe
+```
+
+**RESULTADO**: Enlaces rotos en el menú.
+
+---
+
+### 7. **Posts fuera de la carpeta `posts/`**
+
+Tienes archivos `.qmd` en la raíz que parecen ser posts del blog:
+
+```
+❌ ESTRUCTURA ACTUAL:
+├── 2022-02-23-estrategas-de-la-red.qmd       # ⚠️ En la raíz
+├── 2022-03-02-capitales.qmd                  # ⚠️ En la raíz
+└── posts/
+    └── (vacía?)
+
+✅ ESTRUCTURA CORRECTA:
+├── posts/
+    ├── 2022-02-23-estrategas-de-la-red.qmd
+    ├── 2022-03-02-capitales.qmd
+    └── ...
+```
+
+**ACCIÓN**: Mover todos los posts a `posts/`.
+
+```bash
+mv 2022-*.qmd posts/
+mv 2023-*.qmd posts/
+mv Aspirantes_*.qmd posts/
+mv Candidatos_*.qmd posts/
+mv "El capital burocrático.qmd" posts/
+```
+
+---
+
+### 8. **Problema con `index.qmd`**
+
+Tu `index.qmd` tiene código de citación roto:
+
+```markdown
+# ❌ LÍNEAS 48-56 tienen errores:
+Para recibir actualizaciones... \[cite_start\]
+...
+\[cite: 7\]
+```
+
+**ACCIÓN**: Eliminar estos códigos extraños.
+
+---
+
+## ✅ ESTRUCTURA FINAL CORRECTA
+
+```
+n0dn/
+├── .nojekyll              # ⭐ NUEVO: Necesario para GitHub Pages
+├── .gitignore             # ⭐ ACTUALIZADO
+├── _quarto.yml            # ⭐ CORREGIDO: con output-dir
+├── n0dn.Rproj             # ⭐ MOVIDO: desde docs/ a raíz
+├── styles.css             # ⭐ MOVIDO: desde docs/ a raíz
+│
+├── index.qmd              # ⭐ LIMPIADO: sin códigos de cita
+├── about.qmd              # ✅ OK
+├── descargables.qmd       # ✅ OK
+├── blog.qmd               # ⭐ NUEVO: Listado del blog
+├── projects.qmd           # ⭐ NUEVO: Página de proyectos
+│
+├── posts/                 # ⭐ REORGANIZADO: todos los posts aquí
+│   ├── _metadata.yml      # ⭐ NUEVO: Config común
+│   ├── 2022-02-23-estrategas-de-la-red.qmd
+│   ├── 2022-03-02-capitales.qmd
+│   ├── 2023-*.qmd
+│   ├── Aspirantes_Bolivia_2025.qmd
+│   ├── Aspirantes_Chile_2025.qmd
+│   ├── Candidatos_Honduras_2025.qmd
+│   └── El_capital_burocrático.qmd
+│
+├── dataframes/            # ✅ OK (opcionalmente renombrar a data/)
+├── images/                # ✅ OK
+│
+├── projects/              # ✅ OK
+│   └── shiny/
+│       └── kb_latam_shiny.qmd
+│
+└── docs/                  # ⭐ SE GENERA AUTOMÁTICAMENTE
+    └── (archivos HTML generados por Quarto)
+```
+
+---
+
+## 🚀 PASOS PARA CORREGIR (en orden)
+
+### Paso 1: Mover archivos mal ubicados
+
+```bash
+# Desde la raíz de tu proyecto n0dn/
+
+# 1. Mover .Rproj a la raíz
+mv docs/n0dn.Rproj ./
+
+# 2. Mover styles.css a la raíz
+mv docs/styles.css ./
+
+# 3. Limpiar docs/ (se regenerará)
+rm -rf docs/*
+```
+
+---
+
+### Paso 2: Mover posts a su carpeta
+
+```bash
+# Mover todos los archivos .qmd de la raíz a posts/
+mv 2022-*.qmd posts/
+mv 2023-*.qmd posts/
+mv Aspirantes_*.qmd posts/
+mv Candidatos_*.qmd posts/
+mv "El capital burocrático.qmd" posts/
+```
+
+---
+
+### Paso 3: Crear archivos faltantes
+
+Copia los archivos que te proporciono:
+
+1. `_quarto.yml` (reemplazar el existente)
+2. `.nojekyll` (nuevo)
+3. `.gitignore` (actualizar)
+4. `blog.qmd` (nuevo)
+5. `projects.qmd` (nuevo)
+6. `posts/_metadata.yml` (nuevo)
+
+---
+
+### Paso 4: Limpiar `index.qmd`
+
+Edita `index.qmd` y **elimina las líneas 48-56**:
+
+```markdown
+# ❌ ELIMINAR ESTO:
+\[cite_start\]
+...
+\[cite: 7\]
+```
+
+Reemplazar por:
+
+```markdown
+Para recibir actualizaciones sobre nuestros proyectos y publicaciones, envía un correo a:
+
+**n0dn.info@proton.me**
+```
+
+---
+
+### Paso 5: Renderizar el sitio
+
+```bash
+# Desde RStudio o terminal
+quarto render
+```
+
+Esto generará la carpeta `docs/` con todo el sitio HTML.
+
+---
+
+### Paso 6: Verificar localmente
+
+```bash
+quarto preview
+```
+
+Abre `http://localhost:4200` en tu navegador y verifica:
+
+- ✅ El menú funciona (todos los enlaces)
+- ✅ El blog lista los posts
+- ✅ Los proyectos se cargan
+- ✅ No hay enlaces rotos
+
+---
+
+### Paso 7: Subir a GitHub
+
+```bash
+git add .
+git commit -m "Fix: Estructura corregida para GitHub Pages"
+git push origin main
+```
+
+---
+
+### Paso 8: Configurar GitHub Pages
+
+1. Ve a tu repositorio en GitHub
+2. **Settings** → **Pages**
+3. **Source**: 
+   - Branch: `main`
+   - Folder: `/docs` ⭐
+4. **Save**
+
+Tu sitio estará en: `https://tuusuario.github.io/n0dn/`
+
+---
+
+## 📋 Checklist de Verificación
+
+Antes de hacer commit, verifica:
+
+- [ ] `n0dn.Rproj` está en la **raíz** (no en `docs/`)
+- [ ] `styles.css` está en la **raíz** (no en `docs/`)
+- [ ] `docs/` solo contiene archivos **generados** (HTML, JS, CSS)
+- [ ] `.nojekyll` existe en la **raíz**
+- [ ] `_quarto.yml` tiene `output-dir: docs`
+- [ ] Todos los posts están en `posts/`
+- [ ] `blog.qmd` y `projects.qmd` existen
+- [ ] `index.qmd` no tiene códigos `\[cite_start\]`
+- [ ] `quarto render` ejecuta sin errores
+- [ ] `quarto preview` muestra el sitio correctamente
+
+---
+
+## ⚠️ ERRORES COMUNES A EVITAR
+
+### Error 1: Editar archivos en `docs/`
+❌ **NUNCA** edites archivos dentro de `docs/` manualmente.
+✅ Edita los archivos `.qmd` y deja que Quarto regenere `docs/`.
+
+### Error 2: Ignorar `docs/` en `.gitignore`
+❌ NO agregues `docs/` al `.gitignore`.
+✅ GitHub Pages necesita leer esa carpeta.
+
+### Error 3: No hacer commit de `docs/`
+❌ Si no subes `docs/` a GitHub, el sitio no funcionará.
+✅ Siempre haz commit de la carpeta `docs/` completa.
+
+---
+
+## 🎯 Resumen de Cambios Críticos
+
+| Archivo/Carpeta | Ubicación Actual | ✅ Ubicación Correcta | Acción |
+|-----------------|------------------|----------------------|---------|
+| `n0dn.Rproj` | `docs/` | Raíz | **Mover** |
+| `styles.css` | `docs/` | Raíz | **Mover** |
+| Posts `.qmd` | Raíz | `posts/` | **Mover** |
+| `.nojekyll` | No existe | Raíz | **Crear** |
+| `blog.qmd` | No existe | Raíz | **Crear** |
+| `projects.qmd` | No existe | Raíz | **Crear** |
+| `_quarto.yml` | Incompleto | Raíz | **Actualizar** |
+| `docs/` contenido | Manual | Generado | **Limpiar y regenerar** |
+
+---
+
+¡Con estos cambios tu sitio funcionará correctamente en GitHub Pages!
