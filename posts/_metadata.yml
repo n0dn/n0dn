@@ -1,0 +1,7 @@
+# Configuración común para todos los posts
+format:
+  html:
+    toc: true
+    code-fold: false
+
+author: "n0dn"
