@@ -3,7 +3,6 @@ title: "El problema de la gestión de las crisis económicas"
 author: "Eduardo BxN"
 date: 2023-05-04
 categories: [crisis financieras]
-description: "Contenido migrado desde n0dn.com. Revisa y completa el texto, imágenes y enlaces."
 image: ""
 ---
 

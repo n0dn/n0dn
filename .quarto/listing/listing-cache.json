@@ -1,15 +1,6 @@
 {
   "listingMap": {
-    "n0dn-quarto/blog.qmd": [
-      "posts"
-    ],
     "index.qmd": [
-      "posts"
-    ],
-    "blog.qmd": [
-      "posts"
-    ],
-    "docs/index.qmd": [
       "posts"
     ]
   }
