@@ -1,0 +1,1755 @@
+---
+title: "Reporte del capital burocrático en la contienda de 2022 en Colombia"
+subtitle: "n0dn | The linked Data"
+author: "Dr. Norberto Bustos"
+date: today
+format: 
+  html:
+    toc: true
+    toc-title: "Contenido"
+    toc-depth: 3
+    number-sections: true
+    theme: flatly
+    page-layout: full
+    embed-resources: true
+    smooth-scroll: true
+    link-external-icon: true
+params:
+  datafile: "~/Documentos/web_n0dn/n0dn/dataframes/bd_kb.xlsx"
+lang: es
+execute:
+  echo: false
+  warning: false
+  message: false
+bibliography: references.bib
+link-citations: true
+csl: https://www.zotero.org/styles/apa
+---
+
+```{r setup, include=FALSE}
+# Librerías necesarias únicamente
+library(foreign)
+library(tidyverse)
+library(scales)
+library(readr)
+library(ggplot2)
+library(forcats)
+library(knitr)
+library(kableExtra)
+library(dplyr)
+library(readxl)
+library(ggradar)
+
+# Librerías para mapas
+library(sf)
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(stringdist) 
+
+## Mapas
+
+# install.packages(c("sf", "rnaturalearth", "rnaturalearthdata", "rgeoboundaries", "stringdist"))
+
+# Para fuzzy matching de nombres
+
+# Cargar datos
+# ── Paletas de colores (SIN CAMBIOS) ───────────────────────────────────────────
+colores_tkb <- c("Intra" = "#07979C", "Para"  = "#022674", "Sub"   = "#821291", 
+                 "Exa"   = "#CD040E", "Ana"  = "#FFA600")
+
+colores_institucion <- c("presidencia" = "#53EAFD", "vicepresidencia" = "#02B7CF",
+                        "ministerio" = "#016774", "gobernatura" = "#5E90FD",
+                        "ejercito" = "#155DFC", "corte_suprema" = "#0235A1",
+                        "legislatura" = "#022674", "alcaldia" = "#D545E8",
+                        "partido_politico" = "#821291", "empresas" = "#FC5F67",
+                        "soc_civil" = "#CD040E", "mov_rev" = "#F5B027")
+
+etiquetas_inst <- c("presidencia" = "Presidencia", "vicepresidencia" = "Vicepresidencia",
+                   "ministerio" = "Ministerio", "gobernatura" = "Gobernatura",
+                   "ejercito" = "Ejército", "corte_suprema" = "Corte Suprema",
+                   "legislatura" = "Legislatura", "alcaldia" = "Alcaldía",
+                   "partido_politico" = "Partidos Políticos", "empresas" = "Empresas",
+                   "soc_civil" = "Sociedad Civil", "mov_rev" = "Mov. Insurgentes")
+
+dict_paises <- c("ARG" = "Argentina", "BOL" = "Bolivia", "BRA" = "Brasil",
+                "CHI" = "Chile", "COL" = "Colombia", "COR" = "Costa Rica",
+                "CUB" = "Cuba", "MEX" = "México", "PAN" = "Panamá")
+
+# ── Columnas numéricas ──────────────────────────────────────────────────────────
+cols_numericas <- c("kb", "intra", "para", "sub", "exa", "ana",
+                   "presidencia", "vicepresidencia", "ministerio", "gobernatura",
+                   "ejercito", "corte_suprema", "legislatura", "alcaldia",
+                   "partido_politico", "empresas", "soc_civil", "mov_rev")
+
+# ── Carga y limpieza de datos ──────────────────────────────────────────────────
+df_raw <- read_excel(params$datafile) %>%
+  mutate(
+    across(all_of(cols_numericas), ~as.numeric(replace_na(., 0))),
+    anio = as.integer(anio),
+    edad_en_contienda = as.integer(edad_en_contienda)
+  ) %>% 
+  mutate(pais= case_when(pais =="ARG" ~ "Argentina", 
+                         pais =="BOL"~ "Bolivia", 
+                         pais =="BRA" ~ "Brasil", 
+                         pais =="CHI" ~ "Chile", 
+                         pais =="COL" ~ "Colombia", 
+                         pais =="COR" ~ "Costa Rica",
+                         pais =="CUB" ~ "Cuba", 
+                         pais =="MEX" ~ "México", 
+                         pais =="PAN" ~ "Panamá"))
+
+# Filtros manuales (alternativa)
+pais_sel <- "Colombia"
+anio_sel <- 2022
+
+nombre_pais <- pais_sel
+
+# ── FILTRADO PRINCIPAL (UNIFICADO) ─────────────────────────────────────────────
+# Contienda
+df_contienda <- df_raw %>%
+  filter(pais == pais_sel, anio == anio_sel)
+# Histórico
+df_pais_historico <- df_raw %>% 
+  filter(pais == pais_sel)
+
+# Años
+menor_año <- df_pais_historico %>% 
+  summarise(menor_año = min(anio, na.rm = TRUE))
+
+mayor_año <- df_pais_historico %>% 
+  summarise(mayor_año = max(anio, na.rm = TRUE))
+
+# Validación robusta
+if (nrow(df_contienda) == 0) {
+  anios_disp <- df_raw %>% 
+    filter(pais == pais_sel) %>% 
+    pull(anio) %>% 
+    unique() %>% 
+    sort() %>% 
+    paste(collapse = ", ")
+  
+    validate(
+  need(nrow(df_contienda) > 0,
+       paste("No hay datos para", pais_sel, "en", anio_sel,
+             "Años disponibles:", 
+             paste(unique(df_raw$anio[df_raw$pais == pais_sel]), collapse = ", ")))
+)
+}
+
+# ── Función clasificación kb ───────────────────────────────────────────────────
+clasificar_kb <- function(val, media, sd) {
+  dplyr::case_when(
+    is.na(val) ~ "Sin dato",
+    val >= media + 1.5 * sd ~ "Muy alto",
+    val >= media + 0.5 * sd ~ "Alto", 
+    val >= media - 0.5 * sd ~ "Medio alto",
+    val >= media - 1.0 * sd ~ "Medio",
+    TRUE ~ "Bajo"
+  )
+}
+
+# ── Indicadores (SIN CAMBIOS) ──────────────────────────────────────────────────
+kb_medio <- round(mean(df_contienda$kb, na.rm = TRUE), 2)
+kb_sd <- round(sd(df_contienda$kb, na.rm = TRUE), 2)
+kb_max <- round(max(df_contienda$kb, na.rm = TRUE), 2)
+kb_min <- round(min(df_contienda$kb, na.rm = TRUE), 2)
+kb_total <- round(sum(df_contienda$kb, na.rm = TRUE), 2)
+n_candidatos <- nrow(df_contienda)
+
+# ── Clasificación candidatos ───────────────────────────────────────────────────
+df_contienda <- df_contienda %>%
+  mutate(nivel_kb = clasificar_kb(kb, kb_medio, kb_sd))
+
+# ── Ganador de la contienda ───────────────────────────────────────────────────
+ganador_info <- df_contienda %>% 
+  filter(exito %in% c("Ganador", "De facto")) %>%
+  arrange(desc(kb)) %>%
+  slice(1)
+
+# Niveles de capital burocrático (dentro y fuera)
+## Dentro
+### Histórico
+porcentaje_kb_dentro_hist <- df_pais_historico %>% 
+  mutate(
+    kb_dentro = rowSums(across(c(intra, para, sub)), na.rm = TRUE),
+    pct_dentro = (kb_dentro / kb) * 100
+  ) %>%
+  summarise(
+    mean_pct = round(mean(pct_dentro, na.rm = TRUE),2),
+    .groups = "drop"
+  )
+### contienda
+porcentaje_kb_dentro_contienda <- df_contienda %>% 
+  mutate(
+    kb_dentro = rowSums(across(c(intra, para, sub)), na.rm = TRUE),
+    pct_dentro = (kb_dentro / kb) * 100
+  ) %>%
+  summarise(
+    mean_pct = round(mean(pct_dentro, na.rm = TRUE),2),
+    .groups = "drop"
+  )
+## Fuera
+### Histórico
+porcentaje_kb_fuera_hist <- df_pais_historico %>% 
+  mutate(
+    kb_fuera = rowSums(across(c(exa, ana)), na.rm = TRUE),
+    pct_fuera = (kb_fuera / kb) * 100
+  ) %>%
+  summarise(
+    mean_pct = round(mean(pct_fuera, na.rm = TRUE),2),
+    .groups = "drop"
+  )
+### Contienda
+porcentaje_kb_fuera_contienda <- df_contienda %>% 
+  mutate(
+    kb_fuera = rowSums(across(c(exa, ana)), na.rm = TRUE),
+    pct_fuera = (kb_fuera / kb) * 100
+  ) %>%
+  summarise(
+    mean_pct = round(mean(pct_fuera, na.rm = TRUE),2),
+    .groups = "drop"
+  )
+#### Mapas
+
+# ── Función para obtener el mapa de un país desde rnaturalearth ──────────────
+obtener_mapa_pais <- function(pais_nombre) {
+  # Mapeo de nombres de países en la base a nombres en rnaturalearth
+  map_pais_nombres <- list(
+    "Argentina" = "argentina",
+    "Bolivia" = "bolivia",
+    "Brasil" = "brazil",
+    "Chile" = "chile",
+    "Colombia" = "colombia",
+    "Costa Rica" = "costa rica",
+    "Cuba" = "cuba",
+    "México" = "mexico",
+    "Panamá" = "panama"
+  )
+  
+  pais_buscar <- map_pais_nombres[[pais_nombre]]
+  
+  if (is.null(pais_buscar)) {
+    warning(paste("País no reconocido:", pais_nombre))
+    return(NULL)
+  }
+  
+  # Obtener mapa a nivel de subdivisiones (estados/departamentos)
+  mapa <- ne_states(country = pais_buscar, returnclass = "sf")
+  
+  return(mapa)
+}
+
+# ── Función para limpiar y estandarizar nombres de entidades ─────────────────
+limpiar_nombre_entidad <- function(nombre) {
+  nombre %>%
+    tolower() %>%
+    # Eliminar acentos
+    iconv(to = "ASCII//TRANSLIT") %>%
+    # Eliminar "de", "del", "la", "los", "las", "y", "san", "santo", "santa"
+    gsub("\\b(de|del|la|los|las|y|san|santo|santa|el|do|dos|das|do)\\b", "", .) %>%
+    # Eliminar palabras como "provincia", "departamento", "distrito", "capital"
+    gsub("(provincia|departamento|distrito|capital|ciudad)", "", .) %>%
+    # Eliminar puntuación y espacios extras
+    gsub("[[:punct:]]", "", .) %>%
+    trimws() %>%
+    # Eliminar espacios múltiples
+    gsub("\\s+", " ", .)
+}
+
+# ── Función para hacer fuzzy matching entre nombres de entidades ─────────────
+coincidir_entidades <- function(nombres_base, nombres_mapa, umbral = 0.85) {
+  resultados <- list()
+  
+  for (nombre in nombres_base) {
+    nombre_limpio <- limpiar_nombre_entidad(nombre)
+    
+    # Calcular distancia con todos los nombres del mapa
+    distancias <- stringdist::stringsim(
+      nombre_limpio, 
+      limpiar_nombre_entidad(nombres_mapa),
+      method = "lv"
+    )
+    
+    mejor_coincidencia <- which.max(distancias)
+    
+    if (distancias[mejor_coincidencia] >= umbral) {
+      resultados[[nombre]] <- nombres_mapa[mejor_coincidencia]
+    } else {
+      resultados[[nombre]] <- NA
+    }
+  }
+  
+  return(unlist(resultados))
+}
+
+# ── Preparar datos para mapa de lugares de nacimiento ─────────────────────────
+mapa_pais <- obtener_mapa_pais(nombre_pais)
+
+if (!is.null(mapa_pais)) {
+  
+  # Identificar los nombres de las entidades en el mapa
+  nombres_entidades_mapa <- unique(mapa_pais$name)
+  
+  # Obtener entidades únicas de la base de datos para el país seleccionado
+  entidades_base <- df_pais_historico %>%
+    filter(pais == nombre_pais) %>%
+    pull(entidad_namcimiento) %>%
+    unique() %>%
+    na.omit() %>%
+    as.character()
+  
+  # Realizar fuzzy matching
+  coincidencias <- coincidir_entidades(entidades_base, nombres_entidades_mapa)
+  
+  # Crear dataframe de mapeo
+  df_mapeo <- data.frame(
+    entidad_base = names(coincidencias),
+    entidad_mapa = as.character(coincidencias),
+    stringsAsFactors = FALSE
+  ) %>%
+    filter(!is.na(entidad_mapa))
+  
+  # Contar candidatos por entidad para la contienda seleccionada
+  df_conteo_entidades <- df_contienda %>%
+    group_by(entidad_namcimiento) %>%
+    summarise(
+      n_candidatos = n(),
+      candidatos = paste(candidato, collapse = ", "),
+      .groups = "drop"
+    ) %>%
+    left_join(df_mapeo, by = c("entidad_namcimiento" = "entidad_base"))
+  
+  # Agregar conteo histórico para tooltip
+  df_conteo_historico <- df_pais_historico %>%
+    group_by(entidad_namcimiento) %>%
+    summarise(
+      n_candidatos_historico = n(),
+      .groups = "drop"
+    ) %>%
+    left_join(df_mapeo, by = c("entidad_namcimiento" = "entidad_base"))
+  
+  # Unir con el mapa
+  mapa_conteo <- mapa_pais %>%
+    left_join(df_conteo_entidades, by = c("name" = "entidad_mapa")) %>%
+    replace_na(list(n_candidatos = 0))
+  
+  # Unir datos históricos
+  mapa_historico <- mapa_pais %>%
+    left_join(df_conteo_historico, by = c("name" = "entidad_mapa")) %>%
+    replace_na(list(n_candidatos_historico = 0))
+  
+}
+```
+
+## Introducción
+
+El presente reporte analiza el capital burocrático de los contendientes a las elecciones presidenciales de `r pais_sel` en el año `r anio_sel`, desde una perspectiva que combina la ciencia de datos con la teoría política estructural. El estudio toma como unidad de análisis al agente individual y examina cómo los candidatos acumulan y utilizan diferentes formas de capital político a lo largo de sus trayectorias. La metodología propuesta se fundamenta en los aportes teóricos de Nicos Poulantzas y Bob Jessop sobre el Aparato de Estado (ApE), y operacionaliza el concepto de capital burocrático (kb) a partir de la suma ponderada de los cargos directivos ocupados dentro y fuera del Estado, considerando su jerarquía, duración y capacidad de influencia. Para evaluar la eficiencia de esta acumulación se construye el Índice de Rendimiento del Capital Burocrático por Edad adulta (IRBE) , que combina la eficiencia burocrática, la eficiencia electoral y un factor de éxito diferenciado. De esta forma, el reporte permite identificar, medir y comparar el capital político de cada aspirante a la presidencia de r pais_sel en el período comprendido entre r menor_año y r mayor_año.
+
+## Metodología
+
+El estudio parte de una metodología particular para el análisis del capital político desde un enfoque estructural. El capital político puede entenderse como una forma específica de capital social que representa un conjunto de activos relacionales, simbólicos y de dominación —como el prestigio, los cargos directivos, los recursos financieros o militares— acumulados por actores o redes con el propósito de ejercer influencia o dominación dentro del sistema político. En este sentido, el **ApE** se define como el conjunto organizado de instituciones políticas, jurídicas y coercitivas que estructuran el ejercicio del poder estatal y aseguran la reproducción de las relaciones sociales de producción, manteniendo al mismo tiempo una relativa autonomía frente a las clases sociales.
+
+En América Latina, tras las guerras de independencia la configuración de las clases dirigentes parten de estractos arcáico y atípicos en comparaión con la coformación de la burguesía europea del mismo periodo [@ribeiro1977]. La procedencia de las clases dominantes procede de un contexto colonial-exclavista y que evolucionaría durante el siglo XIX en un empresariado mercantil y que hasta el primer tercio del siglo XX avanzaría hacia una burgesía neocolonial y dependiente, los cuales retrasaron la creación de un capitalismo autónomo[@basavekunhardt1997][@collier1999]. La mezcla entre las clases dominantes con las clases dirigentes, es decir con las redes de burócratas, militares, funcionarios públicos [@américa1985][@balmori1990][@bambirra1978] evolucionó durante el último siglo y medio en la conformación de los tecnócratas, líderes populistas y civiles que han dominado la arena política latinoamericana hasta la actualidad a partir de su dominio en los diferentes sectores que componen el aparato de Estado, con los cuales, van acumulando prestigio y poder político.
+
+En este marco conceptual, definimos el **capital burocrático** (*kb*) como un componente del capital político que, tanto en su dimensión estratégica como estructural, adquiere relevancia por su centralidad dentro del ApE. Este planteamiento parte de la concepción del Estado desarrollada por [Nicos Poulantzas]{.underline}, quien sostiene que el Estado no es un conjunto neutral de instituciones, sino una estructura institucional que organiza y garantiza la reproducción del poder político de las clases dominantes dentro de una formación social capitalista[@poulantzas1991].
+
+A partir de esta perspectiva, [Bob Jessop]{.underline} define el ApE como el conjunto de instituciones, organizaciones y recursos administrativos a través de los cuales se ejerce la autoridad política y se implementan las decisiones gubernamentales dentro de un territorio determinado [@jessop2016]. Jessop advierte que, además de las estructuras institucionales formales —como el gobierno, la administración pública, el sistema judicial o las fuerzas armadas— que permiten formular, ejecutar y hacer cumplir las políticas públicas, existen también otras fuerzas no formales que influyen en la reproducción del Estado capitalista. Entre ellas se encuentran grandes empresas, monopolios, grupos paramilitares o estructuras de poder económico territorial como los latifundios. Desde su **enfoque estratégico-relacional del Estado**, Jessop sostiene que el aparato estatal constituye una configuración institucional que ofrece oportunidades y restricciones diferenciadas para los actores sociales y políticos, dependiendo de la correlación de fuerzas existente.
+
+Partiendo de esta concepción relacional —basada en los aportes teóricos de Poulantzas y Jessop— se desarrolla la metodología propuesta para el estudio del capital burocrático. Desde esta perspectiva, el actor que acumula mayor capital burocrático adquiere la capacidad instrumental de movilizar recursos y vínculos institucionales como resultado de su trayectoria política. Esta capacidad se deriva de su posibilidad de establecer relaciones con actores históricamente relevantes, dirigir instituciones públicas y articular estos recursos con otros activos externos al aparato estatal para consolidar su poder individual o grupal. En este sentido, el *kb* es el resultado de la acumulación de competencias, experiencia y posiciones en cargos directivos dentro y fuera del ApE, que los actores adquieren a lo largo de su trayectoria política en la competencia por convertirse en agentes dominantes dentro de una red política.
+
+Desde una perspectiva operativa, el capital burocrático (*kb*) se mide a partir de la trayectoria institucional de los actores, considerando variables como:
+
+1.  Número y nivel jerárquico de los cargos ocupados dentro del ApE;
+
+2.  Duración o permanencia en dichas posiciones;
+
+3.  Centralidad estratégica de las instituciones dirigidas; y
+
+4.  Capacidad de articulación con redes políticas o económicas externas al Estado.
+
+En conjunto, estas dimensiones permiten estimar el grado de acumulación de capital burocrático de un actor y su posición relativa dentro de la estructura de poder estatal.
+
+Finalmente, la organización del ApE puede describirse por su topología como una compleja red jerárquica ([@barrat2004]; [@ravasz2002]; [@barabási]). Esta estructura se caracteriza por la planificación de tareas administrativas en tres niveles principales —ejecutivo, organizacional y operativo—, lo que implica que pequeños grupos de actores se articulen jerárquicamente en distintos niveles de decisión. A partir de estos niveles se desprenden grupos progresivamente más amplios, al tiempo que la estructura mantiene una topología libre de escala y un grado específico de agrupamiento, rasgos característicos de los sistemas organizacionales complejos.
+
+### Cálculo del kb según los niveles en el aparato de Estado
+
+Partiendo de este principio que caracteriza a las redes jerárquicas, les fueron asignados un valor por cada nivel jerárquico dentro del ApE, asumiendo que la posición de Jefe de Estado o Presidente es el nivel más alto dentro del mismo. Encontramos trece niveles jerárquicos partiendo del supuesto anteriormente señalado. A su vez, cada posición directiva cuenta con un valor que va del 5 al 10, donde:
+
+- **10** — Ministro o Secretario de Estado
+- **9** — Subsecretaría
+- **8** — Dirección General
+- **7** — Dirección de Área
+- **6** — Dirección
+- **5** — Subdirección
+
+Los niveles burocráticos se dividen en dos dimensiones: **a) Dentro** y, **b) Fuera del ApE**.
+
+Asimismo, identificamos que se pueden agrupar diferentes cargos en torno a **clases** en función de su capacidad de movilización del ApE.
+
+Donde:
+
+\- ***intra*** representa aquellos cargos con capacidad de orientar la posición del gobierno y ejecutar las políticas públicas a partir de una agenda programática. Entre esos cargos se encuentran la Presidencia o quien ostente la Jefatura de Estado, la Vicepresidencia o
+
+\- ***para*** son cargos que tienen la facultad de gobernar regiones, modificar las leyes, limitar el presupuesto, movilizar al ejército y sancionar a partir de la normativa aplicable, es decir, son el contrapeso institucional o paralelo a la clase **intra** y viceversa.
+
+\- ***sub*** son cargos que se encuentran con un relativo grado de influencia local ya sea como gobernantes de alcaldías o municipios, así como de organizaciones políticas autónomas como los partidos o movimientos políticos formales, pero cuyas decisiones se encuentran subordinadas a niveles jerárquicos superiores.
+
+\- ***exa*** son cargos que se consideran fuera del ApE pero que guardan una relación indirecta aunque autónoma tales como las empresas o banca privada, asociaciones civiles, educativas, sindicatos o gremios.
+
+\- ***ana*** son posiciones directivas fuera del ApE y contrarias al mantenimiento del mismo, como organizaciones insurgentes o revolucionarios, paramilitares, guerrilleros, entre otros.
+
+```{r tbl-composiciones-estado, echo=FALSE, message=FALSE, warning=FALSE}
+#| tbl-cap: "Clasificación de agentes políticos y su relación con el Estado"
+
+# 1. Crear el data frame con tus datos
+datos <- data.frame(
+Posicion = c("Dentro", "", "", "Fuera", ""),
+Clase = c("Intra", "Para", "Sub", "Exa", "Ana"),
+Descripcion = c(
+"Contribuye directamente con el Jefe de Estado y de Gobierno de la República.",
+"Forman parte del contrapeso institucional al poder Ejecutivo.",
+"Cargos de gobierno o legislatura a nivel local o municipal, dependientes de un gobierno regional.",
+"Fuera del aparato de Estado; poseen influencia por grupos de interés y presión.",
+"Grupos contrarios al aparato de Estado que persiguen cambios radicales (lucha armada)."
+),
+Cargos = c(
+"Presidente, Vicepresidente, Ministros, Embajadores, Directivos de empresas paraestatales",
+"Gobernadores, Diputados, Senadores, Magistrados, Militares.",
+"Alcaldes, líderes de partidos políticos.",
+"Empresarios, banqueros, gremios industriales, líderes sociales, líderes sindicales.",
+"Movimientos insurgentes, revolucionarios o grupos paramilitares, religiosos."
+),
+Factor = c("13-11","10-7","6-5","4-3","2-1")
+)
+
+# 2. Generar la tabla 
+datos %>%
+kable(
+col.names = c("Posición en torno al Estado", "Clase", "Descripción", "Cargos","Factor de influencia Burocrática (F)"),
+align = "cccc",
+booktabs = TRUE
+) %>%
+kable_styling(
+bootstrap_options = c("striped", "hover", "condensed"),
+full_width = TRUE
+) %>%
+row_spec(0, background = "#03293c", color = "cyan", bold = TRUE) %>% # Estilo del encabezado
+column_spec(1:2, bold = TRUE) # Resaltar las primeras dos columnas
+```
+
+Al final, para calcular el valor del **kb** que mide la acumulación de cargos directivos dentro y fuera del parato de Estado mediante la suma ponderada de cargos directivos dentro ($d$) y fuera ($f$) del aparato estatal, elevados al factor de influencia ($F$) correspondiente a cada nivel jerárquico:
+
+\$\$\\tag{1} k_b = \\sum\_{i=1}\^n (d_i\^F + f_i\^F) \$\$
+
+Donde:\
+- *d* es la suma de cargos **dentro** del Estado en nivel *i*; <br> - *f* es la suma de cargos **fuera** del Estado en nivel *i*; <br> - *F* es el Factor de influencia burocrática
+
+### Índice de Rendimiento del Capital Burocrático por Edad adulta
+
+¿Cómo determinar si la trayectoria poliítica de un candidato ha sido más provechosa que otra para convertir la acumulación del capital burocrático en éxito electoral? Para ello debemos considerar cuatro factores.
+
+- El tiempo de acumulación durante su *edad adulta*. Bajo el supuesto que las carreras políticas inican en la edad adulta, a partir de que el candidato inició su vida adulta $$\tag{2} edad_adulta = (año_n +18)-edad_c$$
+
+-  hasta el momento de competir en una contienda presidencial.
+
+- La **eficiencia burocrática** ($e_b$) es el tiempo transcurrido en años desde la edad adulta entre el capital burocrático acumulado al momento de la contienda.
+
+- La **eficiencia electoral** ($e_e$) en cambiom, se refuere al logaritmo natural del porcentaje de cotos obtenidos entre los años que lleva en su edad adulta al momento de la contienda.
+
+- El **factor de éxito** ($\lambda$) es el valor asignado al éxito obtenido en la contienda donde el **ganador = 1**, **perdedor = 0.3** y **de facto = 0.9**.
+
+El factor del éxito electoral $\lambda$ se define como:
+
+$$\tag{3} \lambda = 
+\begin{cases} 
+1 & \text{si es Ganador} \\ 
+0.9 & \text{si es De facto} \\ 
+0.3 & \text{si es Perdedor} 
+\end{cases}$$
+
+Con estos cuatro factores construimos el índice de Rendimiento del Capital Burocrático por Edad adulta (IRBE), en el cual.
+
+$$\tag{4} \text{irbe}_i = e_b \times e_e \times \lambda $$
+
+El *IRBE* estima la **eficiencia relativa** con la que un candidato transforma su capital burocrático acumulado en rendimiento electoral considerando su **tiempo efectivo de vida política adulta**.
+
+La interpretación del IRBE versa en torno a tres probables casos:
+
+Caso 1: IRBE alto por eficiencia_burocratica alta. El candidato es un "constructor de Estado", con mucha experiencia, pero quizás no tan popular.
+
+Caso 2: IRBE alto por eficiencia_electoral alta. El candidato es un "outsider" con poco KB pero enorme arrastre popular (caso típico de populismo).
+
+Caso 3: Ambos altos. El candidato ideal (hegemónico).
+
+
+
+## Datos generales de los candidatos
+
+Para el siguiente reporte se estudiaron las trayectorias de `r n_candidatos` candidatos que participarn en la contienda de `r anio_sel` en `r pais_sel`. Como se aprecia en la @tb1-generales-kb se aprecian los datos generales de los candidatos, su edad al momento de la contienda, la entidad de nacimiento, la alianza o partido que apoyó sus candidaturas, el porcentaje de votos obtenidos en la contienda así como el éxito en la elección y finalmente, el indicador del capital burocrático **kb** acumulado desde su edad adulta hasta el momento de la contienda presidencial, el cual se irá explicando más adelante
+
+```{r tb1-generales-kb, echo=FALSE, message=FALSE, warning=FALSE}
+#| fig-cap: "Perfil de los candidatos y distribución geográfica"
+##| layout-ncol: 2
+##| layout-column-widths: [0.3, 0.7]
+#| fig-height: 8
+##| column: page
+ #── 1. Evolución histórica de edad ────────────────────────────────────────────
+edad_stats <- df_pais_historico %>%
+  mutate(edad_en_contienda = as.integer(edad_en_contienda)) %>%
+  group_by(anio) %>%
+  summarise(
+    edad_prom = mean(edad_en_contienda, na.rm = TRUE),
+    edad_max  = max(edad_en_contienda,  na.rm = TRUE),
+    edad_min  = min(edad_en_contienda,  na.rm = TRUE),
+    .groups   = "drop"
+  )
+# indicadores
+edad_prom_hist    <- round(mean(edad_stats$edad_prom, na.rm = TRUE), 1)
+edad_prom_contien <- round(mean(df_contienda$edad_en_contienda, na.rm = TRUE), 1)
+edad_mayor_contien <- round(max(df_contienda$edad_en_contienda, na.rm = TRUE), 1)
+edad_menor_contien <- round(min(df_contienda$edad_en_contienda, na.rm = TRUE), 1)
+persona_mayor_contien <- df_contienda %>% 
+ filter(edad_en_contienda == max(edad_en_contienda, na.rm = TRUE)) %>%
+  pull(candidato)
+persona_menor_contien <- df_contienda %>% 
+ filter(edad_en_contienda == min(edad_en_contienda, na.rm = TRUE)) %>%
+  pull(candidato)
+# ── Tabla de perfiles generales ───────────────────────────────────────────────
+tb_candidatos_kb <- df_contienda %>%
+  dplyr::select(
+    candidato, edad_en_contienda, entidad_namcimiento,
+    partidos, votos, exito, kb
+  ) %>%
+  mutate(votos = paste0(votos, "%")) %>% 
+  rename(
+    Candidato              = candidato,
+    Edad                   = edad_en_contienda,
+    "Entidad de nacimiento" = entidad_namcimiento,
+    "Votos obtenidos"      = votos,
+    "Alianza o Partido"    = partidos,
+    Resultado              = exito,
+    "Capital burocrático"  = kb
+  ) %>%
+  arrange(desc(`Capital burocrático`))
+
+# Renderizado de la tabla (columna izquierda - 40% del ancho)
+tb_candidatos_kb %>%
+  kable(align = "lccccc") %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+    full_width  = TRUE,      # Cambiado a TRUE para que ocupe el espacio de su columna
+    position    = "left",
+    font_size   = 12         # Reducido ligeramente para mejor ajuste
+  ) %>%
+  row_spec(0, bold = TRUE, background = "#03293c", color = "cyan") %>%
+  column_spec(1, bold = TRUE, color = "#0B3B0B") %>%
+  column_spec(2:7, width = "8em")  # Ajusta el ancho de las columnas
+
+# ── Mapa de los candidatos (columna derecha - 60% del ancho) ──────────────────
+if (!is.null(mapa_pais)) {
+  
+  # Identificar el centro del mapa para el logo
+  bbox <- st_bbox(mapa_pais)
+  centro_x <- (bbox$xmin + bbox$xmax) / 2
+  centro_y <- bbox$ymin + (bbox$ymax - bbox$ymin) * 0.1
+  
+  # Mapa de la contienda
+  p_contienda <- ggplot(data = mapa_conteo) +
+    geom_sf(aes(fill = n_candidatos), color = "white", size = 0.2) +
+    scale_fill_gradient(
+      name = "N° de candidatos",
+      low = "#DFDFDC",      
+      high = "#07979C",     
+      na.value = "#DFDFDC"
+    ) +
+    # Etiquetas para entidades con candidatos
+    geom_sf_text(
+      data = subset(mapa_conteo, n_candidatos > 0),
+      aes(label = name),
+      size = 2.5,
+      color = "#333333",
+      fontface = "bold"
+    ) +
+    # Resaltar entidades con mayor número de candidatos
+    geom_sf(
+      data = subset(mapa_conteo, n_candidatos == max(n_candidatos, na.rm = TRUE) & n_candidatos > 0),
+      fill = NA,
+      color = "#CD040E",
+      size = 1.2
+    ) +
+    # Títulos y tema
+    labs(
+      title = NULL,  # Quitamos título para evitar duplicación
+      caption = NULL  # Quitamos caption para una apariencia más limpia
+    ) +
+    theme_minimal() +
+    theme(
+      plot.title = element_blank(),
+      plot.subtitle = element_blank(),
+      plot.caption = element_blank(),
+      legend.position = "bottom",
+      legend.key.width = unit(1.5, "cm"),
+      legend.title = element_text(size = 9),
+      legend.text = element_text(size = 8),
+      panel.grid = element_blank(),
+      axis.text = element_blank(),
+      axis.title = element_blank()
+    )
+  
+  # Mostrar el mapa
+  plot(p_contienda)
+  
+} else {
+  cat("No se pudo generar el mapa para", nombre_pais)
+}
+
+```
+La edad promedio de los candidatos es de `r round(edad_prom_contien, 1)` años, la cual es `r ifelse(edad_prom_contien > edad_prom_hist, "**mayor**", ifelse(abs(edad_prom_contien - edad_prom_hist) < 1, "**cercana**", "**menor**"))` a la edad promedio histórica de `r round(edad_prom_hist, 1)` años. El candidato con mayor edad es `r persona_mayor_contien`  con `r edad_mayor_contien`, mientras que el candidato más joven es `r persona_menor_contien` con `r edad_menor_contien`. La correlación entre edad y capital burocrático en esta contienda fue de **`r round(cor(df_contienda$edad_en_contienda, df_contienda$kb,use="complete.obs"), 2)`**, lo que indica una asociación `r ifelse(abs(cor(df_contienda$edad_en_contienda, df_contienda$kb, use="complete.obs")) > 0.5, "moderada a fuerte", "débil")` entre ambas variables.
+
+
+```{r grf-edad, echo=FALSE, message=FALSE, warning=FALSE}
+
+# coordenadas correctas
+x_max_p1 <- max(edad_stats$anio, na.rm = TRUE)
+y_max_p1 <- max(edad_stats$edad_max, na.rm = TRUE)
+
+p1 <- ggplot(edad_stats, aes(x = anio, y = edad_prom)) +
+  geom_ribbon(aes(ymin = edad_min, ymax = edad_max),
+              fill = "#07979C", alpha = 0.2) +
+    geom_line(color = "#07979C", linewidth = 1.2) +
+  geom_point(color = "#07979C", size = 2) +
+    geom_point(
+    data = filter(edad_stats, anio == anio_sel),
+    aes(x = anio, y = edad_prom),
+    color = "#CD040E", size = 4, shape = 18
+  ) +
+    geom_label(
+    data = filter(edad_stats, anio == anio_sel),
+    aes(x = anio, y = edad_prom,
+        label = paste0(anio_sel, "\n", round(edad_prom, 1), " años")),
+    vjust = -0.6,
+    size = 3,
+    color = "#CD040E",
+    fill = "white",
+    label.padding = unit(0.2, "lines")
+  ) +
+    geom_hline(
+    yintercept = edad_prom_hist,
+    linetype = "dashed",
+    color = "#022674",
+    linewidth = 0.8
+  ) +
+    annotate(
+    "text",
+    x = min(edad_stats$anio),
+    y = edad_prom_hist * 1.02,
+    label = paste0("Media histórica = ", edad_prom_hist, " años"),
+    hjust = 0,
+    size = 3,
+    color = "#022674"
+  ) +
+  
+  scale_x_continuous(breaks = pretty_breaks(n = 10)) + 
+  scale_y_continuous(
+    labels = comma,
+    expand = expansion(mult = c(0.05, 0.22))
+  ) +
+  coord_cartesian(clip = "off") +
+
+  labs(
+    title = paste0("Evolución de la edad de los candidatos en ", nombre_pais),
+    subtitle = "Franja: rango mínimo–máximo · ◆ Contienda seleccionada",
+    caption = "Elaborado por: n0dn | The Linked Data, 2026",
+    x = "Año",
+    y = "Edad en contienda (años)"
+  ) +
+  
+  theme_minimal(base_size = 12) +
+  
+  theme(
+    plot.title = element_text(face = "bold", color = "#03293c"),
+    plot.subtitle = element_text(size = 9, color = "#555555"),
+    plot.caption = element_text(size = 7, face = "italic"),
+    plot.margin = unit(c(2.5, 3, 1, 1), "cm")
+  )
+p1
+```
+
+Con los datos generales de los candidatos daremos inicio al análisis del capital burocrático y de la eficacia burocrática y electoral a partir del rendimiento del tiempo de sus edad adulta para acumularlo e invertirlo en su carrera para la presidencia de `r pais_sel`.
+
+## Distribución del capital burocrático por candidato
+
+Como señalamos al inicio, el capital burocrático se conforma por la acumulación de cargos directivos dentro y fuera del aparato de Estado durante toda la trayectoria política de cada candidato hasta el momento de la contienda presidencial. Para ello, analizamos cuántos cargos acumulan en las diferentes instituciones, organismos y eventos en los cuales juegan un papel protagónico o directivo. En el siguiente gráfico se deslosa el la acumulación del *kb* de cada candidato por tipo de institución. La línea punteada indica la **media de la contienda** (`r format(kb_medio, big.mark=",")` kb). Los colores azules refieren a aquellas instituciones con mayor cercanía con la presidencia de la república, es decir, con la conducción del aparato burocrático, los morados se refieren a las instituciones que dependen y en ocasiones, inciden, con las instituciones del estado. En cambio, las instituciones más cercanas al color rojo y amarillo, representan a aquellos cargos fuera del ApE y cuyas decisiones organizativas son autónomas al mismo.
+
+```{r grafico-candidatos}
+
+#| fig-cap: !expr paste0("Composición del capital burocrático por candidato — ", pais_sel, " ", anio_sel)
+#| fig-height: !expr max(4, nrow(df_contienda) * 0.65)
+#| fig-width: 11
+
+# Agregar al ggplot (después de theme_minimal())
+
+
+df_contienda_graf <- df_contienda
+df_contienda_graf$candidato <- factor(
+  df_contienda_graf$candidato,
+  levels = df_contienda_graf$candidato[order(df_contienda_graf$kb)]
+)
+
+datos_long <- df_contienda_graf %>%
+  pivot_longer(
+    cols = c(presidencia, vicepresidencia, ministerio, gobernatura,
+             ejercito, corte_suprema, legislatura, alcaldia,
+             partido_politico, empresas, soc_civil, mov_rev),
+    names_to  = "institucion",
+    values_to = "cantidad"
+  ) %>%
+  mutate(institucion = factor(institucion,
+    levels = c("presidencia","vicepresidencia","ministerio","gobernatura",
+               "ejercito","corte_suprema","legislatura","alcaldia",
+               "partido_politico","empresas","soc_civil","mov_rev")))
+
+ggplot(datos_long, aes(x = candidato, y = cantidad, fill = institucion)) +
+  geom_col() +
+  scale_y_continuous(labels = comma) +
+  scale_fill_manual(values = colores_institucion, labels = etiquetas_inst) +
+  coord_flip(clip = "off") +
+  geom_hline(yintercept = kb_medio, linetype = "dashed",
+             color = "black", linewidth = 0.8) +
+  geom_text(
+    aes(x = candidato, y = kb + max(df_contienda$kb, na.rm=TRUE) * 0.04,
+        label = comma(round(kb))),
+    data = df_contienda_graf, size = 3.2, inherit.aes = FALSE, fontface = "bold"
+  ) +
+  annotate("text", x = 0.5, y = kb_medio,
+           label = paste0("Media = ", comma(kb_medio)),
+           hjust = -0.05, vjust = -0.5, size = 3, color = "black") +
+  labs(
+    title    = paste0("Composición del Capital Burocrático — ", nombre_pais, " ", anio_sel),
+    subtitle = "Desglose por tipo de institución",
+    caption  = "Elaborado por: n0dn | The linked Data, 2026",
+    x = "", y = "Capital burocrático (kb)",
+    fill = "Institución"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    legend.position    = "bottom",
+    legend.key.size    = unit(0.4, "cm"),
+    plot.title         = element_text(face = "bold", color = "#03293c"),
+    plot.caption       = element_text(size = 7, face = "italic"),
+    plot.margin        = unit(c(1, 1, 2, 5), "cm")
+  ) +
+  guides(fill = guide_legend(nrow = 3))
+
+# Indicadores de kb por tipo de institución por cada candidato
+# Del candidato ganador, interesa saber cual es el kb, cuál tipo de kb ocupa el 80% de su kb y la categoría del perfil del candidato, qué tanto y qué tanto se concentra en Presidente, Vicepresidente y Ministro de Estado
+# De los candidatos perdedores. clasificarlos por tipo de kb que conforman el 80% de su kb y qué tanto se concentra en Presidente, Vicepresidente y Ministro de Estado y qué tanto en Gubernatura, Legislativo, alcaldía, suprema corte, y que tanto en Alcaldía y Partidos Políticos. Finalmente qué tanto representa las empresas, la sociedad civil y movimientos de rebelión
+
+# ── Función para calcular concentración por tipo de institución ──────────────
+calcular_concentracion <- function(df_candidato, instituciones, umbral = 0.8) {
+  
+  # Obtener valores de kb por institución
+  valores <- df_candidato %>%
+    select(all_of(instituciones)) %>%
+    pivot_longer(cols = everything(), names_to = "institucion", values_to = "valor") %>%
+    filter(valor > 0) %>%
+    arrange(desc(valor)) %>%
+    mutate(
+      porcentaje = valor / sum(valor) * 100,
+      porcentaje_acum = cumsum(porcentaje)
+    )
+  
+  # Identificar instituciones que componen al menos el 80%
+  componentes_80 <- valores %>%
+    filter(porcentaje_acum <= umbral * 100 | row_number() == 1) %>%
+    pull(institucion)
+  
+  # Calcular concentración en presidencia, vicepresidencia y ministerio
+  alta_dir <- df_candidato %>%
+    summarise(
+      kb_presidencia = presidencia,
+      kb_vicepresidencia = vicepresidencia,
+      kb_ministerio = ministerio,
+      kb_alta_dir = presidencia + vicepresidencia + ministerio,
+      pct_alta_dir = (kb_alta_dir / kb) * 100
+    )
+  
+  # Calcular concentración en gobierno subnacional y legislativo
+  gobierno_legislativo <- df_candidato %>%
+    summarise(
+      kb_gobernatura = gobernatura,
+      kb_legislatura = legislatura,
+      kb_corte_suprema = corte_suprema,
+      kb_gob_leg = gobernatura + legislatura + corte_suprema,
+      pct_gob_leg = (kb_gob_leg / kb) * 100
+    )
+  
+  # Calcular concentración en alcaldía y partidos políticos
+  local_partidos <- df_candidato %>%
+    summarise(
+      kb_alcaldia = alcaldia,
+      kb_partido_politico = partido_politico,
+      kb_local_partido = alcaldia + partido_politico,
+      pct_local_partido = (kb_local_partido / kb) * 100
+    )
+  
+  # Calcular concentración en empresas, sociedad civil y movimientos rebeldes
+  sociedad_externa <- df_candidato %>%
+    summarise(
+      kb_empresas = empresas,
+      kb_soc_civil = soc_civil,
+      kb_mov_rev = mov_rev,
+      kb_externo = empresas + soc_civil + mov_rev,
+      pct_externo = (kb_externo / kb) * 100
+    )
+  
+  # Calcular concentración militar
+  militar <- df_candidato %>%
+    summarise(
+      kb_ejercito = ejercito,
+      pct_ejercito = (kb_ejercito / kb) * 100
+    )
+  
+  # Clasificación del perfil del candidato
+  perfiles <- c()
+  
+  if (alta_dir$pct_alta_dir >= 50) {
+    perfiles <- c(perfiles, "Alta dirección estatal")
+  }
+  if (gobierno_legislativo$pct_gob_leg >= 40) {
+    perfiles <- c(perfiles, "Gobierno subnacional / Legislativo")
+  }
+  if (local_partidos$pct_local_partido >= 40) {
+    perfiles <- c(perfiles, "Local / Partidista")
+  }
+  if (sociedad_externa$pct_externo >= 30) {
+    perfiles <- c(perfiles, "Sector externo / Sociedad civil")
+  }
+  if (militar$pct_ejercito >= 30) {
+    perfiles <- c(perfiles, "Militar")
+  }
+  
+  perfil_candidato <- if (length(perfiles) > 1) {
+    paste0("Mixto (", paste(perfiles, collapse = " + "), ")")
+  } else if (length(perfiles) == 1) {
+    perfiles[1]
+  } else {
+    "Perfil diversificado"
+  }
+  
+  # Devolver todos los indicadores
+  list(
+    kb_total = df_candidato$kb,
+    componentes_80 = componentes_80,
+    perfil = perfil_candidato,
+    alta_dir = alta_dir,
+    gobierno_legislativo = gobierno_legislativo,
+    local_partidos = local_partidos,
+    sociedad_externa = sociedad_externa,
+    militar = militar,
+    valores_detalle = valores
+  )
+}
+
+# ── Identificar ganador y perdedores ──────────────────────────────────────────
+ganador <- df_contienda %>%
+  filter(exito %in% c("Ganador", "De facto")) %>%
+  slice(1)
+
+perdedores <- df_contienda %>%
+  filter(exito == "Perdedor") %>%
+  arrange(desc(kb))
+
+# ── Instituciones a analizar ──────────────────────────────────────────────────
+instituciones <- c("presidencia", "vicepresidencia", "ministerio", "gobernatura",
+                   "ejercito", "corte_suprema", "legislatura", "alcaldia",
+                   "partido_politico", "empresas", "soc_civil", "mov_rev")
+
+# ── Calcular indicadores para el ganador ──────────────────────────────────────
+if (nrow(ganador) > 0) {
+  indicadores_ganador <- calcular_concentracion(ganador, instituciones)
+  
+  # Variables para texto inline
+  ganador_nombre <- ganador$candidato
+  ganador_kb <- ganador$kb
+  ganador_votos <- ganador$votos
+  ganador_partido <- ganador$partidos
+  ganador_perfil <- indicadores_ganador$perfil
+  ganador_pct_alta_dir <- round(indicadores_ganador$alta_dir$pct_alta_dir, 1)
+  ganador_kb_alta_dir <- indicadores_ganador$alta_dir$kb_alta_dir
+  ganador_pct_presidencia <- round(ganador$presidencia / ganador$kb * 100, 1)
+  ganador_pct_vicepresidencia <- round(ganador$vicepresidencia / ganador$kb * 100, 1)
+  ganador_pct_ministerio <- round(ganador$ministerio / ganador$kb * 100, 1)
+  
+  # Componentes del 80%
+  componentes_ganador <- indicadores_ganador$componentes_80
+  componentes_ganador_texto <- paste(componentes_ganador, collapse = ", ")
+}
+
+# ── Calcular indicadores para perdedores (individual y agregado) ──────────────
+if (nrow(perdedores) > 0) {
+  
+  # Para el perdedor con mayor kb (principal oponente)
+  principal_oponente <- perdedores %>% slice(1)
+  indicadores_oponente <- calcular_concentracion(principal_oponente, instituciones)
+  
+  oponente_nombre <- principal_oponente$candidato
+  oponente_kb <- principal_oponente$kb
+  oponente_votos <- principal_oponente$votos
+  oponente_partido <- principal_oponente$partidos
+  oponente_perfil <- indicadores_oponente$perfil
+  oponente_pct_alta_dir <- round(indicadores_oponente$alta_dir$pct_alta_dir, 1)
+  oponente_pct_gob_leg <- round(indicadores_oponente$gobierno_legislativo$pct_gob_leg, 1)
+  oponente_pct_local_partido <- round(indicadores_oponente$local_partidos$pct_local_partido, 1)
+  oponente_pct_externo <- round(indicadores_oponente$sociedad_externa$pct_externo, 1)
+  oponente_pct_ejercito <- round(indicadores_oponente$militar$pct_ejercito, 1)
+  
+  # Componentes del 80% del oponente
+  componentes_oponente <- indicadores_oponente$componentes_80
+  componentes_oponente_texto <- paste(componentes_oponente, collapse = ", ")
+  
+  # Estadísticas agregadas de todos los perdedores
+  n_perdedores <- nrow(perdedores)
+  kb_prom_perdedores <- round(mean(perdedores$kb, na.rm = TRUE), 1)
+  kb_total_perdedores <- sum(perdedores$kb, na.rm = TRUE)
+  
+  # Calcular promedios de concentración para todos los perdedores
+  promedios_perdedores <- perdedores %>%
+    summarise(
+      kb_prom = mean(kb, na.rm = TRUE),
+      kb_presidencia_prom = mean(presidencia, na.rm = TRUE),
+      kb_vicepresidencia_prom = mean(vicepresidencia, na.rm = TRUE),
+      kb_ministerio_prom = mean(ministerio, na.rm = TRUE),
+      kb_gobernatura_prom = mean(gobernatura, na.rm = TRUE),
+      kb_legislatura_prom = mean(legislatura, na.rm = TRUE),
+      kb_corte_suprema_prom = mean(corte_suprema, na.rm = TRUE),
+      kb_alcaldia_prom = mean(alcaldia, na.rm = TRUE),
+      kb_partido_politico_prom = mean(partido_politico, na.rm = TRUE),
+      kb_empresas_prom = mean(empresas, na.rm = TRUE),
+      kb_soc_civil_prom = mean(soc_civil, na.rm = TRUE),
+      kb_mov_rev_prom = mean(mov_rev, na.rm = TRUE),
+      kb_ejercito_prom = mean(ejercito, na.rm = TRUE)
+    ) %>%
+    mutate(
+      pct_alta_dir_prom = (kb_presidencia_prom + kb_vicepresidencia_prom + kb_ministerio_prom) / kb_prom * 100,
+      pct_gob_leg_prom = (kb_gobernatura_prom + kb_legislatura_prom + kb_corte_suprema_prom) / kb_prom * 100,
+      pct_local_partido_prom = (kb_alcaldia_prom + kb_partido_politico_prom) / kb_prom * 100,
+      pct_externo_prom = (kb_empresas_prom + kb_soc_civil_prom + kb_mov_rev_prom) / kb_prom * 100,
+      pct_ejercito_prom = kb_ejercito_prom / kb_prom * 100
+    )
+}
+
+## Integración de texto en perdedores
+perdedores_texto <- ifelse(promedios_perdedores$pct_alta_dir_prom > promedios_perdedores$pct_gob_leg_prom, 
+                          "los perdedores tienden a tener una mayor proporción de experiencia en el núcleo del poder ejecutivo nacional, aunque no lograron capitalizarla electoralmente", 
+                          ifelse(promedios_perdedores$pct_gob_leg_prom > 30, 
+                                "una parte significativa de los perdedores proviene de trayectorias regionales o legislativas, lo que podría reflejar dificultades para proyectarse nacionalmente", 
+                                "los perdedores presentan perfiles diversos, con presencia relevante en ámbitos locales, partidistas o externos al Estado"))
+```
+
+### El ganador de la contienda
+
+`r if (nrow(ganador) > 0) paste0("El candidato **", ganador_nombre, "** del partido o alianza **", ganador_partido, "** resultó ganador de la contienda presidencial de ", nombre_pais, " en ", anio_sel, " con un **", ganador_votos, "%** de los votos.")`
+
+Su capital burocrático acumulado es de **`r comma(ganador_kb)` kb**, lo que representa una trayectoria institucional `r ifelse(ganador_kb > kb_medio, "superior", "inferior")` a la media de la contienda (`r comma(kb_medio)` kb). El perfil de `r ganador_nombre` se clasifica como **`r ganador_perfil`**, indicando que `r ifelse(grepl("Alta dirección", ganador_perfil), "su experiencia se concentra predominantemente en los niveles más altos del aparato estatal", ifelse(grepl("Mixto", ganador_perfil), "combina distintos tipos de experiencia institucional", "su trayectoria tiene características particulares"))`.
+
+El **`r round(ganador_pct_alta_dir, 1)`%** de su capital burocrático se concentra en posiciones de alta dirección estatal: Presidencia, Vicepresidencia y Ministerios. Desglosado, el `r ganador_pct_presidencia`% corresponde a la **Presidencia**, el `r ganador_pct_vicepresidencia`% a la **Vicepresidencia** y el `r ganador_pct_ministerio`% a **Ministerios de Estado**. Los cargos que componen el 80% de su *kb* son: `r componentes_ganador_texto`.
+
+### Los candidatos perdedores
+
+En esta contienda participaron **`r n_perdedores` candidatos perdedores**, acumulando en conjunto **`r comma(kb_total_perdedores)` kb**, con un promedio de **`r comma(kb_prom_perdedores)` kb** por candidato.
+
+#### El principal oponente
+
+El candidato perdedor con mayor capital burocrático fue **`r oponente_nombre`** de **`r oponente_partido`**, quien obtuvo **`r oponente_votos`%** de los votos y acumuló **`r comma(oponente_kb)` kb**. Su perfil se clasifica como **`r oponente_perfil`**, con una distribución del *kb* que muestra `r oponente_pct_alta_dir`% en **alta dirección estatal**, `r oponente_pct_gob_leg`% en **cargos de gobernatura, legislatura o corte suprema**, `r oponente_pct_local_partido`% en **alcaldías y partidos políticos**, `r oponente_pct_externo`% en **empresas, sociedad civil o movimientos insurgentes**, y `r oponente_pct_ejercito`% en el **ejército**. Los cargos que conforman el 80% de su *kb* son: `r componentes_oponente_texto`.
+
+#### Análisis agregado de los perdedores
+
+En promedio, los candidatos perdedores concentran su capital burocrático de la siguiente manera:
+
+- **Alta dirección estatal** (Presidencia, Vicepresidencia, Ministerios): `r round(promedios_perdedores$pct_alta_dir_prom, 1)`%
+- **Gobierno subnacional y legislativo** (Gobernaturas, Legislaturas, Cortes Supremas): `r round(promedios_perdedores$pct_gob_leg_prom, 1)`%
+- **Ámbito local y partidista** (Alcaldías y Partidos Políticos): `r round(promedios_perdedores$pct_local_partido_prom, 1)`%
+- **Sector externo** (Empresas, Sociedad Civil, Movimientos de Rebelión): `r round(promedios_perdedores$pct_externo_prom, 1)`%
+- **Poder militar** (Ejército): `r round(promedios_perdedores$pct_ejercito_prom, 1)`%
+
+Esta distribución sugiere que `r perdedores_texto`.
+
+En comparación con el ganador (`r round(ganador_pct_alta_dir, 1)`% en alta dirección), los perdedores presentan `r ifelse(ganador_pct_alta_dir > promedios_perdedores$pct_alta_dir_prom, "una menor concentración en la cúpula del Estado", "patrones similares de acumulación burocrática")`, lo que `r ifelse(ganador_kb > kb_prom_perdedores, "podría explicar parcialmente la ventaja competitiva del ganador", "sugiere que otros factores —como la coalición electoral o el contexto político— fueron determinantes en el resultado")`.
+
+## Clases de capital burocrático (Dentro y Fuera del ApE) {#sec-niveles}
+
+Las clases de capital burocrático permiten identificar cuánto de ese capital proviene de organizaciones dentro y fuera del *ApE*. Históricamente, el **`r porcentaje_kb_dentro_hist`%** del capital burocrático de los candidatos presidenciales de **`r nombre_pais`** se genera dentro del ApE, mientras que el **`r porcentaje_kb_fuera_hist`%** se genera fuera del mismo.
+
+En el caso de la presente contienda, el **`r porcentaje_kb_dentro_contienda`%** correspondió a cargos dentro del ApE y el **`r porcentaje_kb_fuera_contienda`%** a cargos fuera de él, lo cual indica `r ifelse(porcentaje_kb_dentro_contienda > porcentaje_kb_dentro_hist, "**mayor control del ApE**", "**menor control del ApE**")` en comparación con el promedio histórico. En contraste, el capital fuera del ApE indica `r ifelse(porcentaje_kb_fuera_contienda > porcentaje_kb_fuera_hist, "**mayor presencia en organizaciones fuera del ApE**", "**menor presencia en organizaciones fuera del ApE**")` respecto al promedio histórico del país.
+
+```{r grafico-partidos}
+
+#| label: fig-partidos
+#| fig-cap: !expr paste0("Niveles de capital burocrático — ", nombre_pais, " ", anio_sel)
+#| fig-height: !expr max(4, nrow(df_contienda) * 0.65)
+#| fig-width: 16
+#| fig-align: center
+
+library(forcats)
+
+long_kbtyp <- df_contienda %>%
+  pivot_longer(
+    cols      = c(intra, para, sub, exa, ana),
+    names_to  = "Tipo_de_capital",
+    values_to = "cantidad"
+  ) %>%
+  mutate(Tipo_de_capital = str_to_title(Tipo_de_capital))
+
+long_kbtyp_suma <- long_kbtyp %>%
+  group_by(candidato, Tipo_de_capital) %>%
+  summarise(cantidad = sum(cantidad, na.rm = TRUE), .groups = "drop") %>%
+  mutate(Tipo_de_capital = factor(Tipo_de_capital,
+                                  levels = c("Intra", "Para", "Sub", "Exa", "Ana"))) 
+
+
+suma_total_nivel <- long_kbtyp_suma %>%
+  group_by(candidato) %>%
+  summarise(total_kb = sum(cantidad, na.rm = TRUE), .groups = "drop") %>%
+  arrange(desc(total_kb))
+
+orden_candidato                <- pull(suma_total_nivel, candidato)
+long_kbtyp_suma$candidato      <- factor(long_kbtyp_suma$candidato,  levels = orden_candidato)
+suma_total_nivel$candidato     <- factor(suma_total_nivel$candidato,  levels = orden_candidato)
+
+# ordenar candidatos por total_kb (descendente)
+long_kbtyp_suma <- long_kbtyp_suma %>%
+  left_join(suma_total_nivel, by = "candidato") %>%
+  mutate(candidato = fct_reorder(candidato, total_kb, .desc = FALSE))
+
+suma_total_nivel <- suma_total_nivel %>%
+  mutate(candidato = fct_reorder(candidato, total_kb, .desc = FALSE))
+
+max_total <- max(suma_total_nivel$total_kb, na.rm = TRUE)
+
+ggplot(long_kbtyp_suma,
+       aes(x = candidato, y = cantidad, fill = Tipo_de_capital)) +
+  
+  geom_col() +
+  
+  scale_y_continuous(expand = expansion()) +
+  scale_fill_manual(values = colores_tkb) +
+  
+  coord_flip(clip = "off") +
+  
+geom_text(
+    data = suma_total_nivel,
+    aes(
+      x = candidato,
+      y = total_kb + max_total * 0.04,
+      label = comma(round(total_kb))
+    ),
+    size = 2.5,
+    fontface = "bold",
+    color = "black",
+    inherit.aes = FALSE
+  ) +
+    labs(
+    title    = paste0("Capital burocrático acumulado por clase — ", nombre_pais, " ", anio_sel),
+    subtitle = "",
+    caption  = "Elaborado por: n0dn | The Linked Data, 2026",
+    x    = "Candidato",
+    y    = "kb acumulado",
+    fill = "Clase de kb"
+  ) +
+  
+  theme_minimal(base_size = 10) +
+  theme(
+    axis.text.y = element_text(),
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    legend.position    = "bottom",
+    legend.key.size    = unit(0.5, "cm"),
+    plot.title         = element_text(face = "bold", color = "#03293c"),
+    plot.caption       = element_text(size = 8, face = "italic"),
+    plot.margin        = unit(c(2, 4, 2, 1), "cm")
+  )
+
+# Indicadores
+# ── Candidato con mayor kb DENTRO (intra + para + sub) ────────────────────────
+kb_dentro <- df_contienda %>%
+  mutate(kb_dentro = intra + para + sub) %>%
+  arrange(desc(kb_dentro)) %>%
+  slice(1)
+
+candidato_max_dentro    <- kb_dentro$candidato
+kb_max_dentro           <- round(kb_dentro$kb_dentro, 1)
+
+nivel_max_dentro <- kb_dentro %>%
+  dplyr::select(intra, para, sub) %>%
+  pivot_longer(cols = everything(),
+               names_to  = "nivel",
+               values_to = "valor") %>%
+  arrange(desc(valor)) %>%
+  slice(1)
+
+nombre_nivel_max_dentro <- str_to_title(nivel_max_dentro$nivel)
+valor_nivel_max_dentro  <- round(nivel_max_dentro$valor, 1)
+
+# ── Candidato con mayor kb FUERA (exa + ana) ──────────────────────────────────
+kb_fuera <- df_contienda %>%
+  mutate(kb_fuera = exa + ana) %>%
+  arrange(desc(kb_fuera)) %>%
+  slice(1)
+
+candidato_max_fuera    <- kb_fuera$candidato
+kb_max_fuera           <- round(kb_fuera$kb_fuera, 1)
+
+nivel_max_fuera <- kb_fuera %>%
+  dplyr::select(exa, ana) %>%
+  pivot_longer(cols = everything(),
+               names_to  = "nivel",
+               values_to = "valor") %>%
+  arrange(desc(valor)) %>%
+  slice(1)
+
+nombre_nivel_max_fuera <- str_to_title(nivel_max_fuera$nivel)
+valor_nivel_max_fuera  <- round(nivel_max_fuera$valor, 1)
+
+```
+
+En cuanto al capital burocrático **dentro** del ApE, el candidato con mayor acumulación es **`r candidato_max_dentro`** con **`r comma(kb_max_dentro)` kb**, siendo su componente más destacado el nivel **`r nombre_nivel_max_dentro`** con **`r comma(valor_nivel_max_dentro)` kb**.
+
+Respecto al capital burocrático **fuera** del ApE, el candidato con mayor acumulación es **`r candidato_max_fuera`** con **`r comma(kb_max_fuera)` kb**, siendo su componente predominante el nivel **`r nombre_nivel_max_fuera`** con **`r comma(valor_nivel_max_fuera)` kb**.
+
+`## Top 3 de la contienda {#sec-top3}
+
+A continuación analizamos a los candidatos con mayor capital burocrático y comparamos la suma de su *kb* con el resto.
+
+La tabla siguiente desglosa, para cada uno de ellos, su capital burocrático absoluto, su peso relativo dentro de la contienda y la proporción que corresponde a cada nivel jerárquico. El sombreado verde identifica al candidato con mayor acumulación.
+
+```{r top3}
+
+#| tbl-cap: "Top 3 candidatos con mayor capital burocrático en la contienda"
+
+top3_df <- df_contienda %>%
+  arrange(desc(kb)) %>%
+  slice(1:min(3, nrow(.)))
+
+# ── Concentración: % del kb total que acumulan los 3 primeros ─────────────────
+pct_concentracion_top3 <- round(sum(top3_df$kb) / kb_total * 100, 1)
+
+# ── Brecha entre 1° y 2° lugar ────────────────────────────────────────────────
+brecha_1_2 <- if (nrow(top3_df) >= 2) {
+  round(top3_df$kb[1] - top3_df$kb[2], 1)
+} else { NA }
+
+pct_brecha_1_2 <- if (nrow(top3_df) >= 2) {
+  round((top3_df$kb[1] - top3_df$kb[2]) / top3_df$kb[1] * 100, 1)
+} else { NA }
+
+# ── Perfil dominante de cada candidato del top3 ───────────────────────────────
+# Nivel con mayor peso para cada uno (de los 5 niveles)
+perfil_top3 <- top3_df %>%
+  dplyr::select(candidato, intra, para, sub, exa, ana) %>%
+  pivot_longer(cols = c(intra, para, sub, exa, ana),
+               names_to = "nivel", values_to = "valor") %>%
+  group_by(candidato) %>%
+  slice_max(valor, n = 1, with_ties = FALSE) %>%
+  ungroup() %>%
+  mutate(
+    nivel_label = str_to_title(nivel),
+    pct_nivel   = round(valor / top3_df$kb[match(candidato, top3_df$candidato)] * 100, 1)
+  )
+
+# ── ¿El ganador está entre el top 3? ─────────────────────────────────────────
+ganador_en_top3 <- if (nrow(ganador_info) > 0) {
+  ganador_info$candidato %in% top3_df$candidato
+} else { FALSE }
+
+ganador_posicion <- if (ganador_en_top3) {
+  which(top3_df$candidato == ganador_info$candidato)
+} else { NA }
+
+# ── Índice de Herfindahl-Hirschman (HHI) de concentración del kb ──────────────
+# Mide qué tan concentrado está el kb entre todos los candidatos (0 = disperso, 1 = monopolio)
+hhi_kb <- df_contienda %>%
+  mutate(share = kb / kb_total) %>%
+  summarise(hhi = round(sum(share^2, na.rm = TRUE), 4)) %>%
+  pull(hhi)
+
+# ── Ratio ganador / media de la contienda ────────────────────────────────────
+ratio_ganador_media <- if (nrow(ganador_info) > 0) {
+  round(ganador_info$kb / kb_medio, 2)
+} else { NA }
+#####-------------------------
+top3_radar <- df_contienda %>%
+  arrange(desc(kb)) %>%
+  slice(1:3) %>%
+  select(candidato, kb, intra, para, sub, exa, ana) %>%
+  # Normalización: ggradar espera valores entre 0 y 1
+  mutate(across(-candidato, ~ rescale(.x, to = c(0, 1)))) %>%
+  # El formato para ggradar: la primera columna DEBE ser el nombre/grupo
+  rename(group = candidato) 
+
+# 2. Generación del gráfico con ajustes de visibilidad
+ggradar(top3_radar,
+        values.radar = c("0%", "50%", "100%"),
+        grid.min = 0, 
+        grid.mid = 0.5, 
+        grid.max = 1,
+        grid.label.size = 3.5,        # ← Reducido
+        axis.label.size = 3.5,        # ← Reducido
+        group.line.width = 1.2,       # ← Más delgado
+        group.point.size = 2.8,       # ← Más pequeño
+        background.circle.colour = "white",
+        group.colours = c("#07979C", "#CD040E", "#03293c"), 
+        legend.title = "Top 3",       # ← Título corto
+        legend.text.size = 9,         # ← Texto leyenda (VÁLIDO)
+        legend.position = "bottom",
+        fill = TRUE,
+        fill.alpha = 0.2)
+```
+
+Los tres candidatos líderes concentran el **`r pct_concentracion_top3`%** del capital burocrático total de la contienda (HHI = **`r hhi_kb`**), lo que `r ifelse(hhi_kb > 0.35, "refleja una alta concentración de experiencia directiva", ifelse(hhi_kb > 0.20, "indica una concentración moderada", "sugiere una distribución relativamente equilibrada"))` entre los contendientes.
+
+La brecha entre el primer y segundo lugar es de **`r comma(brecha_1_2)` kb** (**`r pct_brecha_1_2`%**), lo que `r ifelse(pct_brecha_1_2 > 30, "representa una ventaja sustancial del líder",ifelse(pct_brecha_1_2 > 10, "indica una diferencia considerable", "sugiere una competencia muy cerrada en términos de trayectoria directiva"))`.
+
+`r if (ganador_en_top3) paste0("El candidato ganador ocupa la **posición ", ganador_posicion, "** del ranking de capital burocrático, con un kb de **", comma(ganador_info$kb), "**, equivalente a **", ratio_ganador_media," veces la media** de la contienda.")else "El candidato ganador **no se encuentra entre los tres primeros** en capital burocrático, lo que sugiere que otros factores —como la movilización partidista o el contexto electoral— incidieron de forma determinante en el resultado."`
+
+## Comparación con la media histórica {#sec-historico}
+
+El capital burocrático no es estático: se acumula, se dispersa y refleja los ciclos políticos de cada país. El siguiente gráfico muestra la evolución del **kb promedio por contienda** en **`r nombre_pais`** desde `r menor_año` hasta `r mayor_año`, junto con el rango entre el candidato con mayor y menor kb en cada elección. El punto rojo indica la contienda seleccionada (**`r anio_sel`**).
+
+```{r grafico-historico}
+#| fig-cap: !expr paste0("Evolución histórica del KB promedio — ", nombre_pais)
+#| fig-height: 5
+#| fig-width: 11
+
+df_evolucion <- df_pais_historico %>%
+  group_by(anio) %>%
+  summarise(
+    kb_prom = mean(kb, na.rm = TRUE),
+    kb_max  = max(kb,  na.rm = TRUE),
+    kb_min  = min(kb,  na.rm = TRUE),
+    .groups = "drop"
+  )
+
+kb_prom_historico <- round(mean(df_evolucion$kb_prom, na.rm = TRUE), 2)
+
+y_max <- max(df_evolucion$kb_max, na.rm = TRUE)
+
+ggplot(df_evolucion, aes(x = anio, y = kb_prom)) +
+  geom_ribbon(aes(ymin = kb_min, ymax = kb_max),
+              fill = "#07979C", alpha = 0.15) +
+  geom_line(color  = "#07979C", linewidth = 1.2) +
+  geom_point(color = "#07979C", size = 1.8) +
+  geom_point(
+    data  = filter(df_evolucion, anio == anio_sel),
+    aes(x = anio, y = kb_prom),
+    color = "#CD040E", size = 4, shape = 18
+  ) +
+  geom_label(
+    data  = filter(df_evolucion, anio == anio_sel),
+    aes(x = anio,
+        y = kb_prom,
+        label = paste0(anio_sel, "\n", round(kb_prom))),
+    vjust = -0.5, size = 3, color = "#CD040E", fill = "white",
+    label.padding = unit(0.2, "lines")
+  ) +
+  geom_hline(yintercept = kb_prom_historico,
+             linetype = "dashed", color = "#022674", linewidth = 0.8) +
+  annotate("text",
+    x = min(df_evolucion$anio),
+    y = kb_prom_historico * 1.05,
+    label = paste0("Media histórica = ", comma(round(kb_prom_historico, 1))),
+    hjust = 0, size = 3, color = "#022674"
+  ) +
+  scale_x_continuous(breaks = pretty_breaks(n = 10)) +
+  scale_y_continuous(labels = comma) +
+  coord_cartesian(clip = "off") +
+  labs(
+    title    = paste0("Evolución del KB promedio — ", nombre_pais),
+    subtitle = "La franja representa el rango entre kb mínimo y máximo por contienda",
+    caption  = "Elaborado por: n0dn | The Linked Data, 2026",
+    x = "Año", y = "kb promedio"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title   = element_text(face = "bold", color = "#03293c"),
+    plot.caption = element_text(size = 7, face = "italic"),
+    plot.margin  = unit(c(2, 2, 1, 1), "cm")  # más margen derecho
+  )
+
+###-----------------------
+## Indicadores
+# ── Posición de la contienda en el ranking histórico ──────────────────────────
+ranking_contienda <- df_evolucion %>%
+  mutate(ranking = rank(desc(kb_prom), ties.method = "min")) %>%
+  filter(anio == anio_sel) %>%
+  pull(ranking)
+
+n_contiendas_total <- nrow(df_evolucion)
+
+pct_ranking <- round(ranking_contienda / n_contiendas_total * 100, 1)
+
+# ── Tendencia reciente (últimas 3 contiendas antes de anio_sel) ───────────────
+ultimas3 <- df_evolucion %>%
+  filter(anio < anio_sel) %>%
+  arrange(desc(anio)) %>%
+  slice(1:3)
+
+tendencia_texto <- if (nrow(ultimas3) >= 2) {
+  modelo <- lm(kb_prom ~ anio, data = ultimas3)
+  coef_tend <- coef(modelo)[2]
+  ifelse(coef_tend > 0,
+    paste0("**tendencia creciente** en las contiendas previas (+",
+           round(coef_tend, 1), " kb por año)"),
+    paste0("**tendencia decreciente** en las contiendas previas (",
+           round(coef_tend, 1), " kb por año)"))
+} else {
+  "insuficientes contiendas previas para calcular tendencia"
+}
+
+# ── Diferencia contienda vs media histórica ───────────────────────────────────
+diff_vs_hist     <- round(kb_medio - kb_prom_historico, 1)
+pct_diff_vs_hist <- round(diff_vs_hist / kb_prom_historico * 100, 1)
+
+signo_diff <- ifelse(diff_vs_hist >= 0, "+", "")
+
+# ── kb promedio ganadores vs perdedores (histórico) ───────────────────────────
+kb_prom_gan_hist <- round(
+  mean(df_pais_historico$kb[df_pais_historico$exito %in% c("Ganador","De facto")],
+       na.rm = TRUE), 1)
+
+kb_prom_per_hist <- round(
+  mean(df_pais_historico$kb[df_pais_historico$exito == "Perdedor"],
+       na.rm = TRUE), 1)
+
+ratio_gan_per_hist <- round(kb_prom_gan_hist / kb_prom_per_hist, 2)
+
+# ── Contienda con mayor kb promedio histórico ─────────────────────────────────
+contienda_pico <- df_evolucion %>%
+  slice_max(kb_prom, n = 1, with_ties = FALSE)
+
+# ── Contienda con menor kb promedio histórico ─────────────────────────────────
+contienda_valle <- df_evolucion %>%
+  slice_min(kb_prom, n = 1, with_ties = FALSE)
+
+# ── Candidato con mayor kb en toda la historia del país ──────────────────────
+candidato_hist_max <- df_pais_historico %>%
+  slice_max(kb, n = 1, with_ties = FALSE)
+```
+
+La contienda de **`r anio_sel`** se ubica en la **posición `r ranking_contienda`** de **`r n_contiendas_total`** contiendas registradas en `r nombre_pais` (`r pct_ranking`° percentil), con un kb promedio de **`r comma(kb_medio)` kb**, es decir, **`r signo_diff`** `r abs(pct_diff_vs_hist)`\*\* % `r ifelse(diff_vs_hist >= 0, "por encima", "por debajo")` de la media histórica (**`r comma(kb_prom_historico)` kb**). Las contiendas previas muestran `r tendencia_texto`.
+
+Históricamente, los ganadores en `r nombre_pais` acumulan en promedio **`r comma(kb_prom_gan_hist)` kb**, frente a **`r comma(kb_prom_per_hist)` kb** de los perdedores, lo que representa una ventaja de **`r ratio_gan_per_hist` puntos**. El mayor kb registrado en la historia del país corresponde a **`r candidato_hist_max$candidato`** en **`r candidato_hist_max$anio`** con **`r comma(candidato_hist_max$kb)` kb**.
+
+## Índice de Rendimiento del Capital Burocrático por Edad
+
+¿Cómo determinar si la trayectoria poliítica de un candidato ha sido más provechosa que otra para convertir la acumulación del capital burocrático en éxito electoral? Para ello debemos considerar cuatro factores.
+
+- El tiempo de acumulación durante su *edad adulta*. Bajo el supuesto que las carreras políticas inican en la edad adulta, a partir de que el candidato inició su vida adulta (18 años o más) hasta el momento de competir en una contienda presidencial.
+- La **eficiencia burocrática** es el tiempo transcurrido en años desde la edad adulta entre el capital burocrático acumulado al momento de la contienda.
+- La **eficiencia electoral** en cambio, se refuere al logaritmo natural del porcentaje de cotos obtenidos entre los años que lleva en su edad adulta al momento de la contienda.
+- El **factor de éxito** es el valor asignado al éxito obtenido en la contienda donde el ganador = 1, perdedor = 0.5 y de facto = 0.9.
+
+Con estos cuatro factores construimos el **Índice de Rendimiento del Capital Burocrático por Edad adulta (IRBE)**, en el cual.
+
+```{r formulas-irbe}
+#| include: false
+#| layout-ncol: 2
+#| layout-column-widths: [0.3, 0.7]
+#| fig-height: 8
+#| column: page
+# ── IRBE para texto inline (mantiene nombres originales) ─────────────────────
+df_irbe_raw <- df_contienda %>%
+  mutate(
+    edad_adulta  = edad_en_contienda - 18,
+    votos_num    = suppressWarnings(as.numeric(as.character(votos))),
+    exito_factor = case_when(
+      exito == "Ganador"  ~ 1.0,
+      exito == "De facto" ~ 0.9,
+      exito == "Perdedor" ~ 0.5,
+      TRUE                ~ 0.3
+    ),
+    eficiencia_burocratica = kb / edad_adulta,  # KB por año de vida adulta
+        eficiencia_electoral = log1p(votos_num) / edad_adulta,
+        irbe = eficiencia_burocratica * eficiencia_electoral * exito_factor
+  ) %>%
+  arrange(desc(irbe))
+
+# Indicadores para texto inline
+edad_adulta <- df_irbe_raw$edad_adulta
+exito_factor <- df_irbe_raw$exito_factor
+votos_num <-df_irbe_raw$votos_num
+irbe_lider          <- df_irbe_raw$candidato[1]
+irbe_lider_valor    <- df_irbe_raw$IRBE[1]
+irbe_media          <- round(mean(df_irbe_raw$IRBE, na.rm = TRUE), 2)
+irbe_lider_eficacia <- ifelse(irbe_lider_valor > irbe_media, "eficiente", "moderada")
+
+# ── Correlación histórica edad–kb ─────────────────────────────────────────────
+cor_edad_kb      <- round(cor(df_pais_historico$edad_en_contienda,
+                              df_pais_historico$kb,
+                              use = "complete.obs"), 2)
+cor_edad_kb_txt  <- ifelse(abs(cor_edad_kb) > 0.5, "moderada a fuerte", "débil")
+
+# ── Correlación de la contienda ───────────────────────────────────────────────
+cor_edad_kb_cont <- round(cor(df_contienda$edad_en_contienda,
+                              df_contienda$kb,
+                              use = "complete.obs"), 2)
+cor_cont_txt     <- ifelse(abs(cor_edad_kb_cont) > 0.5,
+                           "moderada a fuerte", "débil")
+
+## Notas: 
+#Caso 1: IRBE alto por eficiencia_burocratica alta. El candidato es un "constructor de Estado", con mucha experiencia, pero quizás no tan popular.
+
+#Caso 2: IRBE alto por eficiencia_electoral alta. El candidato es un "outsider" con poco KB pero enorme arrastre popular (caso típico de populismo).
+
+#Caso 3: Ambos altos. El candidato ideal (hegemónico).
+
+#Tabla de irbe descompuesto
+
+tb_irbe_descompuesto <- df_irbe_raw %>% 
+  select(anio,candidato,edad_en_contienda,votos,exito,kb,eficiencia_burocratica,eficiencia_electoral,exito_factor,irbe) %>% 
+  mutate(anio = as.integer(anio)) %>% 
+  rename(
+    "Contienda" = anio,
+    "Candidato" =candidato,
+    "Edad en la contienda" = edad_en_contienda,
+    "% de votos" = votos,
+    "Resultado de la elección" = exito,
+    "Capital burocrático" = kb,
+    "a.Eficiencia Burocrática" = eficiencia_burocratica,
+    "b.Eficiencia electoral" = eficiencia_electoral,
+    "c. Factor de Éxito" = exito_factor,
+    "irbe (a*b*c)" = irbe
+  ) %>% 
+ arrange(desc("% de votos" )) %>% 
+  kable(digits = 2, escape = FALSE) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width        = TRUE,
+    latex_options     = c("hold_position", "scale_down")
+  ) %>%
+  row_spec(0, bold = TRUE, background = "#03293c", color = "cyan") %>%
+  row_spec(1, background = "#eaf6fb", bold = TRUE) %>%
+  column_spec(1, bold = TRUE)
+ 
+## Gráfico del irbe histórico
+
+hist_stats <- df_pais_historico %>%
+  summarise(
+    `Contiendas`          = n_distinct(anio),
+    `Candidatos`          = n(),
+    `kb promedio`         = round(mean(kb,  na.rm = TRUE), 1),
+    `kb ganadores`        = round(kb_prom_gan_hist, 1),
+    `kb perdedores`       = round(kb_prom_per_hist, 1),
+    `Ratio gan/per`       = ratio_gan_per_hist,
+    `kb máximo`           = max(kb, na.rm = TRUE),
+    `kb mínimo`           = min(kb, na.rm = TRUE)
+  ) %>%
+  mutate(Periodo = paste0("Histórico (", menor_año$menor_año,
+                          "–", mayor_año$mayor_año, ")"))
+
+contienda_stats <- df_contienda %>%
+  summarise(
+    `Contiendas`    = 1L,
+    `Candidatos`    = n_candidatos,
+    `kb promedio`   = kb_medio,
+    `kb ganadores`  = round(
+      mean(kb[exito %in% c("Ganador","De facto")], na.rm = TRUE), 1),
+    `kb perdedores` = round(
+      mean(kb[exito == "Perdedor"], na.rm = TRUE), 1),
+    `Ratio gan/per` = round(
+      mean(kb[exito %in% c("Ganador","De facto")], na.rm = TRUE) /
+      mean(kb[exito == "Perdedor"], na.rm = TRUE), 2),
+    `kb máximo`     = kb_max,
+    `kb mínimo`     = kb_min
+  ) %>%
+  mutate(Periodo = paste0("Contienda ", anio_sel))
+
+bind_rows(hist_stats, contienda_stats) %>%
+  dplyr::select(Periodo, everything()) %>%
+  kable(format.args = list(big.mark = ",")) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width        = TRUE,
+    latex_options     = c("hold_position", "scale_down")
+  ) %>%
+  row_spec(0, bold = TRUE, background = "#03293c", color = "cyan") %>%
+  row_spec(2, background = "#eaf6fb", bold = TRUE) %>%
+  column_spec(1, bold = TRUE) %>%
+  add_header_above(
+    c(" " = 4, "Promedio kb por resultado" = 3, "Rango kb" = 2),
+    bold = TRUE, background = "#1A5276", color = "white"
+  )
+
+## Gráfica de IRBE histórico
+
+df_historico_irbe <- df_raw %>%
+  mutate(
+    edad_adulta = edad_en_contienda - 18,
+    votos_num = suppressWarnings(as.numeric(as.character(votos))),
+    exito_factor = case_when(
+      exito == "Ganador" ~ 1.0,
+      exito == "De facto" ~ 0.9,
+      TRUE ~ 0.3
+    ),
+    IRBE = round((kb * log1p(votos_num) * exito_factor) / edad_adulta, 2)
+  ) %>%
+  filter(!is.na(IRBE) & is.finite(IRBE)) # Limpiar datos
+
+# Gráfico de tendencia del IRBE promedio por contienda
+df_tendencia_irbe <- df_historico_irbe %>%
+  group_by(pais, anio) %>%
+  summarise(irbe_prom = mean(IRBE, na.rm = TRUE), .groups = "drop")
+
+# Para tu país seleccionado
+df_tendencia_irbe %>%
+  filter(pais == nombre_pais) %>%
+  mutate(
+    destacado = if_else(anio == anio_sel, "Sí", "No")
+  ) %>%
+  ggplot(aes(x = anio, y = irbe_prom, color = destacado)) +
+  geom_line(color = "#07979C", size = 1.2) +  # Línea sin herencia de color
+  geom_point(size = 2.5) +
+  scale_color_manual(values = c("No" = "#07979C", "Sí" = "#CD040E")) +
+  geom_smooth(method = "lm", se = FALSE, linetype = "dashed", color = "gray30") +
+  labs(
+    title = paste("Evolución del IRBE promedio en", nombre_pais),
+    y = "IRBE Promedio de la Contienda",
+    x = "Año",
+    color = paste("Contienda", anio_sel)
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+La tabla anterior permite contrastar dos dimensiones clave: la **escala absoluta** del capital burocrático acumulado en la contienda respecto al promedio histórico, y la **ventaja relativa** de los ganadores sobre los perdedores. Un ratio ganadores/perdedores superior a 1.0 en ambas filas sugiere que el capital burocrático mantiene una asociación positiva con el éxito electoral en `r nombre_pais`, aunque esta relación debe interpretarse con cautela dado que otros factores —como la coalición partidista, el contexto económico o la movilización electoral— también inciden en el resultado final.
+
+En la contienda de **`r anio_sel`**, el candidato con mayor IRBE fue **`r irbe_lider`** con un valor de **`r irbe_lider_valor`**, por encima de la media de la contienda (**`r irbe_media`**), lo que indica una conversión `r irbe_lider_eficacia` de su trayectoria burocrática en respaldo electoral.
+
+La correlación histórica entre edad y capital burocrático en **`r nombre_pais`** es de **`r cor_edad_kb`**, lo que sugiere una asociación `r cor_edad_kb_txt` entre ambas variables a lo largo del tiempo.
+
+```{r calculo-irbe-y-grafica}
+#| fig-cap: !expr paste0("Relación entre IRBE y capital burocrático — ", nombre_pais)
+#| fig-height: 8
+#| fig-width: 11
+#| message: false
+#| warning: false
+
+# ── Calcular IRBE para todos los datos históricos ─────────────────────────────
+df_historico_irbe <- df_pais_historico %>%
+  mutate(
+    edad_adulta = edad_en_contienda - 18,
+    votos_num = suppressWarnings(as.numeric(as.character(votos))),
+    exito_factor = case_when(
+      exito == "Ganador"  ~ 1.0,
+      exito == "De facto" ~ 0.9,
+      exito == "Perdedor" ~ 0.5,
+      TRUE                ~ 0.3
+    ),
+    eficiencia_burocratica = kb / edad_adulta,
+    eficiencia_electoral = log1p(votos_num) / edad_adulta,
+    irbe = round(eficiencia_burocratica * eficiencia_electoral * exito_factor, 4)
+  ) %>%
+  filter(is.finite(irbe), !is.na(irbe))
+
+# ── Calcular IRBE para la contienda actual ────────────────────────────────────
+df_contienda_irbe <- df_contienda %>%
+  mutate(
+    edad_adulta = edad_en_contienda - 18,
+    votos_num = suppressWarnings(as.numeric(as.character(votos))),
+    exito_factor = case_when(
+      exito == "Ganador"  ~ 1.0,
+      exito == "De facto" ~ 0.9,
+      exito == "Perdedor" ~ 0.5,
+      TRUE                ~ 0.3
+    ),
+    eficiencia_burocratica = kb / edad_adulta,
+    eficiencia_electoral = log1p(votos_num) / edad_adulta,
+    irbe = round(eficiencia_burocratica * eficiencia_electoral * exito_factor, 4)
+  ) %>%
+  filter(is.finite(irbe), !is.na(irbe)) %>%
+  arrange(desc(irbe))
+
+# ── Indicadores para texto inline ─────────────────────────────────────────────
+irbe_lider          <- df_contienda_irbe$candidato[1]
+irbe_lider_valor    <- df_contienda_irbe$irbe[1]
+irbe_media          <- round(mean(df_contienda_irbe$irbe, na.rm = TRUE), 4)
+irbe_lider_eficacia <- ifelse(irbe_lider_valor > irbe_media, "eficiente", "moderada")
+
+# ── Correlación entre IRBE y KB (histórica) ──────────────────────────────────
+cor_irbe_kb <- round(cor(df_historico_irbe$irbe, df_historico_irbe$kb, use = "complete.obs"), 3)
+cor_irbe_kb_txt <- ifelse(abs(cor_irbe_kb) > 0.5, "moderada a fuerte", 
+                          ifelse(abs(cor_irbe_kb) > 0.3, "moderada", "débil"))
+
+# ── Correlación entre IRBE y KB (contienda actual) ───────────────────────────
+cor_irbe_kb_cont <- round(cor(df_contienda_irbe$irbe, df_contienda_irbe$kb, use = "complete.obs"), 3)
+
+# ── Tabla con datos de candidatos incluyendo IRBE ─────────────────────────────
+tb_candidatos_irbe <- df_contienda_irbe %>%
+  dplyr::select(
+    candidato, edad_en_contienda, entidad_namcimiento,
+    partidos, votos, exito, kb, irbe,
+    eficiencia_burocratica, eficiencia_electoral, exito_factor
+  ) %>%
+  mutate(
+    votos = paste0(votos, "%"),
+    irbe = round(irbe, 4)
+  ) %>%
+  rename(
+    Candidato = candidato,
+    Edad = edad_en_contienda,
+    "Entidad de nacimiento" = entidad_namcimiento,
+    "Votos obtenidos" = votos,
+    "Alianza o Partido" = partidos,
+    Resultado = exito,
+    "Capital burocrático" = kb,
+    IRBE = irbe,
+    "Eficiencia burocrática" = eficiencia_burocratica,
+    "Eficiencia electoral" = eficiencia_electoral,
+    "Factor éxito" = exito_factor
+  ) %>%
+  arrange(desc(IRBE))
+
+# Mostrar tabla con IRBE
+tb_candidatos_irbe %>%
+  kable(align = "lcccccc", digits = c(0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 2)) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+    full_width = TRUE,
+    font_size = 11
+  ) %>%
+  row_spec(0, bold = TRUE, background = "#03293c", color = "cyan") %>%
+  column_spec(1, bold = TRUE) %>%
+  kableExtra::scroll_box(width = "100%", height = "400px")
+
+# ── Gráfica de dispersión: IRBE vs KB (reemplazando edad por IRBE) ────────────
+colores_exito <- c(
+  "Ganador"   = "#003f5c",
+  "De facto"  = "#bc5090",
+  "Perdedor"  = "#ffa600"
+)
+
+# Calcular límites para la gráfica
+x_max <- max(df_historico_irbe$irbe, na.rm = TRUE)
+y_max <- max(df_historico_irbe$kb, na.rm = TRUE)
+
+# Gráfica principal
+p_irbe <- ggplot(df_historico_irbe,
+                 aes(x = irbe, y = kb, color = exito)) +
+  
+  # Puntos históricos (opacidad reducida)
+  geom_point(size = 2.5, alpha = 0.4) +
+  
+  # Puntos destacados de la contienda actual
+  geom_point(
+    data = df_contienda_irbe,
+    aes(x = irbe, y = kb, color = exito),
+    size = 4,
+    shape = 18
+  ) +
+  
+  # Línea de tendencia
+  geom_smooth(
+    method = "lm",
+    se = TRUE,
+    linewidth = 0.9,
+    alpha = 0.1,
+    color = "#022674"
+  ) +
+  
+  # Etiquetas con nombres de candidatos de la contienda actual
+  geom_label(
+    data = df_contienda_irbe,
+    aes(x = irbe, y = kb, label = candidato),
+    size = 2.5,
+    vjust = -0.7,
+    show.legend = FALSE,
+    label.padding = unit(0.15, "lines"),
+    fill = "white"
+  ) +
+  
+  # Anotación con coeficiente de correlación
+  annotate(
+    "text",
+    x = max(df_contienda_irbe$irbe, na.rm = TRUE) * 0.95,
+    y = y_max * 0.95,
+    label = paste0("r = ", cor_irbe_kb),
+    hjust = 1,
+    size = 3.5,
+    color = "#03293c",
+    fontface = "bold"
+  ) +
+  
+  scale_color_manual(values = colores_exito) +
+  
+  scale_x_continuous(
+    labels = scales::number_format(accuracy = 0.0001),
+    expand = expansion(mult = c(0.05, 0.22))
+  ) +
+  
+  scale_y_continuous(
+    labels = comma,
+    expand = expansion(mult = c(0.05, 0.22))
+  ) +
+  
+  coord_cartesian(clip = "off") +
+  
+  labs(
+    title = paste0("Relación entre IRBE y capital burocrático — ", nombre_pais),
+    subtitle = paste0("◆ Contienda ", anio_sel, 
+                      " · IRBE = (kb × log(1+votos) × λ) / (edad-18) · Línea de tendencia con IC al 95%"),
+    caption = paste0(
+      "Elaborado por: n0dn | The Linked Data, 2026\n",
+      "IRBE = Índice de Rendimiento del Capital Burocrático por Edad adulta"
+    ),
+    x = "Índice de Rendimiento del Capital Burocrático (IRBE)",
+    y = "Capital burocrático (kb)",
+    color = "Resultado electoral"
+  ) +
+  
+  theme_minimal(base_size = 12) +
+  
+  theme(
+    plot.title = element_text(face = "bold", color = "#03293c"),
+    plot.subtitle = element_text(size = 9, color = "#555555"),
+    plot.caption = element_text(size = 7, face = "italic", hjust = 0),
+    legend.position = "bottom",
+    panel.grid.minor = element_blank(),
+    plot.margin = unit(c(2.5, 3, 1, 1), "cm")
+  )
+
+# Mostrar la gráfica
+print(p_irbe)
+
+```
+En la contienda de `r anio_sel`, el candidato con mayor IRBE fue **`r irbe_lider`** con un valor de **`r irbe_lider_valor`**, superando la media de la contienda (**`r irbe_media`**), lo que indica una conversión `r irbe_lider_eficacia` de su trayectoria burocrática en respaldo electoral. 
+
+La correlación histórica entre el IRBE y el capital burocrático en `r nombre_pais` es de **`r cor_irbe_kb`**, lo que sugiere una asociación `r cor_irbe_kb_txt` entre ambas variables a lo largo del tiempo. En la contienda específica de `r anio_sel`, esta correlación alcanza **`r cor_irbe_kb_cont`**, `r ifelse(abs(cor_irbe_kb_cont) > abs(cor_irbe_kb), "superando ligeramente la tendencia histórica", "alineándose con el patrón histórico observado")`.
+
+Un IRBE elevado indica que el candidato logra maximizar su rendimiento electoral por unidad de capital burocrático acumulado durante su vida adulta. Esto puede deberse a:
+- **Alta eficiencia burocrática**: experiencia concentrada en cargos estratégicos
+- **Alta eficiencia electoral**: capacidad de traducir experiencia en votos
+- **Alta combinación de ambos**: perfil hegemónico
+
+
+
+## Conclusiones {#sec-conclusiones}
+
+Los principales indicadores construidos revelan una estructura de poder significativamente concentrada. Los `r n_candidatos` candidatos acumulan un total de `r comma(kb_total)` kb, con una media de `r comma(kb_medio)` kb que se ubica `r ifelse(kb_medio > kb_prom_historico, "**por encima**", "**por debajo**")` de la media histórica del país (`r comma(kb_prom_historico)` kb), y un Índice de Herfindahl-Hirschman (HHI) de `r hhi_kb` que confirma dicha concentración. 
+
+La composición del kb muestra que, históricamente, el `r porcentaje_kb_dentro_hist`% proviene de cargos dentro del ApE, mientras que en esta contienda dicha proporción alcanza el `r porcentaje_kb_dentro_contienda`%, lo que sugiere un `r ifelse(porcentaje_kb_dentro_contienda > porcentaje_kb_dentro_hist, "**mayor control del ApE**", "**menor control del ApE**")` respecto al promedio histórico. 
+
+El candidato con mayor acumulación dentro del ApE es **`r candidato_max_dentro`** (`r comma(kb_max_dentro)` kb), destacando el nivel `r nombre_nivel_max_dentro`, mientras que fuera del ApE el líder es **`r candidato_max_fuera`** (`r comma(kb_max_fuera)` kb), predominando el nivel `r nombre_nivel_max_fuera`. 
+
+Los tres candidatos con mayor kb concentran el `r pct_concentracion_top3`% del total, con una brecha del `r pct_brecha_1_2`% entre el primero y el segundo lugar, lo que `r ifelse(pct_brecha_1_2 > 30, "**representa una ventaja sustancial** del líder", ifelse(pct_brecha_1_2 > 10, "**indica una diferencia considerable**", "**sugiere una competencia muy cerrada**"))`. 
+
+El ganador de la contienda `r if (ganador_en_top3) paste0("**se ubica en la posición", ganador_posicion, "** del ranking, con un kb equivalente a ", round(ratio_ganador_media, 1), " veces la media") else paste0("**no se encuentra** entre los tres primeros en capital burocrático, lo que sugiere que otros factores —como la movilización partidista o el contexto electoral— inciden de manera determinante en el resultado")`.
+
+El análisis del IRBE introduce una dimensión dinámica al evaluar la eficiencia con que los candidatos transforman su trayectoria institucional en respaldo electoral. En la contienda estudiada, el candidato con mayor IRBE es **`r irbe_lider`** con un valor de `r irbe_lider_valor`, `r ifelse(irbe_lider_valor > irbe_media, "**superior**", "**inferior**")` a la media de la contienda (`r irbe_media`), lo que indica una conversión `r irbe_lider_eficacia` de su trayectoria burocrática. 
+
+La evolución histórica del kb promedio en `r nombre_pais` muestra una `r tendencia_texto`, y la contienda de `r anio_sel` se ubica en la posición `r ranking_contienda` de `r n_contiendas_total` contiendas registradas (`r pct_ranking`° percentil). 
+
+La correlación histórica entre edad y capital burocrático es de `r cor_edad_kb`, lo que sugiere una asociación `r cor_edad_kb_txt`, aunque la correlación en la contienda específica es de `r cor_edad_kb_cont`, indicando una relación `r ifelse(abs(cor_edad_kb_cont) > 0.5, "**moderada a fuerte**", "**débil**")`.
+
+## Referencias
