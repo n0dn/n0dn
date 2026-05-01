@@ -3,6 +3,9 @@ title: "Reporte del capital burocrático en la contienda de 1824 en Costa Rica"
 subtitle: "n0dn | The linked Data"
 author: "Dr. Norberto Bustos"
 date: today
+description: "Análisis del capital burocrático de los candidatos presidenciales de Costa Rica en 1824."
+image: "/images/CostaRica_1824.png"
+categories: [analisis, politica,capital burocrático, Costa Rica, Siglo XIX]
 format: 
   html:
     toc: true

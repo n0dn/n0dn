@@ -4,6 +4,8 @@ project:
 
 website:
   title: "n0dn | The linked data"
+  description: "Análisis de redes políticas y capital burocrático en América Latina y el Caribe. Ciencia de datos aplicada a la política latinoamericana."
+  site-url: "https://n0dn.github.io/n0dn"  # o tu dominio propio
   # Menú de navegación
   navbar:
     logo: /images/simbolo_n0dn.png

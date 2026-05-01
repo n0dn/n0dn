@@ -3,6 +3,9 @@ title: "Reporte del capital burocrático en la contienda de 1901 en Cuba"
 subtitle: "n0dn | The linked Data"
 author: "Dr. Norberto Bustos"
 date: today
+description: "Análisis del capital burocrático de los candidatos presidenciales de Cuba en 1901."
+image: "/images/Cuba_1901.png"
+categories: [analisis, politica,capital burocrático, Cuba, Siglo XX]
 format: 
   html:
     toc: true

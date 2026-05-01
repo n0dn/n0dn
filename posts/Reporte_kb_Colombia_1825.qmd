@@ -985,10 +985,9 @@ Las clases de capital burocrático permiten identificar cuánto de ese capital p
 
 En el caso de la presente contienda, el **`r porcentaje_kb_dentro_contienda`%** correspondió a cargos dentro del ApE y el **`r porcentaje_kb_fuera_contienda`%** a cargos fuera de él, lo cual indica `r ifelse(porcentaje_kb_dentro_contienda > porcentaje_kb_dentro_hist, "**mayor control del ApE**", "**menor control del ApE**")` en comparación con el promedio histórico. En contraste, el capital fuera del ApE indica `r ifelse(porcentaje_kb_fuera_contienda > porcentaje_kb_fuera_hist, "**mayor presencia en organizaciones fuera del ApE**", "**menor presencia en organizaciones fuera del ApE**")` respecto al promedio histórico del país.
 
-```{r grafico-partidos}
+```{r kb-clases}
 
-#| label: fig-partidos
-#| fig-cap: !expr paste0("Niveles de capital burocrático — ", nombre_pais, " ", anio_sel)
+#| fig-cap: !expr paste0("Clases de capital burocrático — ", nombre_pais, " ", anio_sel)
 #| fig-height: !expr max(4, nrow(df_contienda) * 0.65)
 #| fig-width: 16
 #| fig-align: center
