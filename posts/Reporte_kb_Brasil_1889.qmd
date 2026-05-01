@@ -3,6 +3,9 @@ title: "Reporte del capital burocrático en la contienda de 1889 en Brasil"
 subtitle: "n0dn | The linked Data"
 author: "Dr. Norberto Bustos"
 date: today
+description: "Análisis del capital burocrático de los candidatos presidenciales de Brasil en 1889."
+image: "/images/Brasil_1889.png"
+categories: [analisis, politica,capital burocrático, Brasil, Siglo XIX]
 format: 
   html:
     toc: true

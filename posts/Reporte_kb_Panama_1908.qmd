@@ -3,6 +3,9 @@ title: "Reporte del capital burocrático en la contienda de 1908 en Panamá"
 subtitle: "n0dn | The linked Data"
 author: "Dr. Norberto Bustos"
 date: today
+description: "Análisis del capital burocrático de los candidatos presidenciales de Panamá en 1908."
+image: "/images/Panama_1908.png"
+categories: [analisis, politica,capital burocrático, Panamá]
 format: 
   html:
     toc: true

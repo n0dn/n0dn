@@ -3,6 +3,9 @@ title: "Reporte del capital burocrático en la contienda de 1817 en Chile"
 subtitle: "n0dn | The linked Data"
 author: "Dr. Norberto Bustos"
 date: today
+description: "Análisis del capital burocrático de los candidatos presidenciales de Chile en 1817."
+image: "/images/Chile_1817.png"
+categories: [analisis, politica,capital burocrático, Chile, Siglo XIX]
 format: 
   html:
     toc: true
@@ -100,7 +103,7 @@ df_raw <- read_excel(params$datafile) %>%
 
 # Filtros manuales (alternativa)
 pais_sel <- "Chile"
-anio_sel <- 1827
+anio_sel <- 1817
 
 nombre_pais <- pais_sel
 
@@ -941,6 +944,8 @@ if (nrow(perdedores) > 0) {
     )
 }
 
+```
+```{r perdedores-texto, echo=FALSE, message=FALSE, warning=FALSE}
 ## Integración de texto en perdedores
 perdedores_texto <- ifelse(promedios_perdedores$pct_alta_dir_prom > promedios_perdedores$pct_gob_leg_prom, 
                           "los perdedores tienden a tener una mayor proporción de experiencia en el núcleo del poder ejecutivo nacional, aunque no lograron capitalizarla electoralmente", 

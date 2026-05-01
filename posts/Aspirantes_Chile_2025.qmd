@@ -20,8 +20,9 @@ callout-appearence: simple
 execute: 
   warning: false
   message: false
-bibliography: referencias.bib
+bibliography: references.bib
 link-citations: true
+csl: https://www.zotero.org/styles/apa
 ---
 
 # Introducción
@@ -472,15 +473,15 @@ A pesar de ello, Parisi, candidato de Partido por la Gente que él mismo creó e
 
 La diferencia más importante de un político además de su capital burocrático es su centralidad dentro de la red política histórica. La política es el uso instrumental de los vínculos de personajes con capitales social, económico y burocrático lo suficientemente estratéfico para movilizar el capital social de grandes conglomerados. Para mantener la cumulación de dicho capital político los personajes se organizan en torno a diferentes estructuras que dependen de las fuentes de poder que las vinculan. En el caso de los candidatos a la presidencia de Chile para 2025 se encuentran dos tipos de estructuras que compiten entre sí como clases dirigentes:
 
--   las castas heredada por vínculos familiares, políticos, empresariales que conformaron una clase dirigente durente la dictadura de Pinochet, la Concertación y el gobierno de Sebstián Piñera
--   los clanes vinculados por trabajo meramente político y empresarial que no se han estructurado como clase dirigente.
+- las castas heredada por vínculos familiares, políticos, empresariales que conformaron una clase dirigente durente la dictadura de Pinochet, la Concertación y el gobierno de Sebstián Piñera
+- los clanes vinculados por trabajo meramente político y empresarial que no se han estructurado como clase dirigente.
 
 ::: callout-note
 ## Castas y clanes
 
--   **Casta**: sistema de estratificación social mucho más rígido y cerrado, donde el estatus social y las identidades están determinadas hereditariamente y se mantienen a través de reglas de endogamia estricta. En las castas, la pertenencia y las oportunidades sociales dependen del nacimiento, y los grupos están organizados en jerarquías fijas con limitaciones sociales, legales y culturales para la movilidad entre ellas. Este sistema es característica de sociedades con divisiones sociales muy estructuradas, como el sistema de castas en India o sistemas similares de estratos sociales rígidos, donde la casta define la posición social, los roles y las interacciones con otros grupos
+- **Casta**: sistema de estratificación social mucho más rígido y cerrado, donde el estatus social y las identidades están determinadas hereditariamente y se mantienen a través de reglas de endogamia estricta. En las castas, la pertenencia y las oportunidades sociales dependen del nacimiento, y los grupos están organizados en jerarquías fijas con limitaciones sociales, legales y culturales para la movilidad entre ellas. Este sistema es característica de sociedades con divisiones sociales muy estructuradas, como el sistema de castas en India o sistemas similares de estratos sociales rígidos, donde la casta define la posición social, los roles y las interacciones con otros grupos
 
--   **Clan**: grupo social basado principalmente en la descendencia común, generalmente en sociedades donde lazos de parentesco y consanguinidad constituyen la unidad fundamental de organización política y social. Los clanes funcionan en sistemas segmentarios o de linaje, donde la solidaridad interna y la identidad colectiva se construyen sobre la genealogía compartida, pudiendo incluir reglas específicas de alianza y conflicto con otros grupos. Son grupos relativamente abiertos y flexibles, donde el parentesco es importante para la cohesión y la expresión de la vida política, pero sin una jerarquía rígida de estatus o privilegios heredados.
+- **Clan**: grupo social basado principalmente en la descendencia común, generalmente en sociedades donde lazos de parentesco y consanguinidad constituyen la unidad fundamental de organización política y social. Los clanes funcionan en sistemas segmentarios o de linaje, donde la solidaridad interna y la identidad colectiva se construyen sobre la genealogía compartida, pudiendo incluir reglas específicas de alianza y conflicto con otros grupos. Son grupos relativamente abiertos y flexibles, donde el parentesco es importante para la cohesión y la expresión de la vida política, pero sin una jerarquía rígida de estatus o privilegios heredados.
 :::
 
 La red política chilena se caracteriza por la densidad de sus vínculos estables que van desde el útlimo tercio del siglo XVIII por la clase colonial española (vascos) y criollos chilenos, la cual participó activamente en la construcción de la República que surgió de la guerra de independencia en el primer tercio del siglo XIX y que se acomodó como nueva clase dominante, junto con migrantes ingleses, norteamericanos, franceses, croatas y alemanes que transitaron su acumulación de capital económico del fundo a las industrias y a la banca [@historia2017]. Durante todo el siglo XIX, la red política chilena comenzó a consolidarse en torno a los vínculos de los antiguos latifundios con los nuevos industriales mineros y comerciantes ultramarinos de Valapariso, y conformaron una red política que incluyó además de los vínculos económicos, su raigambre en las guerras de independencia, golpes de Estado, la conformación de partidos y su participación en los diferentes gobiernos conservadores y liberales[@collier1999]. Aunado a ello, los militares tuvieron un papel relevante especialmente en las diferentes guerras contra Perú y España.
