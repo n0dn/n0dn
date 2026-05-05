@@ -22,8 +22,9 @@ callout-appearence: simple
 execute: 
   warning: false
   message: false
-bibliography: referencias.bib
+bibliography: references.bib
 link-citations: true
+csl: https://www.zotero.org/styles/apa
 ---
 
 Las elecciones primarias en Argentina del 14 de agosto de 2023 reflejaron el descontento debido al manejo de la política fiscal durante la pandemia de COVID-19 y la renegociación de la deuda con el FMI, contraída durante el gobierno de Mauricio Macri (2015-2019). El presidente Alberto Fernández (2019-2023) heredó el país con una tasa de inflación de alrededor del 60% anual, una crisis cambiaria significativa y la posibilidad de incumplir con los acreedores de la deuda externa. La discordia en el gabinete de Fernández sobre las negociaciones con el Fondo Monetario Internacional (FMI) resultó en la destitución de Martín Guzmán como ministro de Economía, reemplazado por el entonces presidente de la Cámara de Diputados, Sergio Massa, quien prometió cambios estructurales para resolver la situación.
@@ -114,7 +115,6 @@ Al analizar a los tres aspirantes con el mayor capital burocrático (kb), como s
 
 Por otro lado, los tres aspirantes con menor capital burocrático, como se detalla en la Tabla 4, son, en orden ascendente, Manuela Castañeira del bloque del "MAS", con 45 kb, ya que solo cuenta con experiencia en el ámbito de las organizaciones civiles. Le sigue la candidata trans Reyna Xiomara Ibañez con 49 kb y un 0.01% de los votos, y en tercer lugar se encuentra el candidato del bloque derechista "LiberAR", con 50 kb y un 0.03% de los votos. La característica más destacada de estos tres candidatos es que las dos últimas candidatas tienen experiencia en militancia o "acompañamiento", pero no en la dirección de organizaciones civiles. En el caso de Nazareno Etchepare, la información sobre su currículum en Internet es limitada, y solo se pudo encontrar que es fundador y dirigente de la agrupación política Demos.
 
-
 ```{r}
 #| label: tb2-generales-kb-arg
 #| echo: false
@@ -163,7 +163,7 @@ tb_aspirantes_kb %>%
   add_header_above(c("Información básica" = 4, "Afiliación política" = 2, "Actividad electoral" = 3))
 ```
 
-Ciertamente, el capital burocrático de los aspirantes es un indicador que evidencia la desigualdad en la experiencia de los actores políticos que compiten por el mismo cargo público. Como se observa en la gráfica 1, solo 4 bloques están por encima de la media de kb, y representan a las fuerzas tradicionales que ya han gobernado el país. Los otros 12 bloques presentan candidatos con experiencia directiva política por debajo de la media y que nunca han ocupado cargos ejecutivos. En este sentido, la competencia con actores experimentados en la administración pública se concentra en 4 bloques. 
+Ciertamente, el capital burocrático de los aspirantes es un indicador que evidencia la desigualdad en la experiencia de los actores políticos que compiten por el mismo cargo público. Como se observa en la gráfica 1, solo 4 bloques están por encima de la media de kb, y representan a las fuerzas tradicionales que ya han gobernado el país. Los otros 12 bloques presentan candidatos con experiencia directiva política por debajo de la media y que nunca han ocupado cargos ejecutivos. En este sentido, la competencia con actores experimentados en la administración pública se concentra en 4 bloques.
 
 ```{r}
 #| label: tb3-kb-candidatos-arg
@@ -250,6 +250,7 @@ ggplot(data = long_kbtyp_suma, aes(x = bloque, y = cantidad, fill = Tipo_de_capi
         legend.position = "bottom",
         panel.background = element_rect(fill = "white", color = NA))
 ```
+
 La distinción entre candidatos orgánicos y no orgánicos en el contexto del aparato de Estado argentino se basa en la acumulación de capital intra, para, y sub-burocrático. Los candidatos orgánicos son aquellos que han adquirido experiencia en estas esferas, mientras que los no orgánicos solo tienen experiencia exa y ana-burocrática.
 
 Los bloques "Hacemos por nuestro país", "Juntos por el Cambio", "Principios y Valores", y "Unidos por la Patria" son las agrupaciones políticas que presentan candidatos orgánicos del aparato de Estado. Por otro lado, los bloques "Frente de Izquierda", "Libres", "Política Obrera", "APA", y "Libertad Avanza" son agrupaciones políticas cuyos candidatos poseen capital burocrático localizado en el poder legislativo y en los partidos políticos, aunque siguen siendo considerados orgánicos. En cambio, los bloques "MIJD", "FPL", "Comp Vecinal", "PJ", "LiberAr", y "MAS" presentan candidatos no orgánicos, ya que su capital burocrático proviene de organizaciones de la sociedad civil, sindicatos o empresas privadas.
@@ -380,6 +381,7 @@ ggplot(datos_long, aes(x = candidato, y = cantidad, fill = institucion)) +
         panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank())
 ```
+
 En cuanto a la composición del capital burocrático, encontramos un factor común para los cinco candidatos: su experiencia en el poder legislativo y la dirección de partidos políticos. Sin embargo, la diferencia más significativa radica en que tres candidatos tienen experiencia intra-burocrática debido a su trabajo como ministros o secretarios de Estado, destacando Sergio Massa y Patricia Bullrich con una experiencia similar de 484 y 429 kb-intra, respectivamente. Por su parte, Juan Schiaretti posee la mayor experiencia para-burocrática con 792 kb-para, gracias a su experiencia en el gobierno y en el poder legislativo.
 
 ## Conclusión
@@ -393,5 +395,5 @@ Lo anterior podría ser visto por otros políticos profesionales de derecha como
 la aceptación del electorado que es insuficiente para gobernar cuando se carece de estructura política para moverse dentro y fuera del Estado. A menos que pida estructura prestada de la red política que Milei denomina "casta".
 
 ::: callout-tip
-**Si deseas descargar la base del capital burocrático de aspirantes a la presidencia de la Argentina, visita la sección *Descargables > Análisis de redes* y da click en el enlace**
+**Si deseas descargar la base del capital burocrático de aspirantes a la presidencia de la Argentina, visita la sección *Descargables \> Análisis de redes* y da click en el enlace**
 :::

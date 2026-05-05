@@ -5,7 +5,7 @@ author: "Dr. Norberto Bustos"
 date: today
 description: "Análisis del capital burocrático de los candidatos presidenciales de México en 1824."
 image: "/images/Mexico_1824.png"
-categories: [analisis, politica,capital burocrático, México, siglo XIX]
+categories: [analisis, politica,capital burocrático, México, Siglo XIX]
 format: 
   html:
     toc: true
@@ -57,22 +57,22 @@ library(stringdist)
 
 # Cargar datos
 # ── Paletas de colores (SIN CAMBIOS) ───────────────────────────────────────────
-colores_tkb <- c("Intra" = "#07979C", "Para"  = "#022674", "Sub"   = "#821291", 
+colores_clase <- c("Intra" = "#07979C", "Para"  = "#022674", "Sub"   = "#821291", 
                  "Exa"   = "#CD040E", "Ana"  = "#FFA600")
 
-colores_institucion <- c("presidencia" = "#53EAFD", "vicepresidencia" = "#02B7CF",
-                        "ministerio" = "#016774", "gobernatura" = "#5E90FD",
-                        "ejercito" = "#155DFC", "corte_suprema" = "#0235A1",
-                        "legislatura" = "#022674", "alcaldia" = "#D545E8",
-                        "partido_politico" = "#821291", "empresas" = "#FC5F67",
-                        "soc_civil" = "#CD040E", "mov_rev" = "#F5B027")
+colores_institucion <- c("Presidencia" = "#53EAFD", "Vicepresidencia" = "#02B7CF",
+                        "Ministerio" = "#016774", "Gubernatura" = "#5E90FD",
+                        "Ejercito" = "#155DFC", "Judicial" = "#0235A1",
+                        "Legislatura" = "#022674", "Alcaldia" = "#D545E8",
+                        "Partido_Politico" = "#821291", "Empresas" = "#FC5F67",
+                        "Sociedad_Civil" = "#CD040E", "Rebelion" = "#F5B027")
 
-etiquetas_inst <- c("presidencia" = "Presidencia", "vicepresidencia" = "Vicepresidencia",
-                   "ministerio" = "Ministerio", "gobernatura" = "Gobernatura",
-                   "ejercito" = "Ejército", "corte_suprema" = "Corte Suprema",
-                   "legislatura" = "Legislatura", "alcaldia" = "Alcaldía",
-                   "partido_politico" = "Partidos Políticos", "empresas" = "Empresas",
-                   "soc_civil" = "Sociedad Civil", "mov_rev" = "Mov. Insurgentes")
+etiquetas_inst <- c("Presidencia" = "Presidencia", "Vicepresidencia" = "Vicepresidencia",
+                   "Ministerio" = "Ministerio", "Gubernatura" = "Gubernatura",
+                   "Ejercito" = "Ejército", "Judicial" = "Judicial",
+                   "Legislatura" = "Legislatura", "Alcaldia" = "Alcaldía",
+                   "Partido_Politico" = "Partidos Políticos", "Empresas" = "Empresas",
+                   "Sociedad_Civil" = "Sociedad Civil", "Rebelion" = "Rebelión")
 
 dict_paises <- c("ARG" = "Argentina", "BOL" = "Bolivia", "BRA" = "Brasil",
                 "CHI" = "Chile", "COL" = "Colombia", "COR" = "Costa Rica",
@@ -80,9 +80,10 @@ dict_paises <- c("ARG" = "Argentina", "BOL" = "Bolivia", "BRA" = "Brasil",
 
 # ── Columnas numéricas ──────────────────────────────────────────────────────────
 cols_numericas <- c("kb", "intra", "para", "sub", "exa", "ana",
-                   "presidencia", "vicepresidencia", "ministerio", "gobernatura",
-                   "ejercito", "corte_suprema", "legislatura", "alcaldia",
-                   "partido_politico", "empresas", "soc_civil", "mov_rev")
+                    "Presidencia","Vicepresidencia","Ministerio","Gubernatura",
+                    "Ejercito","Judicial","Legislatura","Alcaldia",
+                    "Partido_Politico","Empresas","Sociedad_Civil","Rebelion")
+
 
 # ── Carga y limpieza de datos ──────────────────────────────────────────────────
 df_raw <- read_excel(params$datafile) %>%
@@ -661,7 +662,7 @@ p1 <- ggplot(edad_stats, aes(x = anio, y = edad_prom)) +
 
   labs(
     title = paste0("Evolución de la edad de los candidatos en ", nombre_pais),
-    subtitle = "Franja: rango mínimo–máximo · ◆ Contienda seleccionada",
+    subtitle = "Franja: rango mínimo–máximo",
     caption = "Elaborado por: n0dn | The Linked Data, 2026",
     x = "Año",
     y = "Edad en contienda (años)"
@@ -685,10 +686,7 @@ Con los datos generales de los candidatos daremos inicio al análisis del capita
 Como señalamos al inicio, el capital burocrático se conforma por la acumulación de cargos directivos dentro y fuera del aparato de Estado durante toda la trayectoria política de cada candidato hasta el momento de la contienda presidencial. Para ello, analizamos cuántos cargos acumulan en las diferentes instituciones, organismos y eventos en los cuales juegan un papel protagónico o directivo. En el siguiente gráfico se deslosa el la acumulación del *kb* de cada candidato por tipo de institución. La línea punteada indica la **media de la contienda** (`r format(kb_medio, big.mark=",")` kb). Los colores azules refieren a aquellas instituciones con mayor cercanía con la presidencia de la república, es decir, con la conducción del aparato burocrático, los morados se refieren a las instituciones que dependen y en ocasiones, inciden, con las instituciones del estado. En cambio, las instituciones más cercanas al color rojo y amarillo, representan a aquellos cargos fuera del ApE y cuyas decisiones organizativas son autónomas al mismo.
 
 ```{r grafico-candidatos}
-
 #| fig-cap: !expr paste0("Composición del capital burocrático por candidato — ", pais_sel, " ", anio_sel)
-#| fig-height: !expr max(4, nrow(df_contienda) * 0.65)
-#| fig-width: 11
 
 # Agregar al ggplot (después de theme_minimal())
 
@@ -701,16 +699,16 @@ df_contienda_graf$candidato <- factor(
 
 datos_long <- df_contienda_graf %>%
   pivot_longer(
-    cols = c(presidencia, vicepresidencia, ministerio, gobernatura,
-             ejercito, corte_suprema, legislatura, alcaldia,
-             partido_politico, empresas, soc_civil, mov_rev),
+    cols = c(Presidencia,Vicepresidencia,Ministerio,Gubernatura,
+               Ejercito,Judicial,Legislatura,Alcaldia,
+               Partido_Politico,Empresas,Sociedad_Civil,Rebelion),
     names_to  = "institucion",
     values_to = "cantidad"
   ) %>%
   mutate(institucion = factor(institucion,
-    levels = c("presidencia","vicepresidencia","ministerio","gobernatura",
-               "ejercito","corte_suprema","legislatura","alcaldia",
-               "partido_politico","empresas","soc_civil","mov_rev")))
+    levels = c("Presidencia","Vicepresidencia","Ministerio","Gubernatura",
+               "Ejercito","Judicial","Legislatura","Alcaldia",
+               "Partido_Politico","Empresas","Sociedad_Civil","Rebelion")))
 
 ggplot(datos_long, aes(x = candidato, y = cantidad, fill = institucion)) +
   geom_col() +
@@ -772,46 +770,46 @@ calcular_concentracion <- function(df_candidato, instituciones, umbral = 0.8) {
   # Calcular concentración en presidencia, vicepresidencia y ministerio
   alta_dir <- df_candidato %>%
     summarise(
-      kb_presidencia = presidencia,
-      kb_vicepresidencia = vicepresidencia,
-      kb_ministerio = ministerio,
-      kb_alta_dir = presidencia + vicepresidencia + ministerio,
+      kb_presidencia = Presidencia,
+      kb_vicepresidencia = Vicepresidencia,
+      kb_ministerio = Ministerio,
+      kb_alta_dir = Presidencia + Vicepresidencia + Ministerio,
       pct_alta_dir = (kb_alta_dir / kb) * 100
     )
   
   # Calcular concentración en gobierno subnacional y legislativo
   gobierno_legislativo <- df_candidato %>%
     summarise(
-      kb_gobernatura = gobernatura,
-      kb_legislatura = legislatura,
-      kb_corte_suprema = corte_suprema,
-      kb_gob_leg = gobernatura + legislatura + corte_suprema,
+      kb_gobernatura = Gubernatura,
+      kb_legislatura = Legislatura,
+      kb_corte_suprema = Judicial,
+      kb_gob_leg = Gubernatura + Legislatura + Judicial,
       pct_gob_leg = (kb_gob_leg / kb) * 100
     )
   
   # Calcular concentración en alcaldía y partidos políticos
   local_partidos <- df_candidato %>%
     summarise(
-      kb_alcaldia = alcaldia,
-      kb_partido_politico = partido_politico,
-      kb_local_partido = alcaldia + partido_politico,
+      kb_alcaldia = Alcaldia,
+      kb_partido_politico = Partido_Politico,
+      kb_local_partido = Alcaldia + Partido_Politico,
       pct_local_partido = (kb_local_partido / kb) * 100
     )
   
   # Calcular concentración en empresas, sociedad civil y movimientos rebeldes
   sociedad_externa <- df_candidato %>%
     summarise(
-      kb_empresas = empresas,
-      kb_soc_civil = soc_civil,
-      kb_mov_rev = mov_rev,
-      kb_externo = empresas + soc_civil + mov_rev,
+      kb_empresas = Empresas,
+      kb_soc_civil = Sociedad_Civil,
+      kb_mov_rev = Rebelion,
+      kb_externo = Empresas + Sociedad_Civil + Rebelion,
       pct_externo = (kb_externo / kb) * 100
     )
   
   # Calcular concentración militar
   militar <- df_candidato %>%
     summarise(
-      kb_ejercito = ejercito,
+      kb_ejercito = Ejercito,
       pct_ejercito = (kb_ejercito / kb) * 100
     )
   
@@ -866,9 +864,9 @@ perdedores <- df_contienda %>%
   arrange(desc(kb))
 
 # ── Instituciones a analizar ──────────────────────────────────────────────────
-instituciones <- c("presidencia", "vicepresidencia", "ministerio", "gobernatura",
-                   "ejercito", "corte_suprema", "legislatura", "alcaldia",
-                   "partido_politico", "empresas", "soc_civil", "mov_rev")
+instituciones <- c("Presidencia","Vicepresidencia","Ministerio","Gubernatura",
+               "Ejercito","Judicial","Legislatura","Alcaldia",
+               "Partido_Politico","Empresas","Sociedad_Civil","Rebelion")
 
 # ── Calcular indicadores para el ganador ──────────────────────────────────────
 if (nrow(ganador) > 0) {
@@ -882,9 +880,9 @@ if (nrow(ganador) > 0) {
   ganador_perfil <- indicadores_ganador$perfil
   ganador_pct_alta_dir <- round(indicadores_ganador$alta_dir$pct_alta_dir, 1)
   ganador_kb_alta_dir <- indicadores_ganador$alta_dir$kb_alta_dir
-  ganador_pct_presidencia <- round(ganador$presidencia / ganador$kb * 100, 1)
-  ganador_pct_vicepresidencia <- round(ganador$vicepresidencia / ganador$kb * 100, 1)
-  ganador_pct_ministerio <- round(ganador$ministerio / ganador$kb * 100, 1)
+  ganador_pct_presidencia <- round(ganador$Presidencia / ganador$kb * 100, 1)
+  ganador_pct_vicepresidencia <- round(ganador$Vicepresidencia / ganador$kb * 100, 1)
+  ganador_pct_ministerio <- round(ganador$Ministerio / ganador$kb * 100, 1)
   
   # Componentes del 80%
   componentes_ganador <- indicadores_ganador$componentes_80
@@ -922,18 +920,18 @@ if (nrow(perdedores) > 0) {
   promedios_perdedores <- perdedores %>%
     summarise(
       kb_prom = mean(kb, na.rm = TRUE),
-      kb_presidencia_prom = mean(presidencia, na.rm = TRUE),
-      kb_vicepresidencia_prom = mean(vicepresidencia, na.rm = TRUE),
-      kb_ministerio_prom = mean(ministerio, na.rm = TRUE),
-      kb_gobernatura_prom = mean(gobernatura, na.rm = TRUE),
-      kb_legislatura_prom = mean(legislatura, na.rm = TRUE),
-      kb_corte_suprema_prom = mean(corte_suprema, na.rm = TRUE),
-      kb_alcaldia_prom = mean(alcaldia, na.rm = TRUE),
-      kb_partido_politico_prom = mean(partido_politico, na.rm = TRUE),
-      kb_empresas_prom = mean(empresas, na.rm = TRUE),
-      kb_soc_civil_prom = mean(soc_civil, na.rm = TRUE),
-      kb_mov_rev_prom = mean(mov_rev, na.rm = TRUE),
-      kb_ejercito_prom = mean(ejercito, na.rm = TRUE)
+      kb_presidencia_prom = mean(Presidencia, na.rm = TRUE),
+      kb_vicepresidencia_prom = mean(Vicepresidencia, na.rm = TRUE),
+      kb_ministerio_prom = mean(Ministerio, na.rm = TRUE),
+      kb_gobernatura_prom = mean(Gubernatura, na.rm = TRUE),
+      kb_legislatura_prom = mean(Legislatura, na.rm = TRUE),
+      kb_corte_suprema_prom = mean(Judicial, na.rm = TRUE),
+      kb_alcaldia_prom = mean(Alcaldia, na.rm = TRUE),
+      kb_partido_politico_prom = mean(Partido_Politico, na.rm = TRUE),
+      kb_empresas_prom = mean(Empresas, na.rm = TRUE),
+      kb_soc_civil_prom = mean(Sociedad_Civil, na.rm = TRUE),
+      kb_mov_rev_prom = mean(Rebelion, na.rm = TRUE),
+      kb_ejercito_prom = mean(Ejercito, na.rm = TRUE)
     ) %>%
     mutate(
       pct_alta_dir_prom = (kb_presidencia_prom + kb_vicepresidencia_prom + kb_ministerio_prom) / kb_prom * 100,
@@ -1038,7 +1036,7 @@ ggplot(long_kbtyp_suma,
   geom_col() +
   
   scale_y_continuous(expand = expansion()) +
-  scale_fill_manual(values = colores_tkb) +
+  scale_fill_manual(values = colores_clase) +
   
   coord_flip(clip = "off") +
   

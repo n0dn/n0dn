@@ -18,8 +18,9 @@ callout-appearence: simple
 execute: 
   warning: false
   message: false
-bibliography: referencias.bib
+bibliography: references.bib
 link-citations: true
+csl: https://www.zotero.org/styles/apa
 ---
 
 Los gabinetes económicos son equipos formados por los secretarios de Estado que se encargan de diseñar, aplicar y evaluar políticas económicas a través de las instituciones del Estado. Los secretarios de Estado son seleccionados por el presidente en acuerdo con las organizaciones políticas que lo apoyaron en su candidatura, como partidos políticos, organizaciones civiles, empresarios y otros grupos de interés.

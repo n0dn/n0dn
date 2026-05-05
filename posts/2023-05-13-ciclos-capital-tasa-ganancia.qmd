@@ -1,10 +1,10 @@
 ---
-title: "Los ciclos del capital y su vinculación con la tendencia a la baja de la tasa de ganancia"
+title: "Los ciclos del capital y su vinculación con la tendencia decreciente de la tasa de ganancia"
 author: "Eduardo BxN"
 date: 2023-05-13
-categories: [economía política]
-description: "Contenido migrado desde n0dn.com. Revisa y completa el texto, imágenes y enlaces."
-image: ""
+categories: [economía política, marxismo, tasa de ganancia, capital, ciclos]
+description: "Abordamos el problema de los ciclos del capital desde la teoría marxista y cómo se vincula con la tendencia decreciente de la tasa de ganancia del capital industrial"
+image: "/images/Cluster_crisis.png"
 ---
 
 **Clément Juglar** fue el primer economista europeo en describir las crisis como "momentos de ciclos económicos sucesivos". Desde entonces, se les ha definido como ciclos clásicos[^1]. Según Karl Marx, la recurrencia de los ciclos se debe, por un lado, al desequilibrio estructural entre el sector I y el sector II. Dadas las condiciones de competencia, la destrucción de capitales no competitivos y el dominio de monopolios internacionales, se produce una tendencia a la baja de la tasa de ganancia que, según Marx[^2].
@@ -48,6 +48,9 @@ A partir del trabajo de Marx sobre la existencia de ciclos de crisis en el capit
 #| label: ciclo-economico
 #| fig-width: 10
 #| fig-height: 6
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
 
 library(ggplot2)
 library(dplyr)

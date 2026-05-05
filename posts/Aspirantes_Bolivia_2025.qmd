@@ -4,7 +4,7 @@ author: "Dr. Norberto Bustos"
 date: "2025-09-01"
 description: "Análisis del capital burocrático de los candidatos presidenciales de Bolivia en 2025."
 image: "/images/Bolivia_2025.png"
-categories: [analisis, politica,capital burocrático, Bolivia]
+categories: [analisis, politica,capital burocrático, Bolivia, Siglo XXI]
 format: 
   html: 
     toc: true
@@ -24,8 +24,9 @@ callout-appearence: simple
 execute: 
   warning: false
   message: false
-bibliography: referencias.bib
+bibliography: references.bib
 link-citations: true
+csl: https://www.zotero.org/styles/apa
 ---
 
 # Introducción

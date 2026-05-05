@@ -1,10 +1,10 @@
 ---
 title: "Los estrategas de la red"
-author: "Eduardo BxN"
+author: "Dr. Norberto Bustos"
 date: 2022-02-23
 categories: [redes]
-description: "Contenido migrado desde n0dn.com. Revisa y completa el texto, imágenes y enlaces."
-image: ""
+#description: "Contenido migrado desde n0dn.com. Revisa y completa el texto, imágenes y enlaces."
+image: "/images/Estrategas_redes.png"
 ---
 
 ¿Seguirías indicaciones aunque éstas fueran absurdas? ¿Cooperarías con alguien que sólo busca su propio beneficio? ¿Donarías tu dinero a una causa que no tiene sentido? La importancia de la lógica estratégica es fundamental para la cooperación, la confianza y las acciones en el largo plazo que permitan crear instituciones.

@@ -2,8 +2,8 @@
 title: "Acercamiento a la definición del capital burocrático"
 author: "Dr. Norberto Bustos"
 date: "2023-09-14"
-categories: [teoría]
-description: "Introducción del capital burocrático "
+categories: [teoría, capital burocrático]
+description: "Introducción del capital burocrático"
 image: "/images/Mex_full_rpm.png"
 format: 
   html: 
@@ -19,8 +19,9 @@ callout-appearence: simple
 execute: 
   warning: false
   message: false
-bibliography: referencias.bib
+bibliography: references.bib
 link-citations: true
+csl: https://www.zotero.org/styles/apa
 ---
 
 ## El capital político como indicador
@@ -105,13 +106,13 @@ Cuando conocemos a alguien por primera vez, establecemos un contacto el cual pue
 
 A mayor número de conexiones con actores clave dentro de la rph, mayor será su probabilidad de éxito para obtener un cargo relevante en el Estado o en su partido [@gilmendieta] [@camp1996]. Para establecer dichas conexiones, se requiere poseer ciertas habilidades sociales y psicológicas para ingresar, mantenerse y avanzar a posiciones más estratégicas dentro del aparato de Estado. Para analizar la formación de las conexiones a través del tiempo e identificar a los actores centrales, utilizamos la metodología de redes complejas. Éstas se definen como una grafo con características topológicas no triviales presentadas normalmente en redes biológicas, climáticas, tecnológicas y sociales. Sus nodos establecen múltiples vínculos a través del tiempo y sus estructuras tienden a adaptarse a los cambios de manera orgánica. Una red compleja se comporta como un sistema complejo, cuyas características son:
 
--   Se componen por muchas partes interactuantes;
+- Se componen por muchas partes interactuantes;
 
--   Cada componente tiene su propia estructura interna -como es el caso de los clústers o camarillas políticas- y cada una de ellas realiza una función o comportamiento específico;
+- Cada componente tiene su propia estructura interna -como es el caso de los clústers o camarillas políticas- y cada una de ellas realiza una función o comportamiento específico;
 
--   El comportamiento de una pequeña parte del sistema afecta de una manera no lineal a la totalidad del sistema.
+- El comportamiento de una pequeña parte del sistema afecta de una manera no lineal a la totalidad del sistema.
 
--   Los sistemas complejos presentan comportamiento emergente, es decir, estructuras, funciones y comportamientos innovadores que permiten la reproducción de nuevas estructuras para el sistema en su conjunto.
+- Los sistemas complejos presentan comportamiento emergente, es decir, estructuras, funciones y comportamientos innovadores que permiten la reproducción de nuevas estructuras para el sistema en su conjunto.
 
 La visualización del grafo y la medición de sus conexiones y componentes a través del tiempo, permiten analizar a las redes políticas históricas en tanto representan un ejemplo de redes complejas. A través del análisis de redes sociales (ARS), mediremos la centralidad de los precandidatos para conocer el tipo y la cantidad de conexiones con personajes e instituciones políticas, así como el grado de agrupamiento que permita identificar la conexión con diferentes grupos de poder histórico.Además con la identificación de clústers, se identifican, miden y pesan los bloques, instituciones y actores centrales en torno a los cuales se despliega una parte importante de los nodos. Los Congresos Legislativos, las gobernaturas, los partidos políticos, así como movimientos de insuficiencia, batallas, empresas u organizaciones civiles son ejemplos de conexiones que aglutinan a actores políticos y que dada la relevancia de cada nodo. En suma, las conexiones que se establecen al interior de una red política son mixtas, y se componen de actores, instituciones y acontecimientos.
 
@@ -131,20 +132,20 @@ A partir de la revisión histórica de ocho países (Argentina, Chile, Cuba, Cos
 
 ***a) Continuidad***
 
--   **Conservar:** Son aquellos gobernantes en turno que se postulan para continuar en el cargo de manera inmediata.
+- **Conservar:** Son aquellos gobernantes en turno que se postulan para continuar en el cargo de manera inmediata.
 
--   **Mantener:** Aquellos candidatos que buscan la continuidad de un gobierno en turno ya sea por pertenecer al mismo partido, pertenecer al gabinete o tener cierto grado de cercanía personal o política con el gobernante en turno y que son personas diferentes al gobernante actual.
+- **Mantener:** Aquellos candidatos que buscan la continuidad de un gobierno en turno ya sea por pertenecer al mismo partido, pertenecer al gabinete o tener cierto grado de cercanía personal o política con el gobernante en turno y que son personas diferentes al gobernante actual.
 
--   **Interinato:** Aquellos personajes que se convierten en gobernantes por razones extraordinarias, pero contempladas en las normas constitucionales por casos de abandono, suspensión, muerte u otra causalidad que conlleva a que el gobernante en turno no pueda ejercer su cargo, por lo que otra persona dentro o fuera del poder ejecutivo asuma el cargo de gobernante de manera temporal.
+- **Interinato:** Aquellos personajes que se convierten en gobernantes por razones extraordinarias, pero contempladas en las normas constitucionales por casos de abandono, suspensión, muerte u otra causalidad que conlleva a que el gobernante en turno no pueda ejercer su cargo, por lo que otra persona dentro o fuera del poder ejecutivo asuma el cargo de gobernante de manera temporal.
 
 ***b) Renovación***
 
--   **Recuperar:** Son aquellos ex gobernantes que pretenden retomar el cargo en una elección no inmediata al término de su administración.
+- **Recuperar:** Son aquellos ex gobernantes que pretenden retomar el cargo en una elección no inmediata al término de su administración.
 
--   **Restaurar:** Son aquellos personajes que representan aquellos gobernantes que instauran un nuevo régimen de gobierno, ya sea a través de una nueva república, imperio o sistema democrático.
+- **Restaurar:** Son aquellos personajes que representan aquellos gobernantes que instauran un nuevo régimen de gobierno, ya sea a través de una nueva república, imperio o sistema democrático.
 
 ***c) Cambio***
 
--   **Despojar:** Aquellos personajes quienes pretenden obtener el cargo de gobernante mediante un golpe de Estado, sin pasar por un proceso electoral o mediante uso de la violencia contra el gobernante en turno.
+- **Despojar:** Aquellos personajes quienes pretenden obtener el cargo de gobernante mediante un golpe de Estado, sin pasar por un proceso electoral o mediante uso de la violencia contra el gobernante en turno.
 
--   **Alternar:** Son aquellos candidatos que no han sido gobernantes en al menos dos comicios anteriores y que pertenecen a un partido, movimiento o fuerza opositora al gobernante en turno.
+- **Alternar:** Son aquellos candidatos que no han sido gobernantes en al menos dos comicios anteriores y que pertenecen a un partido, movimiento o fuerza opositora al gobernante en turno.

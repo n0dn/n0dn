@@ -4,7 +4,7 @@ author: "Dr. Norberto Bustos"
 date: "2025-09-25"
 description: "Análisis del capital burocrático de los candidatos presidenciales de Honduras en 2025."
 image: "/images/Honduras_2025.png"
-categories: [analisis, politica,capital burocrático, Honduras]
+categories: [analisis, politica,capital burocrático, Honduras,Siglo XXI]
 format: 
   html: 
     toc: true
@@ -21,8 +21,9 @@ callout-appearence: simple
 execute: 
   warning: false
   message: false
-bibliography: referencias.bib
+bibliography: references.bib
 link-citations: true
+csl: https://www.zotero.org/styles/apa
 ---
 
 # Introducción
@@ -79,15 +80,15 @@ Actualmente, es candidato presidencial por el Partido Liberal (PLH), desde el mo
 
 Ahora sistematizaremos la información de cada personaje para covnertirlo en un dato. Inicaremos nuestro análisis presentando los rasgos generalizados de los 13 aspirantes a candidatos presidenciales que participaron en las elecciones internas de sus partidos. Como se aprecia en la @tb1-generales-kb-hnd que presenta la información general de los candidatos ordenados de manera descendiente por su capital burocrático, encontramos los siguientes resultados:
 
--   La mayoría de los candidatos provienen del departamento de Francisco Morazán donde se localiza su capital, Tegucigalpa, así como de los municipios de Yoro.
+- La mayoría de los candidatos provienen del departamento de Francisco Morazán donde se localiza su capital, Tegucigalpa, así como de los municipios de Yoro.
 
--   La edad promedio es de 62 años, siendo el más joven Jorge Luis Calix con 40 años y el mayor con 82 años que fue el caso de Carlos Urbizo Solis
+- La edad promedio es de 62 años, siendo el más joven Jorge Luis Calix con 40 años y el mayor con 82 años que fue el caso de Carlos Urbizo Solis
 
--   Sólo tres de los 13 casos son mujeres.
+- Sólo tres de los 13 casos son mujeres.
 
--   El Partido Liberal presentó mayor cantidad de aspirantes con 4, seguido del Nacional con 3, Libertado y Refundación 2 e Innovación y Unidad Socialdemócrata y Democracia Cristiana 1 cada uno.
+- El Partido Liberal presentó mayor cantidad de aspirantes con 4, seguido del Nacional con 3, Libertado y Refundación 2 e Innovación y Unidad Socialdemócrata y Democracia Cristiana 1 cada uno.
 
--   Con respecto al capital burocrático **(kb)**, la media es de 402.30 kbs, siendo el menor 56 kb por el octogenario Carlos Urbizo y el mayor kb por la candidata oficialista Rixi Moncada con 1,215.
+- Con respecto al capital burocrático **(kb)**, la media es de 402.30 kbs, siendo el menor 56 kb por el octogenario Carlos Urbizo y el mayor kb por la candidata oficialista Rixi Moncada con 1,215.
 
 ```{r}
 #| label: tb1-generales-kb-hnd
