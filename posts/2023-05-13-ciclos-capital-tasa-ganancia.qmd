@@ -1,11 +1,18 @@
 ---
 title: "Los ciclos del capital y su vinculación con la tendencia a la baja de la tasa de ganancia"
-author: "Eduardo BxN"
+author: "Norberto Bustos"
 date: 2023-05-13
 categories: [economía política]
-description: "Contenido migrado desde n0dn.com. Revisa y completa el texto, imágenes y enlaces."
+description: "Análisis de las teorías de los ciclos económicos clásicos, las ondas largas y la tendencia a la baja de la tasa de ganancia en el pensamiento económico."
 image: ""
 ---
+
+{r setup}
+#| include: false
+library(ggplot2)
+library(dplyr)
+```
+
 
 **Clément Juglar** fue el primer economista europeo en describir las crisis como "momentos de ciclos económicos sucesivos". Desde entonces, se les ha definido como ciclos clásicos[^1]. Según Karl Marx, la recurrencia de los ciclos se debe, por un lado, al desequilibrio estructural entre el sector I y el sector II. Dadas las condiciones de competencia, la destrucción de capitales no competitivos y el dominio de monopolios internacionales, se produce una tendencia a la baja de la tasa de ganancia que, según Marx[^2].
 
@@ -46,19 +53,19 @@ A partir del trabajo de Marx sobre la existencia de ciclos de crisis en el capit
 
 ```{r}
 #| label: ciclo-economico
+#| echo: false
+#| message: false
+#| warning: false
 #| fig-width: 10
 #| fig-height: 6
 
-library(ggplot2)
-library(dplyr)
-
-# Crear datos para la curva del ciclo económico
+# Datos para la curva del ciclo económico
 tiempo <- seq(0, 100, length.out = 200)
 pib <- 50 + 30 * sin(tiempo/15 - pi/2) + tiempo/8
 
 df <- data.frame(tiempo = tiempo, pib = pib)
 
-# Definir las fases del ciclo con sus límites
+# Fases del ciclo con sus límites
 fases <- data.frame(
   fase = c("Expansión", "Boom", "Recesión", "Depresión"),
   xmin = c(0, 20, 35, 55),
@@ -66,15 +73,12 @@ fases <- data.frame(
   color = c("#FFB6C6", "#FFFF99", "#C8D6B9", "#FFD4A3")
 )
 
-# Crear el gráfico
+# Renderizado gráfico
 ggplot(df, aes(x = tiempo, y = pib)) +
-  # Agregar rectángulos de fondo para cada fase
   geom_rect(data = fases, 
             aes(xmin = xmin, xmax = xmax, ymin = -Inf, ymax = Inf, fill = fase),
             inherit.aes = FALSE, alpha = 0.6) +
-  # Línea del ciclo económico
-  geom_line(color = "#00008B", size = 1.5) +
-  # Colores personalizados
+  geom_line(color = "#00008B", linewidth = 1.2) +
   scale_fill_manual(values = c("Expansión" = "#FFB6C6", 
                                 "Boom" = "#FFFF99", 
                                 "Recesión" = "#C8D6B9", 
@@ -83,17 +87,16 @@ ggplot(df, aes(x = tiempo, y = pib)) +
   labs(x = "Tiempo", 
        y = "Producto Interno Bruto",
        fill = NULL,
-       caption = "Elaborado por n0dn, 2025") +
-  # Tema limpio
+       caption = "Elaborado por n0dn, 2023") +
   theme_minimal() +
   theme(
     axis.text = element_blank(),
     axis.ticks = element_blank(),
     panel.grid = element_blank(),
     legend.position = "top",
-    legend.text = element_text(size = 12),
-    axis.title = element_text(size = 12, face = "bold"),
-    plot.margin = margin(20, 20, 20, 20)
+    legend.text = element_text(size = 11),
+    axis.title = element_text(size = 11, face = "bold"),
+    plot.margin = margin(15, 15, 15, 15)
   ) +
   guides(fill = guide_legend(nrow = 1))
 ```
