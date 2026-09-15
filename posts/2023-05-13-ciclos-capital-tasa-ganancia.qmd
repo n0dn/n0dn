@@ -9,6 +9,7 @@ image: ""
 
 {r setup}
 #| include: false
+rsconnect::writeManifest()
 library(ggplot2)
 library(dplyr)
 ```
