@@ -22,9 +22,9 @@ callout-appearence: simple
 execute: 
   warning: false
   message: false
-bibliography: references.bib
-link-citations: true
-csl: https://www.zotero.org/styles/apa
+#bibliography: references.bib
+#link-citations: true
+#csl: https://www.zotero.org/styles/apa
 ---
 
 Las elecciones primarias en Argentina del 14 de agosto de 2023 reflejaron el descontento debido al manejo de la política fiscal durante la pandemia de COVID-19 y la renegociación de la deuda con el FMI, contraída durante el gobierno de Mauricio Macri (2015-2019). El presidente Alberto Fernández (2019-2023) heredó el país con una tasa de inflación de alrededor del 60% anual, una crisis cambiaria significativa y la posibilidad de incumplir con los acreedores de la deuda externa. La discordia en el gabinete de Fernández sobre las negociaciones con el Fondo Monetario Internacional (FMI) resultó en la destitución de Martín Guzmán como ministro de Economía, reemplazado por el entonces presidente de la Cámara de Diputados, Sergio Massa, quien prometió cambios estructurales para resolver la situación.

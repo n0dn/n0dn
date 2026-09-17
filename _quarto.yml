@@ -3,6 +3,7 @@ project:
   output-dir: docs
 
 website:
+  site-url: "https://n0dn.github.io/n0dn"
   title: "n0dn | The linked data"
   description: "Análisis de redes políticas y capital burocrático en América Latina y el Caribe. Ciencia de datos aplicada a la política latinoamericana."
   #site-url: "https://n0dn.github.io/n0dn"  # o tu dominio propio

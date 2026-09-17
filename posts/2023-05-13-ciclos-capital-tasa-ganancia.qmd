@@ -51,7 +51,7 @@ A partir del trabajo de Marx sobre la existencia de ciclos de crisis en el capit
 #| echo: FALSE
 #| message: FALSE
 #| warning: FALSE
-
+li
 library(ggplot2)
 library(dplyr)
 
